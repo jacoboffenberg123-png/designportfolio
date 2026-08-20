@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    :root{
+      --ink:#171717; --line:#8a8a8a; --line-soft:#c7c7c7;
+      --fill:#eeeeee; --bg:#ffffff;
+    }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; background:var(--bg); color:var(--ink); }
+    a{ color:var(--ink); text-decoration:underline; }
+    a:hover{ color:#000; }
+    .page{ width:1280px; min-height:1750px; display:flex; flex-direction:column; border:1px solid var(--line-soft); }
+    header{ display:flex; align-items:center; justify-content:space-between; padding:22px 40px; border-bottom:2px solid var(--ink); }
+    .logo{ font-size:18px; font-weight:700; letter-spacing:0.02em; }
+    .tabs{ display:flex; gap:0; border:1.5px solid var(--ink); border-radius:999px; overflow:hidden; }
+    .tab{ padding:9px 22px; font-size:13px; letter-spacing:0.03em; }
+    .tab.active{ background:var(--ink); color:#fff; }
+    .tab:not(.active){ background:#fff; }
+    main{ flex:1; padding:32px 40px 48px; display:flex; flex-direction:column; gap:40px; }
+    .pagelabel{ font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--line); margin:0; }
+    .back{ font-size:13px; margin:12px 0 4px; }
+    .hero-cover{
+      aspect-ratio:16/7; background:
+        repeating-linear-gradient(135deg, var(--fill), var(--fill) 12px, #e2e2e2 12px, #e2e2e2 24px);
+      border:1.5px solid var(--ink);
+      display:flex; align-items:center; justify-content:center;
+      font-size:13px; color:var(--line); letter-spacing:0.04em;
+    }
+    .heading{ display:flex; flex-direction:column; gap:16px; }
+    h1{ font-size:34px; margin:0; font-weight:700; }
+    .metadata{ display:flex; gap:32px; border-top:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); padding:16px 0; }
+    .metaitem{ display:flex; flex-direction:column; gap:4px; }
+    .metalabel{ font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--line); }
+    .metaval{ font-size:14px; }
+    .content{ display:flex; flex-direction:column; gap:28px; max-width:760px; }
+    .block h2{ font-size:18px; margin:0 0 10px; }
+    .block .lorem{ height:14px; background:var(--fill); border-radius:2px; margin-bottom:8px; }
+    .block .lorem:nth-child(3){ width:92%; }
+    .block .lorem:nth-child(4){ width:78%; }
+    .gallery{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:20px; }
+    .galleryitem{
+      aspect-ratio:1; background:
+        repeating-linear-gradient(135deg, var(--fill), var(--fill) 10px, #e2e2e2 10px, #e2e2e2 20px);
+      border:1.5px solid var(--ink);
+      display:flex; align-items:center; justify-content:center;
+      font-size:12px; color:var(--line);
+    }
+    .next{ display:flex; justify-content:flex-end; padding-top:8px; border-top:1px solid var(--line-soft); }
+    .next a{ font-size:15px; font-weight:600; }
+    footer{ border-top:2px solid var(--ink); padding:22px 40px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--line); }
+    footer a{ color:var(--ink); }
+  </style>
+</helmet>
+<div class="page">
+  <header>
+    <div class="logo">Navn Etternavn</div>
+    <nav class="tabs">
+      <div class="tab active">Prosjekter</div>
+      <div class="tab">CV</div>
+    </nav>
+  </header>
+  <main>
+    <div>
+      <p class="pagelabel">Prosjektside — /arbeid/[slug]</p>
+      <div class="back"><a href="#">&larr; Tilbake til prosjekter</a></div>
+    </div>
+
+    <div class="hero-cover">2400 × 1200 — cover</div>
+
+    <div class="heading">
+      <h1>Prosjekttittel</h1>
+      <div class="metadata">
+        <div class="metaitem"><span class="metalabel">Rolle</span><span class="metaval">UI/UX Designer</span></div>
+        <div class="metaitem"><span class="metalabel">År</span><span class="metaval">2025</span></div>
+        <div class="metaitem"><span class="metalabel">Verktøy</span><span class="metaval">Figma, Next.js</span></div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="block">
+        <h2>Utfordringen</h2>
+        <div class="lorem" style="width:100%"></div>
+        <div class="lorem" style="width:95%"></div>
+        <div class="lorem" style="width:92%"></div>
+        <div class="lorem" style="width:78%"></div>
+      </div>
+      <div class="block">
+        <h2>Prosessen</h2>
+        <div class="lorem" style="width:100%"></div>
+        <div class="lorem" style="width:88%"></div>
+        <div class="lorem" style="width:70%"></div>
+      </div>
+    </div>
+
+    <div class="gallery">
+      <div class="galleryitem">800 × 800</div>
+      <div class="galleryitem">800 × 800</div>
+      <div class="galleryitem">800 × 800</div>
+    </div>
+
+    <div class="next"><a href="#">Neste prosjekt &rarr;</a></div>
+  </main>
+  <footer>
+    <span>© Navn Etternavn</span>
+    <a href="#">kontakt@epost.no</a>
+  </footer>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

@@ -9,4 +9,9 @@ dist/
 *.log
 .DS_Store
 .turbo/
-apps/cms/payload-types.ts
+apps/cms/src/payload-types.ts
+
+# Local disk media storage — real uploads, not source. Once Cloudinary is
+# wired up this won't accumulate locally at all; until then, keep the repo
+# clean of user-uploaded binaries.
+apps/cms/media/

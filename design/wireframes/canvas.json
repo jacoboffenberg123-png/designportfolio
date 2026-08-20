@@ -1,0 +1,15 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1280, "h": 1040 },
+    { "file": "Prosjektside.dc.html", "x": 1440, "y": 0, "w": 1280, "h": 1780 },
+    { "file": "CV.dc.html", "x": 2880, "y": 0, "w": 1280, "h": 1150 }
+  ],
+  "annotations": [
+    { "id": "ia-overview", "x": 0, "y": -160, "w": 900, "text": "IA: Prosjekter og CV er søsken-seksjoner, byttet med tab-switcher i header. Prosjektsiden er en underside — nås kun ved å klikke et prosjektkort, ikke via egen tab." },
+    { "id": "flow-card-click", "x": 1300, "y": 460, "w": 220, "text": "Klikk på et\nprosjektkort →\nåpner prosjektsiden" },
+    { "id": "flow-back", "x": 1300, "y": 90, "w": 220, "text": "← Tilbake fører\ntilbake til\nprosjektoversikten" },
+    { "id": "flow-tabs", "x": 60, "y": 1080, "w": 500, "text": "Tab-switcher (Prosjekter/CV) er persistent i header på alle tre sidene — samme komponent, ulik aktiv-tilstand." },
+    { "id": "note-contact", "x": 2880, "y": 1190, "w": 500, "text": "Ingen egen kontaktside i denne IA-en: kontaktinfo ligger i CV-sidens footer i stedet." }
+  ],
+  "launch": { "view": "canvas" }
+}

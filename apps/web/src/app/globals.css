@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+:root {
+  --color-ink: #0a0a0a;
+  --color-paper: #fefdfb;
+  --color-surface: #ffffff;
+  --color-line: #e4e1da;
+  --color-muted: #8c877d;
+}
+
+@theme inline {
+  --color-ink: var(--color-ink);
+  --color-paper: var(--color-paper);
+  --color-surface: var(--color-surface);
+  --color-line: var(--color-line);
+  --color-muted: var(--color-muted);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --spacing-8: 8px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-96: 96px;
+
+  --radius-pill: 999px;
+  --radius-card: 8px;
+}
+
+html {
+  /* Reserve the scrollbar's width on every page, whether or not it's tall
+     enough to need one — otherwise the centered header shifts sideways by
+     the scrollbar's width when navigating from a tall page (grid) to a
+     short one (CV). */
+  scrollbar-gutter: stable;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}

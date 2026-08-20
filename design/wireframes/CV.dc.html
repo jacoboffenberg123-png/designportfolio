@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    :root{
+      --ink:#171717; --line:#8a8a8a; --line-soft:#c7c7c7;
+      --fill:#eeeeee; --bg:#ffffff;
+    }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; background:var(--bg); color:var(--ink); }
+    a{ color:var(--ink); text-decoration:underline; }
+    a:hover{ color:#000; }
+    .page{ width:1280px; min-height:1100px; display:flex; flex-direction:column; border:1px solid var(--line-soft); }
+    header{ display:flex; align-items:center; justify-content:space-between; padding:22px 40px; border-bottom:2px solid var(--ink); }
+    .logo{ font-size:18px; font-weight:700; letter-spacing:0.02em; }
+    .tabs{ display:flex; gap:0; border:1.5px solid var(--ink); border-radius:999px; overflow:hidden; }
+    .tab{ padding:9px 22px; font-size:13px; letter-spacing:0.03em; }
+    .tab.active{ background:var(--ink); color:#fff; }
+    .tab:not(.active){ background:#fff; }
+    main{ flex:1; padding:48px 40px; display:flex; flex-direction:column; gap:44px; max-width:820px; }
+    .pagelabel{ font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--line); margin:0 0 8px; }
+    .intro{ display:flex; gap:28px; align-items:flex-start; }
+    .avatar{
+      width:120px; height:120px; flex:none;
+      background:repeating-linear-gradient(135deg, var(--fill), var(--fill) 8px, #e2e2e2 8px, #e2e2e2 16px);
+      border:1.5px solid var(--ink);
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; color:var(--line);
+    }
+    .bio{ display:flex; flex-direction:column; gap:10px; padding-top:6px; }
+    .bio .lorem{ height:13px; background:var(--fill); border-radius:2px; }
+    .section h2{ font-size:14px; text-transform:uppercase; letter-spacing:0.06em; margin:0 0 18px; border-bottom:1px solid var(--line-soft); padding-bottom:10px; }
+    .exp{ display:flex; flex-direction:column; gap:22px; }
+    .expitem{ display:flex; gap:24px; }
+    .expdate{ width:120px; flex:none; font-size:12px; color:var(--line); font-variant-numeric:tabular-nums; padding-top:2px; }
+    .expbody strong{ display:block; font-size:15px; margin-bottom:4px; }
+    .expbody span{ font-size:13px; color:var(--line); }
+    .tags{ display:flex; flex-wrap:wrap; gap:10px; }
+    .tags span{ font-size:12px; border:1px solid var(--line); border-radius:999px; padding:6px 14px; }
+    .edu{ display:flex; flex-direction:column; gap:14px; }
+    .eduitem strong{ display:block; font-size:14px; }
+    .eduitem span{ font-size:12px; color:var(--line); }
+    .cta{ display:inline-flex; align-self:flex-start; border:1.5px solid var(--ink); padding:12px 24px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta:hover{ background:var(--ink); color:#fff; }
+    footer{ border-top:2px solid var(--ink); padding:22px 40px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--line); }
+    footer a{ color:var(--ink); }
+    .socials{ display:flex; gap:16px; }
+  </style>
+</helmet>
+<div class="page">
+  <header>
+    <div class="logo">Navn Etternavn</div>
+    <nav class="tabs">
+      <div class="tab">Prosjekter</div>
+      <div class="tab active">CV</div>
+    </nav>
+  </header>
+  <main>
+    <p class="pagelabel">CV — /cv</p>
+
+    <div class="intro">
+      <div class="avatar">400 × 400</div>
+      <div class="bio">
+        <div class="lorem" style="width:520px"></div>
+        <div class="lorem" style="width:480px"></div>
+        <div class="lorem" style="width:360px"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Erfaring</h2>
+      <div class="exp">
+        <sc-for list="{{experience}}" as="e" hint-placeholder-count="3">
+          <div class="expitem">
+            <div class="expdate">{{e.dates}}</div>
+            <div class="expbody">
+              <strong>{{e.role}}</strong>
+              <span>{{e.company}}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Ferdigheter</h2>
+      <div class="tags">
+        <sc-for list="{{skills}}" as="s" hint-placeholder-count="8">
+          <span>{{s.label}}</span>
+        </sc-for>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Utdanning</h2>
+      <div class="edu">
+        <sc-for list="{{education}}" as="ed" hint-placeholder-count="2">
+          <div class="eduitem">
+            <strong>{{ed.program}}</strong>
+            <span>{{ed.school}} — {{ed.dates}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <a class="cta" href="#">Last ned CV (PDF)</a>
+  </main>
+  <footer>
+    <span>kontakt@epost.no</span>
+    <div class="socials">
+      <a href="#">LinkedIn</a>
+      <a href="#">Instagram</a>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      experience: [
+        { role: 'Stillingstittel', company: 'Selskapsnavn', dates: '2024–nå' },
+        { role: 'Stillingstittel', company: 'Selskapsnavn', dates: '2022–2024' },
+        { role: 'Stillingstittel', company: 'Selskapsnavn', dates: '2020–2022' },
+      ],
+      skills: [
+        { label: 'Figma' }, { label: 'Next.js' }, { label: 'React' },
+        { label: 'TypeScript' }, { label: 'Tailwind' }, { label: 'Payload CMS' },
+        { label: 'UI-design' }, { label: 'Motion' },
+      ],
+      education: [
+        { program: 'Studieprogram', school: 'Skolenavn', dates: '2019–2022' },
+        { program: 'Studieprogram', school: 'Skolenavn', dates: '2017–2019' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

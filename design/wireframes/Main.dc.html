@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    :root{
+      --ink:#171717; --line:#8a8a8a; --line-soft:#c7c7c7;
+      --fill:#eeeeee; --bg:#ffffff;
+    }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; background:var(--bg); color:var(--ink); }
+    a{ color:var(--ink); text-decoration:underline; }
+    a:hover{ color:#000; }
+    .page{ width:1280px; min-height:1000px; display:flex; flex-direction:column; border:1px solid var(--line-soft); }
+    header{ display:flex; align-items:center; justify-content:space-between; padding:22px 40px; border-bottom:2px solid var(--ink); }
+    .logo{ font-size:18px; font-weight:700; letter-spacing:0.02em; }
+    .tabs{ display:flex; gap:0; border:1.5px solid var(--ink); border-radius:999px; overflow:hidden; }
+    .tab{ padding:9px 22px; font-size:13px; letter-spacing:0.03em; }
+    .tab.active{ background:var(--ink); color:#fff; }
+    .tab:not(.active){ background:#fff; }
+    main{ flex:1; padding:48px 40px; }
+    .pagelabel{ font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--line); margin:0 0 28px; }
+    .grid{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:32px; }
+    .card{ border:1.5px solid var(--ink); display:flex; flex-direction:column; }
+    .thumb{
+      aspect-ratio:4/3; background:
+        repeating-linear-gradient(135deg, var(--fill), var(--fill) 10px, #e2e2e2 10px, #e2e2e2 20px);
+      border-bottom:1.5px solid var(--ink);
+      display:flex; align-items:center; justify-content:center;
+      font-size:12px; color:var(--line); letter-spacing:0.04em;
+    }
+    .cardbody{ padding:16px 18px 20px; display:flex; flex-direction:column; gap:8px; }
+    .title{ font-size:16px; font-weight:600; }
+    .metarow{ display:flex; align-items:center; gap:10px; }
+    .tag{ font-size:11px; border:1px solid var(--line); border-radius:999px; padding:3px 10px; letter-spacing:0.02em; }
+    .year{ font-size:12px; color:var(--line); font-variant-numeric:tabular-nums; }
+    footer{ border-top:2px solid var(--ink); padding:22px 40px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--line); }
+    footer a{ color:var(--ink); }
+  </style>
+</helmet>
+<div class="page">
+  <header>
+    <div class="logo">Navn Etternavn</div>
+    <nav class="tabs">
+      <div class="tab active">Prosjekter</div>
+      <div class="tab">CV</div>
+    </nav>
+  </header>
+  <main>
+    <p class="pagelabel">Prosjektoversikt — /arbeid</p>
+    <div class="grid">
+      <sc-for list="{{projects}}" as="p" hint-placeholder-count="6">
+        <div class="card">
+          <div class="thumb">1200 × 800</div>
+          <div class="cardbody">
+            <div class="title">{{p.title}}</div>
+            <div class="metarow">
+              <span class="tag">{{p.category}}</span>
+              <span class="year">{{p.year}}</span>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </main>
+  <footer>
+    <span>© Navn Etternavn</span>
+    <a href="#">kontakt@epost.no</a>
+  </footer>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      projects: [
+        { title: 'Prosjekttittel 01', category: 'UI', year: '2025' },
+        { title: 'Prosjekttittel 02', category: 'Branding', year: '2025' },
+        { title: 'Prosjekttittel 03', category: 'Motion', year: '2024' },
+        { title: 'Prosjekttittel 04', category: 'UI', year: '2024' },
+        { title: 'Prosjekttittel 05', category: 'Print', year: '2023' },
+        { title: 'Prosjekttittel 06', category: 'Branding', year: '2023' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
