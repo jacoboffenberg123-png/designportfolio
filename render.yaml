@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: designportfolio-cms
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build -w apps/cms
+    startCommand: npm run start -w apps/cms
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: DATABASE_URL
+        sync: false
+      - key: PAYLOAD_SECRET
+        generateValue: true
+      - key: WEB_APP_URL
+        value: https://chic-sable-e19664.netlify.app
