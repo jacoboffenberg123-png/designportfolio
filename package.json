@@ -1,0 +1,13 @@
+{
+  "name": "designportefolio",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev -w apps/web",
+    "dev:cms": "npm run dev -w apps/cms",
+    "build:web": "npm run build -w apps/web",
+    "build:cms": "npm run build -w apps/cms"
+  }
+}
