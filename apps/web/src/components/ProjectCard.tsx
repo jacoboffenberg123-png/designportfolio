@@ -31,7 +31,7 @@ export default function ProjectCard({
           />
         ) : null}
         <div className="absolute bottom-32 left-1/2 -translate-x-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="inline-flex items-center justify-center whitespace-nowrap rounded-pill bg-white/20 px-16 py-8 text-xs font-normal text-surface backdrop-blur-[17px]">
+          <span className="inline-flex items-center justify-center whitespace-nowrap rounded-pill bg-white/20 px-16 py-8 text-xs font-normal text-surface backdrop-blur-[17px] transition-[background-color,transform] duration-200 ease-out hover:scale-[1.08] hover:bg-black/55">
             {ctaLabel}
           </span>
         </div>
