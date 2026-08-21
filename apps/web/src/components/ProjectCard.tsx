@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import Pill from "./Pill";
 
 type ProjectCardProps = {
   slug: string;
@@ -31,15 +30,10 @@ export default function ProjectCard({
             className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
           />
         ) : null}
-        <div className="absolute bottom-16 left-16 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <Pill
-            as="span"
-            pillStyle="outline"
-            size="small"
-            className="bg-surface/80 backdrop-blur-sm"
-          >
+        <div className="absolute bottom-32 left-1/2 -translate-x-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <span className="inline-flex items-center justify-center whitespace-nowrap rounded-pill bg-white/20 px-16 py-8 text-xs font-normal text-surface backdrop-blur-[17px]">
             {ctaLabel}
-          </Pill>
+          </span>
         </div>
       </div>
       <div className="flex flex-col gap-8">
