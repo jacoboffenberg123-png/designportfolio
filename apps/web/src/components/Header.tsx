@@ -8,7 +8,7 @@ export default function Header() {
         href="/"
         className="text-[15px] leading-none font-bold uppercase tracking-[0.02em] text-ink"
       >
-        Navn Etternavn
+        Jacob Offenberg
       </Link>
       <NavTabs />
     </header>

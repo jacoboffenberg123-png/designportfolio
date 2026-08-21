@@ -15,18 +15,29 @@
   --color-line: var(--color-line);
   --color-muted: var(--color-muted);
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 
+  --spacing-4: 4px;
   --spacing-8: 8px;
+  --spacing-12: 12px;
   --spacing-16: 16px;
   --spacing-24: 24px;
   --spacing-32: 32px;
   --spacing-48: 48px;
   --spacing-64: 64px;
   --spacing-96: 96px;
+  --spacing-120: 120px;
 
+  /* Names mirror the Figma Radius collection, so these deliberately replace
+     Tailwind's default rounded-sm/md/lg values. */
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
   --radius-pill: 999px;
-  --radius-card: 8px;
+
+  --shadow-card: 0 1px 2px rgb(10 10 10 / 0.04), 0 8px 24px rgb(10 10 10 / 0.06);
+  --shadow-card-hover: 0 2px 4px rgb(10 10 10 / 0.05), 0 16px 40px rgb(10 10 10 / 0.1);
+  --shadow-pill: 0 2px 12px rgb(10 10 10 / 0.2);
 }
 
 html {

@@ -16,17 +16,15 @@ export default async function ProsjektsidePage({
   const next = await getNextProject(slug);
 
   return (
-    <div className="flex flex-1 flex-col gap-48 px-24 pt-32 pb-64 md:px-48 lg:px-[120px]">
-      <div className="flex flex-col gap-8">
-        <Link href="/" className="w-fit text-xs font-medium tracking-[-0.01em] text-ink">
-          ← Tilbake
-        </Link>
-        <p className="text-xs tracking-[0.08em] text-muted uppercase">
-          Prosjektside — /arbeid/{slug}
-        </p>
-      </div>
+    <div className="flex flex-1 flex-col gap-48 px-24 pt-24 pb-96 md:px-48 lg:px-120">
+      <Link
+        href="/"
+        className="w-fit text-[13px] leading-[1.3] font-medium text-ink hover:underline"
+      >
+        ← Tilbake
+      </Link>
 
-      <div className="relative aspect-[16/7] w-full overflow-hidden rounded-card bg-line">
+      <div className="relative aspect-[16/7] w-full overflow-hidden rounded-md bg-line shadow-card">
         {project.imageUrl ? (
           <Image
             src={project.imageUrl}
@@ -39,10 +37,10 @@ export default async function ProsjektsidePage({
       </div>
 
       <div className="flex flex-col gap-24">
-        <h1 className="text-[36px] leading-[1.05] font-semibold tracking-[-0.01em] text-ink">
+        <h1 className="text-[40px] leading-[1.1] font-bold tracking-[-0.015em] text-ink">
           {project.title}
         </h1>
-        <div className="flex flex-wrap gap-48 border-y border-line py-16">
+        <div className="flex flex-wrap gap-48 border-y border-line py-24">
           <MetaItem label="Rolle" value={project.role} />
           <MetaItem label="År" value={project.year} />
           <MetaItem label="Verktøy" value={project.tools} />
@@ -59,7 +57,7 @@ export default async function ProsjektsidePage({
           {project.gallery.map((src) => (
             <div
               key={src}
-              className="relative aspect-[331/379] w-full overflow-hidden rounded-card bg-line"
+              className="relative aspect-[384/440] w-full overflow-hidden rounded-md bg-line shadow-card"
             >
               <Image src={src} alt="" fill sizes="33vw" className="object-cover" />
             </div>
@@ -68,10 +66,10 @@ export default async function ProsjektsidePage({
       ) : null}
 
       {next ? (
-        <div className="flex justify-end pt-16">
+        <div className="flex justify-end">
           <Link
             href={`/arbeid/${next.slug}`}
-            className="text-xs font-medium tracking-[-0.01em] text-ink"
+            className="text-[13px] leading-[1.3] font-medium text-ink hover:underline"
           >
             Neste prosjekt →
           </Link>
@@ -83,9 +81,11 @@ export default async function ProsjektsidePage({
 
 function MetaItem({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex w-[100px] flex-col gap-8">
-      <span className="text-xs tracking-[0.06em] text-muted uppercase">{label}</span>
-      <span className="text-xs font-medium tracking-[-0.01em] text-ink">{value}</span>
+    <div className="flex w-[160px] flex-col gap-8">
+      <span className="text-[11px] leading-[1.2] font-medium tracking-[0.08em] text-muted uppercase">
+        {label}
+      </span>
+      <span className="text-[13px] leading-[1.3] font-medium text-ink">{value}</span>
     </div>
   );
 }
@@ -93,8 +93,10 @@ function MetaItem({ label, value }: { label: string; value: string }) {
 function ContentBlock({ heading, body }: { heading: string; body: string }) {
   return (
     <div className="flex flex-col gap-16">
-      <span className="text-xs font-medium tracking-[-0.01em] text-ink">{heading}</span>
-      <p className="text-[15px] leading-[1.6] tracking-[-0.005em] text-ink">{body}</p>
+      <h2 className="text-[20px] leading-[1.3] font-medium tracking-[-0.005em] text-ink">
+        {heading}
+      </h2>
+      <p className="text-base leading-[1.65] tracking-[-0.005em] text-ink">{body}</p>
     </div>
   );
 }

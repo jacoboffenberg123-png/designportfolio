@@ -19,7 +19,7 @@ export default function NavTabs() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex items-center gap-8">
+    <nav className="flex items-center gap-4 rounded-pill bg-surface p-4 shadow-card">
       {TABS.map((tab) => {
         const active = isActive(pathname, tab.href);
         return (
@@ -28,8 +28,8 @@ export default function NavTabs() {
             href={tab.href}
             className={
               active
-                ? "rounded-pill bg-ink px-16 py-8 text-xs font-medium tracking-[-0.01em] text-surface"
-                : "rounded-pill px-16 py-8 text-xs font-medium tracking-[-0.01em] text-muted"
+                ? "rounded-pill bg-ink px-16 py-8 text-[13px] leading-[1.3] font-medium text-surface"
+                : "rounded-pill px-16 py-8 text-[13px] leading-[1.3] font-medium text-muted transition-colors hover:text-ink"
             }
           >
             {tab.label}

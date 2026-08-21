@@ -5,11 +5,9 @@ export default async function CVPage() {
   const cv = await getCV();
 
   return (
-    <div className="mx-auto flex w-full max-w-[820px] flex-1 flex-col gap-48 px-24 pt-32 pb-64 md:px-48">
-      <p className="text-xs tracking-[0.08em] text-muted uppercase">CV — /cv</p>
-
+    <div className="mx-auto flex w-full max-w-[820px] flex-1 flex-col gap-48 px-24 pt-24 pb-96 md:px-48 lg:px-0">
       <div className="flex flex-col gap-24">
-        <div className="h-[120px] w-[120px] shrink-0 bg-line">
+        <div className="h-[120px] w-[120px] shrink-0 overflow-hidden rounded-md bg-line shadow-card">
           {cv.avatarUrl ? (
             <Image
               src={cv.avatarUrl}
@@ -20,17 +18,17 @@ export default async function CVPage() {
             />
           ) : null}
         </div>
-        <p className="text-[15px] leading-[1.6] tracking-[-0.005em] text-ink">{cv.bio}</p>
+        <p className="text-base leading-[1.65] tracking-[-0.005em] text-ink">{cv.bio}</p>
       </div>
 
       <Section title="Utdanning">
         <div className="flex flex-col gap-16">
           {cv.education.map((ed) => (
             <div key={ed.program + ed.dates} className="flex flex-col gap-8">
-              <span className="text-xs font-medium tracking-[-0.01em] text-ink">
+              <span className="text-[13px] leading-[1.3] font-medium text-ink">
                 {ed.program}
               </span>
-              <span className="text-xs text-muted">
+              <span className="text-xs leading-[1.5] text-muted">
                 {ed.school} — {ed.dates}
               </span>
             </div>
@@ -43,7 +41,7 @@ export default async function CVPage() {
           {cv.skills.map((skill) => (
             <span
               key={skill}
-              className="rounded-card bg-line p-8 text-xs font-normal text-ink"
+              className="rounded-sm bg-line px-12 py-8 text-xs leading-[1.5] text-ink"
             >
               {skill}
             </span>
@@ -56,8 +54,10 @@ export default async function CVPage() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-16">
-      <span className="text-xs tracking-[0.06em] text-muted uppercase">{title}</span>
+    <div className="flex flex-col gap-24">
+      <h2 className="text-[20px] leading-[1.3] font-medium tracking-[-0.005em] text-ink">
+        {title}
+      </h2>
       {children}
     </div>
   );
