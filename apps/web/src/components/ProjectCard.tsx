@@ -32,12 +32,12 @@ export default function ProjectCard({
         ) : null}
 
         {/* Year sits on the image so the meta line below stays to one thought. */}
-        <span className="absolute top-16 right-16 rounded-sm bg-ink/30 px-8 py-4 text-xs leading-[1.5] text-surface backdrop-blur-[24px]">
+        <span className="absolute top-16 right-16 rounded-sm bg-scrim px-8 py-4 text-xs leading-[1.5] text-surface backdrop-blur-[24px]">
           {year}
         </span>
 
         <div className="absolute inset-x-0 bottom-32 flex justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="rounded-pill bg-white/20 px-16 py-8 text-xs leading-[1.5] text-surface shadow-pill backdrop-blur-[17px] transition-colors duration-200 hover:bg-white/35">
+          <span className="rounded-pill bg-glass px-16 py-8 text-xs leading-[1.5] text-surface shadow-pill backdrop-blur-[17px] transition-colors duration-200 hover:bg-white/35">
             {ctaLabel}
           </span>
         </div>

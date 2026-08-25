@@ -6,6 +6,9 @@
   --color-surface: #ffffff;
   --color-line: #e4e1da;
   --color-muted: #8c877d;
+  /* Translucent surfaces for controls that sit on top of photography. */
+  --color-scrim: rgb(10 10 10 / 0.3);
+  --color-glass: rgb(255 255 255 / 0.22);
 }
 
 @theme inline {
@@ -14,6 +17,8 @@
   --color-surface: var(--color-surface);
   --color-line: var(--color-line);
   --color-muted: var(--color-muted);
+  --color-scrim: var(--color-scrim);
+  --color-glass: var(--color-glass);
 
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 
