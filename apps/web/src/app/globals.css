@@ -52,3 +52,38 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
 }
+
+/* --- View transitions -----------------------------------------------------
+   The site header and the project page's top bar share three names — brand,
+   nav-left and nav-right — so navigating between them splits the nav tabs out
+   to the edges and collapses the wordmark into the J.O monogram. */
+
+::view-transition-group(.morph) {
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* A touch of blur hides pixel interpolation while the pills travel. */
+::view-transition-image-pair(.morph) {
+  animation-name: morph-blur;
+}
+
+@keyframes morph-blur {
+  30% {
+    filter: blur(2px);
+  }
+}
+
+/* The overlay would otherwise swallow clicks mid-transition. */
+::view-transition {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getCV } from "@/lib/cv";
 import "./globals.css";
@@ -20,9 +19,11 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 
   return (
     <html lang="no" className={`${dmSans.variable} h-full antialiased`}>
+      {/* The header lives in each page rather than here: layouts persist across
+          navigation, so a header in the layout could never morph between the
+          site header and the project page's top bar. */}
       <body className="min-h-full flex flex-col bg-paper text-ink font-sans">
-        <Header />
-        <main className="flex-1 flex flex-col">{children}</main>
+        {children}
         <Footer
           contactEmail={cv.contactEmail}
           linkedin={cv.linkedin}

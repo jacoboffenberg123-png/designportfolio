@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ViewTransition from "./ViewTransition";
 
 const TABS = [
-  { label: "Prosjekter", href: "/" },
-  { label: "CV", href: "/cv" },
+  { label: "Prosjekter", href: "/", vt: "nav-left" },
+  { label: "CV", href: "/cv", vt: "nav-right" },
 ];
 
 function isActive(pathname: string, href: string) {
@@ -23,17 +24,20 @@ export default function NavTabs() {
       {TABS.map((tab) => {
         const active = isActive(pathname, tab.href);
         return (
-          <Link
-            key={tab.href}
-            href={tab.href}
-            className={
-              active
-                ? "rounded-pill bg-ink px-16 py-8 text-[13px] leading-[1.3] font-medium text-surface"
-                : "rounded-pill px-16 py-8 text-[13px] leading-[1.3] font-medium text-muted transition-colors hover:text-ink"
-            }
-          >
-            {tab.label}
-          </Link>
+          // Named so each tab pairs with its counterpart in the project page's
+          // top bar and slides out to that edge on navigation.
+          <ViewTransition key={tab.href} name={tab.vt} share="morph" default="none">
+            <Link
+              href={tab.href}
+              className={
+                active
+                  ? "rounded-pill bg-ink px-16 py-8 text-[13px] leading-[1.3] font-medium text-surface"
+                  : "rounded-pill px-16 py-8 text-[13px] leading-[1.3] font-medium text-muted transition-colors hover:text-ink"
+              }
+            >
+              {tab.label}
+            </Link>
+          </ViewTransition>
         );
       })}
     </nav>
