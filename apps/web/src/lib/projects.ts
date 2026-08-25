@@ -20,8 +20,6 @@ export type Project = {
   role: string;
   tools: string;
   imageUrl?: string;
-  /** Optional full-bleed image placed midway down the Bildeledet layout. */
-  wideImage?: string;
   gallery: GalleryItem[];
   challenge: { heading: string; body: string };
   process: { heading: string; body: string };
@@ -43,7 +41,6 @@ type PayloadProject = {
   tools?: string;
   order?: number;
   coverImage?: PayloadMedia | string;
-  wideImage?: PayloadMedia | string;
   gallery?: { image?: PayloadMedia | string; label?: string; featured?: boolean }[];
   challenge?: { heading?: string; body?: string };
   process?: { heading?: string; body?: string };
@@ -69,7 +66,6 @@ function toProject(doc: PayloadProject): Project {
     role: doc.role ?? "",
     tools: doc.tools ?? "",
     imageUrl: mediaUrl(doc.coverImage),
-    wideImage: mediaUrl(doc.wideImage),
     // flatMap rather than map+filter so an item without a resolvable URL is
     // dropped and the remaining ones keep a non-optional url.
     gallery: (doc.gallery ?? []).flatMap<GalleryItem>((item) => {

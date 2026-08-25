@@ -118,22 +118,12 @@ export const Projects: CollectionConfig = {
 
     // --- Bilder ---
     {
-      name: "wideImage",
-      type: "upload",
-      relationTo: "media",
-      admin: {
-        condition: isBildeledet,
-        description:
-          "Stort fullbredde-bilde midt på siden, mellom Utfordringen og Prosessen. Valgfritt.",
-      },
-    },
-    {
       name: "gallery",
       type: "array",
       labels: { singular: "Bilde", plural: "Bilder" },
       admin: {
         description:
-          "I Katalog er dette hele serien, i rekkefølge. I Bildeledet vises de i et rutenett nederst.",
+          "I Katalog er dette hele serien, i rekkefølge. I Bildeledet er det galleriet under teksten.",
       },
       fields: [
         {
