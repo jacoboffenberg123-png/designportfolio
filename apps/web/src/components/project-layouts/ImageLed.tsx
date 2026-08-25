@@ -22,10 +22,6 @@ export default function ImageLed({
   project: Project;
   nextSlug?: string;
 }) {
-  const [wide, ...rest] = project.gallery;
-  const pair = rest.slice(0, 2);
-  const grid = rest.slice(2);
-
   return (
     <main className="flex flex-1 flex-col">
       <Figure src={project.imageUrl} ratio="9 / 5" rounded={false} priority />
@@ -56,20 +52,12 @@ export default function ImageLed({
         </Band>
       ) : null}
 
-      {wide ? (
+      {/* Its own field rather than the first gallery image, so choosing it is
+          deliberate and the gallery stays a plain gallery. */}
+      {project.wideImage ? (
         <div className="pt-96">
-          <Figure src={wide.url} ratio="16 / 7" rounded={false} />
+          <Figure src={project.wideImage} ratio="16 / 7" rounded={false} />
         </div>
-      ) : null}
-
-      {pair.length > 0 ? (
-        <Band className="pt-96">
-          <div className="grid grid-cols-1 gap-24 md:grid-cols-2">
-            {pair.map((g) => (
-              <Figure key={g.url} src={g.url} ratio="4 / 3" sizes="(min-width: 768px) 50vw, 100vw" />
-            ))}
-          </div>
-        </Band>
       ) : null}
 
       {project.process.body ? (
@@ -81,11 +69,16 @@ export default function ImageLed({
         </Band>
       ) : null}
 
-      {grid.length > 0 ? (
-        <Band className="pt-64">
-          <div className="grid grid-cols-1 gap-24 md:grid-cols-3">
-            {grid.map((g) => (
-              <Figure key={g.url} src={g.url} ratio="4 / 5" sizes="33vw" />
+      {project.gallery.length > 0 ? (
+        <Band className="pt-96">
+          <div className="grid grid-cols-1 gap-24 md:grid-cols-2">
+            {project.gallery.map((g) => (
+              <Figure
+                key={g.url}
+                src={g.url}
+                ratio="4 / 3"
+                sizes="(min-width: 768px) 50vw, 100vw"
+              />
             ))}
           </div>
         </Band>
