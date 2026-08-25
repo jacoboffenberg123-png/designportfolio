@@ -7,7 +7,7 @@ export default async function CVPage() {
   return (
     <main className="mx-auto flex w-full max-w-[820px] flex-1 flex-col gap-48 px-24 pt-24 pb-96 md:px-48 lg:px-0">
       <div className="flex flex-col gap-24">
-        <div className="h-[120px] w-[120px] shrink-0 overflow-hidden rounded-md bg-line shadow-card">
+        <div className="h-[120px] w-[120px] shrink-0 overflow-hidden rounded-sm bg-line shadow-card">
           {cv.avatarUrl ? (
             <Image
               src={cv.avatarUrl}
@@ -41,7 +41,7 @@ export default async function CVPage() {
           {cv.skills.map((skill) => (
             <span
               key={skill}
-              className="rounded-sm bg-line px-12 py-8 text-xs leading-[1.5] text-ink"
+              className="rounded-sm-md bg-line px-12 py-8 text-xs leading-[1.5] text-ink"
             >
               {skill}
             </span>

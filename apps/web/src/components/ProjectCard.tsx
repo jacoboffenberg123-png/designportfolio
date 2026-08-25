@@ -20,7 +20,7 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   return (
     <Link href={`/arbeid/${slug}`} className="group flex flex-col gap-16">
-      <div className="relative aspect-square w-full overflow-hidden rounded-md bg-line shadow-card transition-shadow duration-300 ease-out group-hover:shadow-card-hover">
+      <div className="relative aspect-square w-full overflow-hidden rounded-sm bg-line shadow-card transition-shadow duration-300 ease-out group-hover:shadow-card-hover">
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -32,7 +32,7 @@ export default function ProjectCard({
         ) : null}
 
         {/* Year sits on the image so the meta line below stays to one thought. */}
-        <span className="absolute top-16 right-16 rounded-sm bg-scrim px-8 py-4 text-xs leading-[1.5] text-surface backdrop-blur-[24px]">
+        <span className="absolute top-16 right-16 rounded-sm-md bg-scrim px-8 py-4 text-xs leading-[1.5] text-surface backdrop-blur-[24px]">
           {year}
         </span>
 

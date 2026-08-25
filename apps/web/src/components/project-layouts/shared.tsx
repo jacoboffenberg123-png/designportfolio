@@ -53,7 +53,7 @@ export function Figure({
   return (
     <div
       className={`relative w-full overflow-hidden bg-line ${
-        rounded ? "rounded-md shadow-card" : ""
+        rounded ? "rounded-sm shadow-card" : ""
       }`}
       style={{ aspectRatio: ratio }}
     >

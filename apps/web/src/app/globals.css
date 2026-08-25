@@ -34,10 +34,12 @@
   --spacing-120: 120px;
 
   /* Names mirror the Figma Radius collection, so these deliberately replace
-     Tailwind's default rounded-sm/md/lg values. */
-  --radius-sm: 12px;
-  --radius-md: 20px;
-  --radius-lg: 28px;
+     Tailwind's default rounded-sm/md/lg values. 4px steps. */
+  --radius-sm: 8px;
+  --radius-sm-md: 12px;
+  --radius-md: 16px;
+  --radius-md-lg: 20px;
+  --radius-lg: 24px;
   --radius-pill: 999px;
 
   --shadow-card: 0 1px 2px rgb(10 10 10 / 0.04), 0 8px 24px rgb(10 10 10 / 0.06);
