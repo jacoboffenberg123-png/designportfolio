@@ -22,9 +22,9 @@ export default function ImageLed({
   project: Project;
   nextSlug?: string;
 }) {
-  const [wide, ...rest] = project.gallery;
-  const pair = rest.slice(0, 2);
-  const grid = rest.slice(2);
+  // First two images sit side by side, the rest fall into a three-column grid.
+  const pair = project.gallery.slice(0, 2);
+  const grid = project.gallery.slice(2);
 
   return (
     <main className="flex flex-1 flex-col">
@@ -54,12 +54,6 @@ export default function ImageLed({
             <Body>{project.challenge.body}</Body>
           </div>
         </Band>
-      ) : null}
-
-      {wide ? (
-        <div className="pt-96">
-          <Figure src={wide.url} ratio="16 / 7" rounded={false} />
-        </div>
       ) : null}
 
       {pair.length > 0 ? (
