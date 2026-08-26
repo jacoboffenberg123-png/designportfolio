@@ -32,7 +32,7 @@ export default function ProjectCard({
         ) : null}
 
         {/* Year sits on the image so the meta line below stays to one thought. */}
-        <span className="absolute top-16 right-16 rounded-sm bg-scrim px-8 py-[6px] text-xs leading-[1.2] font-medium tracking-[0.08em] text-surface uppercase backdrop-blur-[24px]">
+        <span className="absolute top-16 right-16 rounded-sm-md bg-scrim px-8 py-[6px] text-xs leading-[1.2] font-medium tracking-[0.08em] text-surface uppercase backdrop-blur-[24px]">
           {year}
         </span>
 

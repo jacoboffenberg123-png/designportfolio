@@ -92,31 +92,6 @@ export function MetaTable({ project }: { project: Project }) {
   );
 }
 
-/** Compact one-line variant, used where a full table would be too heavy. */
-export function FactsRow({ project }: { project: Project }) {
-  const rows: [string, string][] = [
-    ["Emne", project.subject],
-    ["Varighet", project.duration],
-    ["Rolle", project.role],
-    ["Verktøy", project.tools],
-  ];
-  const filled = rows.filter(([, v]) => v);
-  if (filled.length === 0) return null;
-
-  return (
-    <dl className="flex flex-wrap gap-x-48 gap-y-16 border-y border-line py-16">
-      {filled.map(([label, value]) => (
-        <div key={label} className="flex flex-col gap-8">
-          <dt className="text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
-            {label}
-          </dt>
-          <dd className="text-sm leading-[1.55] text-ink">{value}</dd>
-        </div>
-      ))}
-    </dl>
-  );
-}
-
 export function Reflection({ text }: { text: string }) {
   if (!text) return null;
   return (
