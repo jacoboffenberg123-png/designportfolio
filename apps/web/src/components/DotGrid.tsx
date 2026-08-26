@@ -47,10 +47,10 @@ const MARK_COLS =
   MARK_LETTERS.reduce((sum, l) => sum + GLYPHS[l][0].length, 0) +
   MARK_GAP * (MARK_LETTERS.length - 1);
 
-const ROWS = 18;
-const PITCH = 16; // centre-to-centre distance between dots
-const RADIUS = 3.1;
-const REACH = 64; // how far from the pointer a dot reacts
+const ROWS = 20;
+const PITCH = 12; // centre-to-centre distance between dots
+const RADIUS = 2.3;
+const REACH = 58; // how far from the pointer a dot reacts
 const HOLD = 260; // ms at full darkness before it begins letting go
 const FADE = 1100; // ms to drift back to the resting grey
 const LEVELS = 14; // darkness steps, so dots can be filled in batches

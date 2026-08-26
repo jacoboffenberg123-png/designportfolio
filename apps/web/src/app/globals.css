@@ -5,12 +5,12 @@
    values below, so the two never disagree at rest. */
 :root {
   --color-ink: #0a0a0a;
-  --color-paper: #fefdfb;
+  --color-paper: #ffffff;
   --color-surface: #ffffff;
-  --color-line: #e3e0d8;
-  --color-muted: #8c877b;
+  --color-line: #eaeaea;
+  --color-muted: #8c877d;
   /* Resting colour of the footer's dot grid. */
-  --color-dot: #d5d2ca;
+  --color-dot: #d5d5d5;
   /* Translucent surfaces for controls that sit on top of photography. */
   --color-scrim: rgb(10 10 10 / 0.3);
   --color-glass: rgb(255 255 255 / 0.22);
@@ -25,7 +25,7 @@
   --color-scrim: var(--color-scrim);
   --color-glass: var(--color-glass);
 
-  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
   --spacing-4: 4px;
   --spacing-8: 8px;
@@ -49,7 +49,7 @@
 
   --shadow-card: 0 1px 2px rgb(10 10 10 / 0.04), 0 8px 24px rgb(10 10 10 / 0.06);
   --shadow-card-hover: 0 2px 4px rgb(10 10 10 / 0.05), 0 16px 40px rgb(10 10 10 / 0.1);
-  --shadow-pill: 0 2px 12px rgb(10 10 10 / 0.2);
+  --shadow-pill: 0 2px 8px rgb(10 10 10 / 0.12);
 }
 
 html {
@@ -74,52 +74,26 @@ body * {
 }
 
 /* --- The dimmer ------------------------------------------------------------
-   A range input restyled as a slim track that runs from paper to ink, so the
-   control itself reads as the thing it does. */
+   A real range input, made invisible and stretched over the pill in
+   `ThemeSlider`, so dragging, clicking and arrow keys all keep working while
+   the knob and track are drawn as ordinary elements. */
 .dimmer {
   appearance: none;
+  margin: 0;
   background: transparent;
-  cursor: ew-resize;
-  height: 16px;
-}
-
-.dimmer::-webkit-slider-runnable-track {
-  height: 6px;
-  border-radius: 999px;
-  border: 1px solid var(--color-line);
-  background: linear-gradient(90deg, #fefdfb, #8c877d 58%, #0e0e0d);
-}
-
-.dimmer::-moz-range-track {
-  height: 6px;
-  border-radius: 999px;
-  border: 1px solid var(--color-line);
-  background: linear-gradient(90deg, #fefdfb, #8c877d 58%, #0e0e0d);
+  cursor: pointer;
 }
 
 .dimmer::-webkit-slider-thumb {
   appearance: none;
-  width: 14px;
-  height: 14px;
-  /* Half the thumb's overhang past the 8px-tall bordered track. */
-  margin-top: -4px;
-  border-radius: 999px;
-  border: 1px solid var(--color-line);
-  background: var(--color-surface);
-  box-shadow: 0 2px 12px rgb(10 10 10 / 0.2);
+  /* Matches the drawn knob, so the grab area lines up with what's visible. */
+  width: 26px;
+  height: 26px;
 }
 
 .dimmer::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
-  border-radius: 999px;
-  border: 1px solid var(--color-line);
-  background: var(--color-surface);
-  box-shadow: 0 2px 12px rgb(10 10 10 / 0.2);
-}
-
-.dimmer:focus-visible {
-  outline: 2px solid var(--color-muted);
-  outline-offset: 4px;
-  border-radius: 999px;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  background: transparent;
 }

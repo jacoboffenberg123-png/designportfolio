@@ -41,7 +41,7 @@ export default async function CVPage() {
           {cv.skills.map((skill) => (
             <span
               key={skill}
-              className="rounded-sm-md bg-line px-12 py-8 text-xs leading-[1.5] text-ink"
+              className="rounded-sm bg-ink/5 px-12 py-8 text-xs leading-[1.5] text-ink"
             >
               {skill}
             </span>
@@ -55,7 +55,9 @@ export default async function CVPage() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-24">
-      <h2 className="text-[20px] leading-[1.3] font-medium tracking-[-0.005em] text-ink">
+      {/* Section headings carry the `eyebrow` style, not a display size — the
+          page gets its hierarchy from spacing rather than typographic scale. */}
+      <h2 className="text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
         {title}
       </h2>
       {children}

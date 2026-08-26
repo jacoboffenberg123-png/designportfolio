@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import Footer from "@/components/Footer";
 import { getCV } from "@/lib/cv";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+// Inter, per the design brief: metrically close to Helvetica Neue, which isn't
+// web-licensed off macOS.
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -19,7 +21,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const cv = await getCV();
 
   return (
-    <html lang="no" className={`${dmSans.variable} h-full antialiased`}>
+    <html lang="no" className={`${inter.variable} h-full antialiased`}>
       <head>
         {/* Repaints the palette from the stored dim level before first paint,
             so a dark page never flashes white on load. */}

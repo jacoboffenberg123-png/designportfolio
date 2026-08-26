@@ -2,9 +2,10 @@ import Image from "next/image";
 import PillLink from "@/components/PillLink";
 import type { Project } from "@/lib/projects";
 
+/** The `eyebrow` text style: Inter Medium 12/120%, 8% tracking, uppercase. */
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <span className="text-[11px] leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
+    <span className="text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
       {children}
     </span>
   );
@@ -81,7 +82,7 @@ export function MetaTable({ project }: { project: Project }) {
     <dl className="flex w-full flex-col lg:w-[400px]">
       {filled.map(([label, value]) => (
         <div key={label} className="flex gap-24 border-t border-line py-16">
-          <dt className="w-[120px] shrink-0 text-[11px] leading-[1.2] font-medium tracking-[0.08em] text-muted uppercase">
+          <dt className="w-[120px] shrink-0 text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
             {label}
           </dt>
           <dd className="text-sm leading-[1.55] text-ink">{value}</dd>
@@ -106,10 +107,10 @@ export function FactsRow({ project }: { project: Project }) {
     <dl className="flex flex-wrap gap-x-48 gap-y-16 border-y border-line py-16">
       {filled.map(([label, value]) => (
         <div key={label} className="flex flex-col gap-8">
-          <dt className="text-[11px] leading-[1.2] font-medium tracking-[0.08em] text-muted uppercase">
+          <dt className="text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
             {label}
           </dt>
-          <dd className="text-xs leading-[1.5] text-ink">{value}</dd>
+          <dd className="text-sm leading-[1.55] text-ink">{value}</dd>
         </div>
       ))}
     </dl>

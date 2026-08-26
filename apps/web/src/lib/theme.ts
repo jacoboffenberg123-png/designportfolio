@@ -38,9 +38,9 @@ export function applyDim(t: number) {
   };
 
   // The two grounds interpolate straight between the palettes.
-  const paper = mix([254, 253, 251], [14, 14, 13], eased);
+  const paper = mix([255, 255, 255], [14, 14, 14], eased);
   write("paper", paper);
-  write("surface", mix([255, 255, 255], [26, 26, 24], eased));
+  write("surface", mix([255, 255, 255], [26, 26, 26], eased));
 
   // WCAG relative luminance; 0.179 is the crossover where light text starts to
   // beat dark text on the same ground.
@@ -52,19 +52,20 @@ export function applyDim(t: number) {
     0.2126 * channel(paper[0]) + 0.7152 * channel(paper[1]) + 0.0722 * channel(paper[2]);
   const lightGround = luminance > 0.179;
 
-  const ink = lightGround ? [10, 10, 10] : [242, 239, 233];
+  const ink = lightGround ? [10, 10, 10] : [240, 240, 240];
   write("ink", ink);
   style.colorScheme = lightGround ? "light" : "dark";
 
   // Everything between the ground and the ink is mixed from the pair rather
   // than ramped on its own, so it can never land on the same grey as the
-  // background halfway through the dimmer. The tints put back the warmth that
-  // mixing two near-neutrals loses. Muted leans further toward ink around the
-  // midpoint, where there is least contrast to spend.
-  const mutedWeight = 0.467 + 0.21 * Math.sin(Math.PI * clamped);
+  // background halfway through the dimmer. The weights reproduce the palette's
+  // light end exactly at t=0, and muted keeps its warm tint — the one colour in
+  // the system that isn't neutral. Muted also leans further toward ink around
+  // the midpoint, where there is least contrast to spend.
+  const mutedWeight = 0.4694 + 0.21 * Math.sin(Math.PI * clamped);
   write("muted", mix(paper, ink, mutedWeight), [0, -5, -15]);
-  write("line", mix(paper, ink, 0.11), [0, -2, -8]);
-  write("dot", mix(paper, ink, 0.17), [0, -2, -8]);
+  write("line", mix(paper, ink, 0.0857));
+  write("dot", mix(paper, ink, 0.1714));
 }
 
 /**
