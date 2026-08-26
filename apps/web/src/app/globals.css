@@ -67,10 +67,18 @@ body {
 
 /* Ink can't fade across the dimmer — it steps from one end of the scale to the
    other as the background passes mid-grey. A short transition turns that step
-   into a dissolve. Elements carrying their own `transition-*` utility opt out,
-   which is what we want for the ones that animate on hover instead. */
-body * {
-  transition: color 220ms ease;
+   into a dissolve.
+
+   This has to sit inside `base`. Unlayered rules outrank every layered one no
+   matter their specificity, so as a bare `body *` it beat Tailwind's own
+   `transition-*` utilities and quietly replaced them all with `color`. From
+   `base`, utilities win, and elements that declare their own transition opt
+   out of this one — which is what we want for anything that animates on
+   hover. */
+@layer base {
+  body * {
+    transition: color 220ms ease;
+  }
 }
 
 /* Inter's disambiguation set gives the slashed zero; tabular lining figures

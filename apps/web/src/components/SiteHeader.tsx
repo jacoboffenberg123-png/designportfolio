@@ -54,25 +54,41 @@ export default function SiteHeader() {
 
   return (
     <>
+      {/* The clipping frame stays transparent — a background here would paint
+          over the page even with the panel slid out of view. */}
       <div
         aria-hidden={!open}
-        className={`fixed inset-x-0 top-0 z-40 overflow-hidden bg-paper ${
+        className={`fixed inset-0 z-40 overflow-hidden ${
           open ? "" : "pointer-events-none"
         }`}
-        style={{ height: `calc(100dvh - ${height}px)` }}
       >
         <div
-          className="h-full transition-transform duration-500 ease-out"
-          style={{ transform: open ? "translateY(0)" : "translateY(-100%)" }}
+          className="h-full bg-paper transition-transform duration-[600ms]"
+          style={{
+            transform: open ? "translateY(0)" : "translateY(-100%)",
+            transitionTimingFunction: "cubic-bezier(0.32, 0, 0.24, 1)",
+          }}
         >
-          <AboutPanel />
+          {/* The panel fills everything above where the header lands; the strip
+              below it is plain paper the header covers. */}
+          <div style={{ height: `calc(100dvh - ${height}px)` }}>
+            <AboutPanel />
+          </div>
         </div>
       </div>
 
       <header
         ref={headerRef}
-        className="relative z-50 flex flex-col items-center gap-24 bg-paper pt-48 pb-24 transition-transform duration-500 ease-out"
-        style={{ transform: open ? shift : undefined }}
+        className="relative z-50 flex flex-col items-center gap-24 bg-paper pt-48 pb-24 duration-[620ms] transition-transform"
+        style={{
+          transform: open ? shift : undefined,
+          // Opening overshoots slightly and settles, so it reads as falling
+          // rather than sliding. Safe because the panel covers the full
+          // viewport behind it. Closing gets the plain curve.
+          transitionTimingFunction: open
+            ? "cubic-bezier(0.34, 1.45, 0.64, 1)"
+            : "cubic-bezier(0.32, 0, 0.24, 1)",
+        }}
       >
         <Link
           href="/"
