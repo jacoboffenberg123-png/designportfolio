@@ -55,10 +55,14 @@ export default function Catalogue({
                     ratio="1 / 1"
                     sizes="(min-width: 768px) 25vw, 50vw"
                   />
-                  <div className="flex gap-8">
+                  {/* Centred against the label, which is the taller of the two —
+                      top-aligning them leaves the number sitting high. */}
+                  <div className="flex items-center gap-8">
                     {/* Three digits, so the run reads as a series rather than a
                         handful — the set is the argument here. */}
-                    <Eyebrow>{`${String(i + 1).padStart(3, "0")}.`}</Eyebrow>
+                    <span className="serial text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
+                      {`${String(i + 1).padStart(3, "0")}.`}
+                    </span>
                     {g.label ? (
                       <span className="text-xs leading-[1.5] text-muted">{g.label}</span>
                     ) : null}

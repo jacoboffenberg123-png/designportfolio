@@ -73,6 +73,14 @@ body * {
   transition: color 220ms ease;
 }
 
+/* Inter's disambiguation set gives the slashed zero; tabular lining figures
+   keep every number the same width, so a numbered series lines up in a column
+   however many ones and zeros it contains. */
+.serial {
+  font-feature-settings: "ss02" 1, "zero" 1, "lnum" 1, "tnum" 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
 /* --- The dimmer ------------------------------------------------------------
    A real range input, made invisible and stretched over the pill in
    `ThemeSlider`, so dragging, clicking and arrow keys all keep working while

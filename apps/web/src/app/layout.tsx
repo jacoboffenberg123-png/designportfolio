@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import Footer from "@/components/Footer";
 import { getCV } from "@/lib/cv";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
@@ -7,9 +7,15 @@ import "./globals.css";
 
 // Inter, per the design brief: metrically close to Helvetica Neue, which isn't
 // web-licensed off macOS.
-const inter = Inter({
+//
+// Self-hosted rather than pulled from next/font/google, because Google strips
+// stylistic sets from the fonts it serves — including ss02, the disambiguation
+// set that gives the slashed zero the catalogue numbering uses.
+const inter = localFont({
+  src: "./fonts/InterVariable.woff2",
   variable: "--font-inter",
-  subsets: ["latin"],
+  weight: "100 900",
+  display: "swap",
 });
 
 export const metadata: Metadata = {

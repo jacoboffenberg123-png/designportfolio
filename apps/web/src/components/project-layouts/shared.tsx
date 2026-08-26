@@ -81,7 +81,9 @@ export function MetaTable({ project }: { project: Project }) {
   return (
     <dl className="flex w-full flex-col lg:w-[400px]">
       {filled.map(([label, value]) => (
-        <div key={label} className="flex gap-24 border-t border-line py-16">
+        // Centred, not top-aligned: the label and value are different sizes, so
+        // aligning their tops leaves them visibly off the same line.
+        <div key={label} className="flex items-center gap-24 border-t border-line py-16">
           <dt className="w-[120px] shrink-0 text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
             {label}
           </dt>
