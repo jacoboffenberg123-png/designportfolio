@@ -29,7 +29,9 @@ export default function Catalogue({
       <Band className="pt-64">
         <div className="flex flex-col gap-48">
           <PageTitle>{project.title}</PageTitle>
-          <div className="flex flex-col gap-48 lg:flex-row lg:gap-96">
+          {/* Side by side from md up — at lg the two columns only met on very
+              wide screens, and stacked on anything narrower. */}
+          <div className="flex flex-col gap-48 md:flex-row md:gap-48 lg:gap-96">
             {project.intro ? (
               <div className="flex flex-1 flex-col gap-16">
                 <Eyebrow>Om prosjektet</Eyebrow>

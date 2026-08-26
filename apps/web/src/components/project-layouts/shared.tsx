@@ -78,7 +78,7 @@ export function MetaTable({ project }: { project: Project }) {
   if (filled.length === 0) return null;
 
   return (
-    <dl className="flex w-full flex-col lg:w-[400px]">
+    <dl className="flex w-full shrink-0 flex-col md:w-[320px] lg:w-[400px]">
       {filled.map(([label, value]) => (
         // Centred, not top-aligned: the label and value are different sizes, so
         // aligning their tops leaves them visibly off the same line.
