@@ -20,7 +20,10 @@ export const DIM_KEY = "jo-dim";
  */
 export function applyDim(t: number) {
   const clamped = t < 0 ? 0 : t > 1 ? 1 : t;
-  const eased = clamped * clamped * (3 - 2 * clamped);
+  // Smootherstep rather than smoothstep: steeper through the middle, so the
+  // page spends as few slider positions as possible at the grey where ink has
+  // to swap ends and neither choice reads well.
+  const eased = clamped * clamped * clamped * (clamped * (clamped * 6 - 15) + 10);
   const style = document.documentElement.style;
 
   const mix = (from: number[], to: number[], k: number) => [
@@ -37,10 +40,12 @@ export function applyDim(t: number) {
     style.setProperty("--color-" + name, "rgb(" + out[0] + " " + out[1] + " " + out[2] + ")");
   };
 
-  // The two grounds interpolate straight between the palettes.
-  const paper = mix([255, 255, 255], [14, 14, 14], eased);
+  // The two grounds interpolate straight between the palettes. The dark end
+  // stops at a dark grey rather than black — the page dims, it doesn't black
+  // out — and surface stays a step lighter than paper so cards still lift.
+  const paper = mix([255, 255, 255], [34, 34, 34], eased);
   write("paper", paper);
-  write("surface", mix([255, 255, 255], [26, 26, 26], eased));
+  write("surface", mix([255, 255, 255], [48, 48, 48], eased));
 
   // WCAG relative luminance; 0.179 is the crossover where light text starts to
   // beat dark text on the same ground.
@@ -62,7 +67,9 @@ export function applyDim(t: number) {
   // light end exactly at t=0, and muted keeps its warm tint — the one colour in
   // the system that isn't neutral. Muted also leans further toward ink around
   // the midpoint, where there is least contrast to spend.
-  const mutedWeight = 0.4694 + 0.21 * Math.sin(Math.PI * clamped);
+  // The boost is skewed to peak where the ground actually crosses, which is
+  // later than halfway now that the dark end stops at grey.
+  const mutedWeight = 0.4694 + 0.21 * Math.sin(Math.PI * Math.pow(clamped, 1.3));
   write("muted", mix(paper, ink, mutedWeight), [0, -5, -15]);
   write("line", mix(paper, ink, 0.0857));
   write("dot", mix(paper, ink, 0.1714));

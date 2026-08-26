@@ -5,13 +5,14 @@ import { readStoredDim, setDim } from "@/lib/theme";
 
 const STEPS = 100;
 
-// Track geometry. The knob stops short of both ends so it never covers an
-// icon — the sun and moon each keep a zone the knob can't reach.
+// Track geometry. The knob travels the full width and passes over both icons —
+// it is glass, so they read through it.
 const HEIGHT = 34;
 const WIDTH = 132;
 const KNOB = 26;
+const PAD = 4;
 const ICON_ZONE = 28;
-const TRAVEL = WIDTH - ICON_ZONE * 2 - KNOB;
+const TRAVEL = WIDTH - PAD * 2 - KNOB;
 
 function Sun() {
   return (
@@ -56,7 +57,9 @@ export default function ThemeSlider() {
         height: HEIGHT,
         // Fixed colours, not palette tokens: the track has to mean the same
         // thing at both ends of the dimmer, and tokens would invert it.
-        background: "linear-gradient(90deg, #ffffff 0%, #0a0a0a 100%)",
+        // Ends on the same dark grey the page bottoms out at, so the control
+        // doesn't promise a black it never reaches.
+        background: "linear-gradient(90deg, #ffffff 0%, #222222 100%)",
         // A mid grey so the pill's outline survives against both grounds — a
         // dark ring vanishes on the dark end of the dimmer, and vice versa.
         boxShadow: "inset 0 0 0 1px rgb(140 135 125 / 0.35)",
@@ -83,12 +86,17 @@ export default function ThemeSlider() {
         aria-hidden
         className="pointer-events-none absolute rounded-pill transition-transform duration-150 ease-out"
         style={{
-          left: ICON_ZONE,
+          left: PAD,
           top: (HEIGHT - KNOB) / 2,
           width: KNOB,
           height: KNOB,
-          background: "#ffffff",
-          boxShadow: "0 2px 8px rgb(10 10 10 / 0.28), inset 0 0 0 1px rgb(10 10 10 / 0.1)",
+          background: "rgb(255 255 255 / 0.32)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+          // A mid-grey ring rather than a white or black one, so the knob keeps
+          // an edge at both ends of the track.
+          boxShadow:
+            "inset 0 0 0 1px rgb(140 135 125 / 0.55), 0 2px 10px rgb(10 10 10 / 0.28)",
           transform: `translateX(${value * TRAVEL}px)`,
         }}
       />
