@@ -5,18 +5,19 @@ import { readStoredDim, setDim } from "@/lib/theme";
 
 const STEPS = 100;
 
-// Track geometry. The knob travels the full width and passes over both icons —
-// it is glass, so they read through it.
-const HEIGHT = 34;
-const WIDTH = 132;
-const KNOB = 26;
+// Track geometry. Height and inner padding match NavTabs, so the two controls
+// read as one family and sit on the same line. The knob travels the full width
+// and passes over both icons — it is glass, so they read through it.
+const HEIGHT = 41;
+const WIDTH = 148;
 const PAD = 4;
-const ICON_ZONE = 28;
+const KNOB = HEIGHT - PAD * 2;
+const ICON_ZONE = 34;
 const TRAVEL = WIDTH - PAD * 2 - KNOB;
 
 function Sun() {
   return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" className="h-[13px] w-[13px]">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" className="h-[15px] w-[15px]">
       <circle cx="8" cy="8" r="3.1" />
       <path d="M8 1.4v1.6M8 13v1.6M14.6 8H13M3 8H1.4M12.7 3.3l-1.1 1.1M4.4 11.6l-1.1 1.1M12.7 12.7l-1.1-1.1M4.4 4.4L3.3 3.3" />
     </svg>
@@ -25,7 +26,7 @@ function Sun() {
 
 function Moon() {
   return (
-    <svg viewBox="0 0 16 16" fill="currentColor" className="h-[13px] w-[13px]">
+    <svg viewBox="0 0 16 16" fill="currentColor" className="h-[15px] w-[15px]">
       <path d="M13.4 9.9A5.9 5.9 0 0 1 6.1 2.6a.5.5 0 0 0-.7-.6 6.6 6.6 0 1 0 8.6 8.6.5.5 0 0 0-.6-.7Z" />
     </svg>
   );
@@ -90,13 +91,17 @@ export default function ThemeSlider() {
           top: (HEIGHT - KNOB) / 2,
           width: KNOB,
           height: KNOB,
-          background: "rgb(255 255 255 / 0.32)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
+          // Thin enough to read the sun and moon straight through; the ring and
+          // the shadow are what give it an edge, not the fill.
+          // A sheen rather than a backdrop blur: the icons' strokes are ~1.3px,
+          // and any blur at all smears them into the track instead of letting
+          // them show through. The gradient is what makes it read as glass.
+          background:
+            "linear-gradient(160deg, rgb(255 255 255 / 0.34), rgb(255 255 255 / 0.06))",
           // A mid-grey ring rather than a white or black one, so the knob keeps
           // an edge at both ends of the track.
           boxShadow:
-            "inset 0 0 0 1px rgb(140 135 125 / 0.55), 0 2px 10px rgb(10 10 10 / 0.28)",
+            "inset 0 0 0 1px rgb(140 135 125 / 0.6), 0 2px 10px rgb(10 10 10 / 0.22)",
           transform: `translateX(${value * TRAVEL}px)`,
         }}
       />

@@ -95,13 +95,13 @@ body * {
 .dimmer::-webkit-slider-thumb {
   appearance: none;
   /* Matches the drawn knob, so the grab area lines up with what's visible. */
-  width: 26px;
-  height: 26px;
+  width: 33px;
+  height: 33px;
 }
 
 .dimmer::-moz-range-thumb {
-  width: 26px;
-  height: 26px;
+  width: 33px;
+  height: 33px;
   border: 0;
   background: transparent;
 }
