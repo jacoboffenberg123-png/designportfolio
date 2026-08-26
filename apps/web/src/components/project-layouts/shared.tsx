@@ -72,7 +72,6 @@ export function MetaTable({ project }: { project: Project }) {
     ["Kategori", project.category],
     ["År", project.year],
     ["Varighet", project.duration],
-    ["Rolle", project.role],
     ["Verktøy", project.tools],
   ];
   const filled = rows.filter(([, v]) => v);
