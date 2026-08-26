@@ -1,11 +1,16 @@
 @import "tailwindcss";
 
+/* The daylight end of the palette. The dimmer in `lib/theme.ts` overwrites
+   these on the root element as it runs; applyDim(0) reproduces exactly the
+   values below, so the two never disagree at rest. */
 :root {
   --color-ink: #0a0a0a;
   --color-paper: #fefdfb;
   --color-surface: #ffffff;
-  --color-line: #e4e1da;
-  --color-muted: #8c877d;
+  --color-line: #e3e0d8;
+  --color-muted: #8c877b;
+  /* Resting colour of the footer's dot grid. */
+  --color-dot: #d5d2ca;
   /* Translucent surfaces for controls that sit on top of photography. */
   --color-scrim: rgb(10 10 10 / 0.3);
   --color-glass: rgb(255 255 255 / 0.22);
@@ -58,4 +63,63 @@ html {
 body {
   background: var(--color-paper);
   color: var(--color-ink);
+}
+
+/* Ink can't fade across the dimmer — it steps from one end of the scale to the
+   other as the background passes mid-grey. A short transition turns that step
+   into a dissolve. Elements carrying their own `transition-*` utility opt out,
+   which is what we want for the ones that animate on hover instead. */
+body * {
+  transition: color 220ms ease;
+}
+
+/* --- The dimmer ------------------------------------------------------------
+   A range input restyled as a slim track that runs from paper to ink, so the
+   control itself reads as the thing it does. */
+.dimmer {
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+  height: 16px;
+}
+
+.dimmer::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: linear-gradient(90deg, #fefdfb, #8c877d 58%, #0e0e0d);
+}
+
+.dimmer::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: linear-gradient(90deg, #fefdfb, #8c877d 58%, #0e0e0d);
+}
+
+.dimmer::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  /* Half the thumb's overhang past the 8px-tall bordered track. */
+  margin-top: -4px;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  box-shadow: 0 2px 12px rgb(10 10 10 / 0.2);
+}
+
+.dimmer::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  box-shadow: 0 2px 12px rgb(10 10 10 / 0.2);
+}
+
+.dimmer:focus-visible {
+  outline: 2px solid var(--color-muted);
+  outline-offset: 4px;
+  border-radius: 999px;
 }

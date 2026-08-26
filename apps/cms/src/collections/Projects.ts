@@ -140,15 +140,6 @@ export const Projects: CollectionConfig = {
             description: "Materiale eller kort merkelapp, f.eks. «Eik».",
           },
         },
-        {
-          name: "featured",
-          type: "checkbox",
-          defaultValue: false,
-          admin: {
-            condition: isKatalog,
-            description: "Vises forstørret i «Nærmere»-seksjonen. Velg gjerne tre.",
-          },
-        },
       ],
     },
 

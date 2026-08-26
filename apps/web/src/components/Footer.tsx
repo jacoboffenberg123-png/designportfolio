@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import DotGrid from "./DotGrid";
 
 type FooterProps = {
   contactEmail: string;
@@ -36,6 +37,9 @@ export default function Footer({ contactEmail, linkedin, instagram }: FooterProp
             <span className="text-ink">{contactEmail}</span>
           </>
         )}
+      </div>
+      <div className="pb-48">
+        <DotGrid />
       </div>
     </footer>
   );

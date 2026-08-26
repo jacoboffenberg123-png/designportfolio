@@ -29,6 +29,10 @@ export default buildConfig({
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
   db: postgresAdapter({
+    // Payload syncs the schema on boot in dev, and this points at the same Neon
+    // database the deployed CMS uses. Set PAYLOAD_DB_PUSH=false to run against
+    // it read-only — for previewing the frontend without migrating anything.
+    push: process.env.PAYLOAD_DB_PUSH !== "false",
     pool: {
       connectionString: process.env.DATABASE_URL || "",
     },

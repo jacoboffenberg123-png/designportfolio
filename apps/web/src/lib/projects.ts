@@ -5,7 +5,6 @@ export type ProjectLayout = "bildeledet" | "katalog";
 export type GalleryItem = {
   url: string;
   label?: string;
-  featured?: boolean;
 };
 
 export type Project = {
@@ -41,7 +40,7 @@ type PayloadProject = {
   tools?: string;
   order?: number;
   coverImage?: PayloadMedia | string;
-  gallery?: { image?: PayloadMedia | string; label?: string; featured?: boolean }[];
+  gallery?: { image?: PayloadMedia | string; label?: string }[];
   challenge?: { heading?: string; body?: string };
   process?: { heading?: string; body?: string };
   reflection?: string;
@@ -71,7 +70,7 @@ function toProject(doc: PayloadProject): Project {
     gallery: (doc.gallery ?? []).flatMap<GalleryItem>((item) => {
       const url = mediaUrl(item.image);
       if (!url) return [];
-      return [{ url, label: item.label || undefined, featured: item.featured ?? false }];
+      return [{ url, label: item.label || undefined }];
     }),
     challenge: {
       heading: doc.challenge?.heading || "Utfordringen",

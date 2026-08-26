@@ -12,8 +12,8 @@ import {
 
 /**
  * Katalog — for a series of objects, where the volume and the variation across
- * the set is the point. Every item is shown, numbered and labelled; the ones
- * marked featured get a second, larger pass.
+ * the set is the point. Every item is shown once, numbered and labelled; the
+ * grid carries the argument, so there is no second pass on selected pieces.
  */
 export default function Catalogue({
   project,
@@ -22,11 +22,9 @@ export default function Catalogue({
   project: Project;
   nextSlug?: string;
 }) {
-  const featured = project.gallery.filter((g) => g.featured);
-
   return (
     <main className="flex flex-1 flex-col">
-      <Figure src={project.imageUrl} ratio="16 / 7" rounded={false} priority />
+      <Figure src={project.imageUrl} ratio="9 / 5" rounded={false} priority />
 
       <Band className="pt-64">
         <div className="flex flex-col gap-32">
@@ -60,24 +58,6 @@ export default function Catalogue({
                       <span className="text-xs leading-[1.5] text-muted">{g.label}</span>
                     ) : null}
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Band>
-      ) : null}
-
-      {featured.length > 0 ? (
-        <Band className="pt-96">
-          <div className="flex flex-col gap-32">
-            <Eyebrow>Nærmere</Eyebrow>
-            <div className="grid grid-cols-1 gap-24 md:grid-cols-3">
-              {featured.map((g) => (
-                <div key={g.url} className="flex flex-col gap-8">
-                  <Figure src={g.url} ratio="4 / 5" sizes="33vw" />
-                  {g.label ? (
-                    <span className="text-xs leading-[1.5] text-muted">{g.label}</span>
-                  ) : null}
                 </div>
               ))}
             </div>

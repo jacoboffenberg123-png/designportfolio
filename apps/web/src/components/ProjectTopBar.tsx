@@ -1,11 +1,13 @@
 import Link from "next/link";
 import PillLink from "./PillLink";
+import ThemeSlider from "./ThemeSlider";
 
 /** Slim header for project pages, so a case study reads without the site nav. */
 export default function ProjectTopBar() {
   return (
     <header className="flex items-center px-24 py-24 md:px-48 lg:px-120">
-      <div className="flex w-[140px] justify-start lg:w-[220px]">
+      {/* Both tracks are the same width so J.O lands on the page's centre. */}
+      <div className="flex w-[140px] justify-start lg:w-[260px]">
         <PillLink href="/">← Tilbake</PillLink>
       </div>
 
@@ -18,7 +20,10 @@ export default function ProjectTopBar() {
         </Link>
       </div>
 
-      <div className="flex w-[140px] justify-end lg:w-[220px]">
+      <div className="flex w-[140px] items-center justify-end gap-16 lg:w-[260px]">
+        <div className="hidden lg:block">
+          <ThemeSlider />
+        </div>
         <PillLink href="/cv">CV</PillLink>
       </div>
     </header>
