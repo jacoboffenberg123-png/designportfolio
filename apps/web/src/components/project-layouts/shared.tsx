@@ -24,9 +24,16 @@ export function Body({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * Fluid rather than stepped: a one-word title like FORMFABRIKKEN can't wrap, so
+ * at a fixed 40px it needs 325px in a 257px column and pushes the page sideways.
+ * The clamp scales it with the viewport and settles on the design's 40px from
+ * about 570px up. `break-words` is the backstop for a title long enough to
+ * overflow even at the floor.
+ */
 export function PageTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h1 className="text-[40px] leading-[1.1] font-bold tracking-[-0.015em] text-ink uppercase">
+    <h1 className="text-[clamp(26px,7vw,40px)] leading-[1.1] font-bold tracking-[-0.015em] break-words text-ink uppercase">
       {children}
     </h1>
   );
