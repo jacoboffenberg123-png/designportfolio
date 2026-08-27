@@ -6,7 +6,9 @@ import ThemeToggle from "./ThemeToggle";
 /** Slim header for project pages, so a case study reads without the site nav. */
 export default function ProjectTopBar() {
   return (
-    <header className="flex items-center justify-between px-24 py-24 md:px-48 lg:px-120">
+    // Sticky at its natural height: at 80–89px it's already compact enough not
+    // to need the site header's shrink-on-scroll.
+    <header className="sticky top-0 z-30 flex items-center justify-between bg-paper px-24 py-24 md:px-48 lg:px-120">
       <PillLink href="/">← Tilbake</PillLink>
 
       <div className="flex items-center gap-12 md:gap-24">

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useBlind } from "./BlindShell";
 import NavTabs from "./NavTabs";
 import PanelToggle from "./PanelToggle";
@@ -18,6 +18,17 @@ const useIsomorphicLayoutEffect =
 export default function SiteHeader() {
   const { open, toggle, reportHeaderHeight } = useBlind();
   const ref = useRef<HTMLElement>(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Only the top padding shrinks once you leave the top of the page. The
+  // controls on desktop are pinned to the header's bottom edge, so trimming
+  // that side too would drag them out of the box.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useIsomorphicLayoutEffect(() => {
     const el = ref.current;
@@ -32,7 +43,9 @@ export default function SiteHeader() {
   return (
     <header
       ref={ref}
-      className="relative flex flex-col items-center gap-24 px-24 pt-48 pb-24 md:px-0"
+      className={`sticky top-0 z-30 flex flex-col items-center gap-24 bg-paper px-24 pb-24 transition-[padding] duration-300 ease-out md:px-0 ${
+        scrolled ? "pt-16" : "pt-48"
+      }`}
     >
       {/* Phones get one line: button, mark, tabs, switch. `md:contents`
           dissolves the row above that width, handing the children back to the
