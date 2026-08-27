@@ -23,14 +23,30 @@ const PARAGRAPHS = [
 export default function AboutPanel() {
   return (
     <div className="mx-auto flex h-full w-full max-w-[1200px] flex-col gap-48 overflow-y-auto px-24 py-48 md:px-48 lg:flex-row lg:gap-96 lg:px-0 lg:py-64">
+      <div className="flex flex-1 flex-col gap-24">
+        <span className="text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
+          Om porteføljen
+        </span>
+        {PARAGRAPHS.map((text) => (
+          <p
+            key={text.slice(0, 24)}
+            className="max-w-[680px] text-base leading-[1.65] tracking-[-0.005em] text-ink"
+          >
+            {text}
+          </p>
+        ))}
+      </div>
+
       <div className="flex shrink-0 flex-col gap-8 lg:w-[320px]">
         <span className="mb-8 text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
           Teknisk oppsett
         </span>
         {STACK.map(({ layer, items }) => (
+          // Paper on the sunken plane — an ink tint would barely separate from
+          // the grey behind it.
           <div
             key={layer}
-            className="flex flex-col gap-8 rounded-sm bg-ink/5 px-16 py-12"
+            className="flex flex-col gap-8 rounded-sm bg-paper px-16 py-12"
           >
             <span className="text-[11px] leading-[1.2] font-medium tracking-[0.08em] text-muted uppercase">
               {layer}
@@ -44,20 +60,6 @@ export default function AboutPanel() {
               ))}
             </span>
           </div>
-        ))}
-      </div>
-
-      <div className="flex flex-col gap-24">
-        <span className="text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
-          Om porteføljen
-        </span>
-        {PARAGRAPHS.map((text) => (
-          <p
-            key={text.slice(0, 24)}
-            className="max-w-[680px] text-base leading-[1.65] tracking-[-0.005em] text-ink"
-          >
-            {text}
-          </p>
         ))}
       </div>
     </div>

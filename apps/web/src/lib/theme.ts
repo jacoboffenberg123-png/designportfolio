@@ -73,6 +73,9 @@ export function applyDim(t: number) {
   write("muted", mix(paper, ink, mutedWeight), [0, -5, -15]);
   write("line", mix(paper, ink, 0.0857));
   write("dot", mix(paper, ink, 0.1714));
+  // The surface behind the page, revealed when the blind rolls down. Just far
+  // enough off paper to read as a different plane.
+  write("sunken", mix(paper, ink, 0.053));
 }
 
 /**
