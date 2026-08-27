@@ -47,10 +47,18 @@ const MARK_COLS =
   MARK_LETTERS.reduce((sum, l) => sum + GLYPHS[l][0].length, 0) +
   MARK_GAP * (MARK_LETTERS.length - 1);
 
-const ROWS = 20;
-const PITCH = 12; // centre-to-centre distance between dots
-const RADIUS = 2.3;
-const REACH = 58; // how far from the pointer a dot reacts
+/**
+ * Dot spacing scales with the width. At the desktop pitch a phone fits barely
+ * more columns than the initials are wide, so the mark spans the whole grid and
+ * stops reading as a mark in a field; and 20 rows of it eats a third of the
+ * screen. Narrower viewports get a finer grid and fewer rows instead.
+ */
+function gridFor(width: number) {
+  if (width < 480) return { pitch: 8, rows: 15, radius: 1.5, reach: 40 };
+  if (width < 900) return { pitch: 10, rows: 17, radius: 1.9, reach: 48 };
+  return { pitch: 12, rows: 20, radius: 2.3, reach: 58 };
+}
+
 const HOLD = 260; // ms at full darkness before it begins letting go
 const FADE = 1100; // ms to drift back to the resting grey
 const LEVELS = 14; // darkness steps, so dots can be filled in batches
@@ -80,7 +88,13 @@ export default function DotGrid() {
     if (!ctx) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const height = ROWS * PITCH;
+
+    // Set by layout(), from the width — see gridFor.
+    let PITCH = 12;
+    let ROWS = 20;
+    let RADIUS = 2.3;
+    let REACH = 58;
+    let height = ROWS * PITCH;
 
     let width = 0;
     let cols = 0;
@@ -111,6 +125,11 @@ export default function DotGrid() {
     function layout() {
       width = host!.clientWidth;
       if (width <= 0) return;
+
+      ({ pitch: PITCH, rows: ROWS, radius: RADIUS, reach: REACH } = gridFor(
+        window.innerWidth,
+      ));
+      height = ROWS * PITCH;
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas!.width = Math.round(width * dpr);
