@@ -12,7 +12,9 @@ const HEIGHT = 41;
 const WIDTH = 148;
 const PAD = 4;
 const KNOB = HEIGHT - PAD * 2;
-const ICON_ZONE = 34;
+// The icon zone is the height, which puts each icon's centre exactly on the
+// knob's centre when the knob is parked at that end.
+const ICON_ZONE = HEIGHT;
 const TRAVEL = WIDTH - PAD * 2 - KNOB;
 
 function Sun() {

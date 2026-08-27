@@ -50,7 +50,8 @@ export const Projects: CollectionConfig = {
       type: "textarea",
       admin: {
         description:
-          "To–tre setninger: hva var oppgaven, for hvem, og hva skulle den løse.",
+          "Vises under «Om prosjektet», ved siden av faktatabellen. To–tre setninger: " +
+          "hva var oppgaven, for hvem, og hva skulle den løse. Tomme linjer blir avsnitt.",
       },
     },
     {
@@ -64,22 +65,18 @@ export const Projects: CollectionConfig = {
     },
 
     // --- Faktatabell ---
+    // Rendres i denne rekkefølgen, og bare radene som har innhold.
     { name: "category", type: "text", required: true },
     { name: "year", type: "text", required: true },
     {
       name: "subject",
       type: "text",
-      admin: { description: "Emne eller kurs, f.eks. «Industridesign»." },
+      admin: { description: "Vises som «Emne». F.eks. «Industridesign»." },
     },
     {
       name: "duration",
       type: "text",
       admin: { description: "F.eks. «14 dager» eller «6 uker»." },
-    },
-    {
-      name: "role",
-      type: "text",
-      admin: { description: "«Solo», eller din rolle hvis det var gruppearbeid." },
     },
     {
       name: "tools",
@@ -103,7 +100,11 @@ export const Projects: CollectionConfig = {
       admin: { condition: isBildeledet },
       fields: [
         { name: "heading", type: "text", defaultValue: "Utfordringen" },
-        { name: "body", type: "textarea" },
+        {
+          name: "body",
+          type: "textarea",
+          admin: { description: "Tomme linjer blir avsnitt." },
+        },
       ],
     },
     {
@@ -112,7 +113,11 @@ export const Projects: CollectionConfig = {
       admin: { condition: isBildeledet },
       fields: [
         { name: "heading", type: "text", defaultValue: "Prosessen" },
-        { name: "body", type: "textarea" },
+        {
+          name: "body",
+          type: "textarea",
+          admin: { description: "Tomme linjer blir avsnitt." },
+        },
       ],
     },
 
@@ -123,7 +128,8 @@ export const Projects: CollectionConfig = {
       labels: { singular: "Bilde", plural: "Bilder" },
       admin: {
         description:
-          "I Katalog er dette hele serien, i rekkefølge. I Bildeledet er det galleriet under teksten.",
+          "I Katalog er dette hele serien, i rekkefølge, nummerert 001 og oppover. " +
+          "I Bildeledet går de to første side om side, resten i tre kolonner under.",
       },
       fields: [
         {
@@ -149,7 +155,8 @@ export const Projects: CollectionConfig = {
       type: "textarea",
       admin: {
         description:
-          "«Hva jeg lærte». Vær konkret — dette er ofte avsnittet som gjør størst inntrykk.",
+          "Vises under «Hva jeg lærte». Vær konkret — dette er ofte avsnittet som gjør " +
+          "størst inntrykk. Tomme linjer blir avsnitt.",
       },
     },
   ],

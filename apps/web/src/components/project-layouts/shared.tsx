@@ -11,9 +11,16 @@ export function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * `whitespace-pre-line` because the CMS fields are plain textareas: the blank
+ * lines an author types are real newlines in the value, and HTML would collapse
+ * them into single spaces.
+ */
 export function Body({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-base leading-[1.65] tracking-[-0.005em] text-ink">{children}</p>
+    <p className="text-base leading-[1.65] tracking-[-0.005em] whitespace-pre-line text-ink">
+      {children}
+    </p>
   );
 }
 

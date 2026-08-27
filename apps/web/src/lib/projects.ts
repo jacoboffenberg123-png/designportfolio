@@ -16,7 +16,6 @@ export type Project = {
   year: string;
   subject: string;
   duration: string;
-  role: string;
   tools: string;
   imageUrl?: string;
   gallery: GalleryItem[];
@@ -36,7 +35,6 @@ type PayloadProject = {
   year: string;
   subject?: string;
   duration?: string;
-  role?: string;
   tools?: string;
   order?: number;
   coverImage?: PayloadMedia | string;
@@ -62,7 +60,6 @@ function toProject(doc: PayloadProject): Project {
     year: doc.year,
     subject: doc.subject ?? "",
     duration: doc.duration ?? "",
-    role: doc.role ?? "",
     tools: doc.tools ?? "",
     imageUrl: mediaUrl(doc.coverImage),
     // flatMap rather than map+filter so an item without a resolvable URL is

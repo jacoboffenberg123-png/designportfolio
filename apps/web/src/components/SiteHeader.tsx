@@ -47,7 +47,10 @@ export default function SiteHeader() {
         type="button"
         onClick={toggle}
         aria-expanded={open}
-        className="absolute bottom-24 left-24 flex h-[41px] items-center rounded-pill bg-ink/10 px-16 text-xs leading-[1.5] text-ink shadow-card transition-[background-color,box-shadow] duration-200 hover:bg-ink/20 hover:shadow-card-hover md:left-48 lg:left-120"
+        // Same lettering as the cards' "Se mer" pill: the eyebrow style,
+        // uppercase. The fill stays the secondary tint — glass would all but
+        // disappear against the white header.
+        className="absolute bottom-24 left-24 flex h-[41px] items-center rounded-pill bg-ink/10 px-16 text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase shadow-card transition-[background-color,box-shadow] duration-200 hover:bg-ink/20 hover:shadow-card-hover md:left-48 lg:left-120"
       >
         Portfolio
       </button>
