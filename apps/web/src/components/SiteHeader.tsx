@@ -52,7 +52,7 @@ export default function SiteHeader() {
         // disappear against the white header.
         className="absolute bottom-24 left-24 flex h-[41px] items-center rounded-pill bg-ink/10 px-16 text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase shadow-card transition-[background-color,box-shadow] duration-200 hover:bg-ink/20 hover:shadow-card-hover md:left-48 lg:left-120"
       >
-        Portfolio
+        Se mer
       </button>
 
       <div className="absolute right-24 bottom-24 md:right-48 lg:right-120">
