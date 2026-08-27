@@ -5,7 +5,7 @@ export default async function CVPage() {
   const cv = await getCV();
 
   return (
-    <main className="mx-auto flex w-full max-w-[820px] flex-1 flex-col gap-48 px-24 pt-24 pb-96 md:px-48 lg:px-0">
+    <main className="mx-auto flex w-full max-w-[820px] flex-1 flex-col gap-48 px-24 py-64 md:px-48 lg:px-0">
       <div className="flex flex-col gap-24">
         <div className="h-[120px] w-[120px] shrink-0 overflow-hidden rounded-sm bg-line shadow-card">
           {cv.avatarUrl ? (
