@@ -23,8 +23,22 @@ export default function SiteHeader() {
   // Only the top padding shrinks once you leave the top of the page. The
   // controls on desktop are pinned to the header's bottom edge, so trimming
   // that side too would drag them out of the box.
+  //
+  // The two thresholds are far apart on purpose. The header is in flow, so
+  // shrinking it by 32px shortens the page above you, and the browser keeps the
+  // content anchored by pulling the scroll position down by the same 32px. With
+  // one threshold that lands you back below it, the header grows, the scroll
+  // returns, and it oscillates forever — measured at 71 direction changes a
+  // second. A gap wider than the shrink means neither edge can trigger the
+  // other.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () =>
+      setScrolled((was) => {
+        const y = window.scrollY;
+        if (!was && y > 96) return true;
+        if (was && y < 32) return false;
+        return was;
+      });
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);

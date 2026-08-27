@@ -60,7 +60,19 @@ export const Projects: CollectionConfig = {
       relationTo: "media",
       required: true,
       admin: {
-        description: "Hero-bildet. I Katalog: gjerne hele serien samlet i ett bilde.",
+        description:
+          "Hero-bildet øverst på prosjektsiden. Vises bredt, i 9:5 — så motivet bør " +
+          "tåle å bli beskåret i høyden. I Katalog: gjerne hele serien samlet i ett bilde.",
+      },
+    },
+    {
+      name: "cardImage",
+      type: "upload",
+      relationTo: "media",
+      admin: {
+        description:
+          "Bildet på prosjektoversikten. Vises kvadratisk, så et bredt hero-bilde " +
+          "mister mye her. Lar du feltet stå tomt, brukes hero-bildet beskåret.",
       },
     },
 

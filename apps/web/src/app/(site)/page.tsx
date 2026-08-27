@@ -19,7 +19,7 @@ export default async function ProsjektoversiktPage() {
               title={project.title}
               category={project.category}
               year={project.year}
-              imageUrl={project.imageUrl}
+              imageUrl={project.cardImageUrl}
             />
           ))}
         </div>

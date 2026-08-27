@@ -18,6 +18,7 @@ export type Project = {
   duration: string;
   tools: string;
   imageUrl?: string;
+  cardImageUrl?: string;
   gallery: GalleryItem[];
   challenge: { heading: string; body: string };
   process: { heading: string; body: string };
@@ -38,6 +39,7 @@ type PayloadProject = {
   tools?: string;
   order?: number;
   coverImage?: PayloadMedia | string;
+  cardImage?: PayloadMedia | string;
   gallery?: { image?: PayloadMedia | string; label?: string }[];
   challenge?: { heading?: string; body?: string };
   process?: { heading?: string; body?: string };
@@ -62,6 +64,9 @@ function toProject(doc: PayloadProject): Project {
     duration: doc.duration ?? "",
     tools: doc.tools ?? "",
     imageUrl: mediaUrl(doc.coverImage),
+    // Falls back to the hero, cropped — a square crop of a wide image is
+    // better than an empty card.
+    cardImageUrl: mediaUrl(doc.cardImage) ?? mediaUrl(doc.coverImage),
     // flatMap rather than map+filter so an item without a resolvable URL is
     // dropped and the remaining ones keep a non-optional url.
     gallery: (doc.gallery ?? []).flatMap<GalleryItem>((item) => {
