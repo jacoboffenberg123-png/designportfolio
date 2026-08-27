@@ -29,6 +29,19 @@ export default buildConfig({
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
   db: postgresAdapter({
+    // Schema sync is a local-only act. Dev and production share one Neon
+    // database, so a deploy that pushed would drop whatever columns the current
+    // build no longer declares — and it would do it on live data, unattended.
+    //
+    // Adding a field: run this locally once with PAYLOAD_DB_PUSH=true, check the
+    // column landed, then deploy. Set it to "false" to boot against Neon without
+    // touching the schema at all.
+    push:
+      process.env.PAYLOAD_DB_PUSH === "true"
+        ? true
+        : process.env.PAYLOAD_DB_PUSH === "false"
+          ? false
+          : process.env.NODE_ENV !== "production",
     pool: {
       connectionString: process.env.DATABASE_URL || "",
     },

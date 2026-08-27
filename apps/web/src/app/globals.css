@@ -1,11 +1,18 @@
 @import "tailwindcss";
 
+/* The daylight end of the palette. The dimmer in `lib/theme.ts` overwrites
+   these on the root element as it runs; applyDim(0) reproduces exactly the
+   values below, so the two never disagree at rest. */
 :root {
   --color-ink: #0a0a0a;
-  --color-paper: #fefdfb;
+  --color-paper: #ffffff;
   --color-surface: #ffffff;
-  --color-line: #e4e1da;
+  --color-line: #eaeaea;
   --color-muted: #8c877d;
+  /* Resting colour of the footer's dot grid. */
+  --color-dot: #d5d5d5;
+  /* The plane behind the page, revealed when the blind rolls down. */
+  --color-sunken: #f2f2f2;
   /* Translucent surfaces for controls that sit on top of photography. */
   --color-scrim: rgb(10 10 10 / 0.3);
   --color-glass: rgb(255 255 255 / 0.22);
@@ -17,10 +24,11 @@
   --color-surface: var(--color-surface);
   --color-line: var(--color-line);
   --color-muted: var(--color-muted);
+  --color-sunken: var(--color-sunken);
   --color-scrim: var(--color-scrim);
   --color-glass: var(--color-glass);
 
-  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
   --spacing-4: 4px;
   --spacing-8: 8px;
@@ -44,7 +52,7 @@
 
   --shadow-card: 0 1px 2px rgb(10 10 10 / 0.04), 0 8px 24px rgb(10 10 10 / 0.06);
   --shadow-card-hover: 0 2px 4px rgb(10 10 10 / 0.05), 0 16px 40px rgb(10 10 10 / 0.1);
-  --shadow-pill: 0 2px 12px rgb(10 10 10 / 0.2);
+  --shadow-pill: 0 2px 8px rgb(10 10 10 / 0.12);
 }
 
 html {
@@ -58,4 +66,53 @@ html {
 body {
   background: var(--color-paper);
   color: var(--color-ink);
+}
+
+/* Ink can't fade across the dimmer — it steps from one end of the scale to the
+   other as the background passes mid-grey. A short transition turns that step
+   into a dissolve.
+
+   This has to sit inside `base`. Unlayered rules outrank every layered one no
+   matter their specificity, so as a bare `body *` it beat Tailwind's own
+   `transition-*` utilities and quietly replaced them all with `color`. From
+   `base`, utilities win, and elements that declare their own transition opt
+   out of this one — which is what we want for anything that animates on
+   hover. */
+@layer base {
+  body * {
+    transition: color 220ms ease;
+  }
+}
+
+/* Inter's disambiguation set gives the slashed zero; tabular lining figures
+   keep every number the same width, so a numbered series lines up in a column
+   however many ones and zeros it contains. */
+.serial {
+  font-feature-settings: "ss02" 1, "zero" 1, "lnum" 1, "tnum" 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* --- The dimmer ------------------------------------------------------------
+   A real range input, made invisible and stretched over the pill in
+   `ThemeSlider`, so dragging, clicking and arrow keys all keep working while
+   the knob and track are drawn as ordinary elements. */
+.dimmer {
+  appearance: none;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dimmer::-webkit-slider-thumb {
+  appearance: none;
+  /* Matches the drawn knob, so the grab area lines up with what's visible. */
+  width: 33px;
+  height: 33px;
+}
+
+.dimmer::-moz-range-thumb {
+  width: 33px;
+  height: 33px;
+  border: 0;
+  background: transparent;
 }

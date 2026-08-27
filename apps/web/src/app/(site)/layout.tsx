@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import SiteHeader from "@/components/SiteHeader";
 
 /**
  * Shared shell for the overview and CV pages. The header lives here rather than
@@ -10,7 +10,7 @@ import Header from "@/components/Header";
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Header />
+      <SiteHeader />
       {children}
     </>
   );

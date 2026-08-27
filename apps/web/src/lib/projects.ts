@@ -5,7 +5,6 @@ export type ProjectLayout = "bildeledet" | "katalog";
 export type GalleryItem = {
   url: string;
   label?: string;
-  featured?: boolean;
 };
 
 export type Project = {
@@ -17,7 +16,6 @@ export type Project = {
   year: string;
   subject: string;
   duration: string;
-  role: string;
   tools: string;
   imageUrl?: string;
   gallery: GalleryItem[];
@@ -37,11 +35,10 @@ type PayloadProject = {
   year: string;
   subject?: string;
   duration?: string;
-  role?: string;
   tools?: string;
   order?: number;
   coverImage?: PayloadMedia | string;
-  gallery?: { image?: PayloadMedia | string; label?: string; featured?: boolean }[];
+  gallery?: { image?: PayloadMedia | string; label?: string }[];
   challenge?: { heading?: string; body?: string };
   process?: { heading?: string; body?: string };
   reflection?: string;
@@ -63,7 +60,6 @@ function toProject(doc: PayloadProject): Project {
     year: doc.year,
     subject: doc.subject ?? "",
     duration: doc.duration ?? "",
-    role: doc.role ?? "",
     tools: doc.tools ?? "",
     imageUrl: mediaUrl(doc.coverImage),
     // flatMap rather than map+filter so an item without a resolvable URL is
@@ -71,7 +67,7 @@ function toProject(doc: PayloadProject): Project {
     gallery: (doc.gallery ?? []).flatMap<GalleryItem>((item) => {
       const url = mediaUrl(item.image);
       if (!url) return [];
-      return [{ url, label: item.label || undefined, featured: item.featured ?? false }];
+      return [{ url, label: item.label || undefined }];
     }),
     challenge: {
       heading: doc.challenge?.heading || "Utfordringen",

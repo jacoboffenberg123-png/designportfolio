@@ -2,17 +2,25 @@ import Image from "next/image";
 import PillLink from "@/components/PillLink";
 import type { Project } from "@/lib/projects";
 
+/** The `eyebrow` text style: Inter Medium 12/120%, 8% tracking, uppercase. */
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <span className="text-[11px] leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
+    <span className="text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
       {children}
     </span>
   );
 }
 
+/**
+ * `whitespace-pre-line` because the CMS fields are plain textareas: the blank
+ * lines an author types are real newlines in the value, and HTML would collapse
+ * them into single spaces.
+ */
 export function Body({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-base leading-[1.65] tracking-[-0.005em] text-ink">{children}</p>
+    <p className="text-base leading-[1.65] tracking-[-0.005em] whitespace-pre-line text-ink">
+      {children}
+    </p>
   );
 }
 
@@ -71,45 +79,21 @@ export function MetaTable({ project }: { project: Project }) {
     ["Kategori", project.category],
     ["År", project.year],
     ["Varighet", project.duration],
-    ["Rolle", project.role],
     ["Verktøy", project.tools],
   ];
   const filled = rows.filter(([, v]) => v);
   if (filled.length === 0) return null;
 
   return (
-    <dl className="flex w-full flex-col lg:w-[400px]">
+    <dl className="flex w-full shrink-0 flex-col md:w-[320px] lg:w-[400px]">
       {filled.map(([label, value]) => (
-        <div key={label} className="flex gap-24 border-t border-line py-16">
-          <dt className="w-[120px] shrink-0 text-[11px] leading-[1.2] font-medium tracking-[0.08em] text-muted uppercase">
+        // Centred, not top-aligned: the label and value are different sizes, so
+        // aligning their tops leaves them visibly off the same line.
+        <div key={label} className="flex items-center gap-24 border-t border-line py-16">
+          <dt className="w-[120px] shrink-0 text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
             {label}
           </dt>
           <dd className="text-sm leading-[1.55] text-ink">{value}</dd>
-        </div>
-      ))}
-    </dl>
-  );
-}
-
-/** Compact one-line variant, used where a full table would be too heavy. */
-export function FactsRow({ project }: { project: Project }) {
-  const rows: [string, string][] = [
-    ["Emne", project.subject],
-    ["Varighet", project.duration],
-    ["Rolle", project.role],
-    ["Verktøy", project.tools],
-  ];
-  const filled = rows.filter(([, v]) => v);
-  if (filled.length === 0) return null;
-
-  return (
-    <dl className="flex flex-wrap gap-x-48 gap-y-16 border-y border-line py-16">
-      {filled.map(([label, value]) => (
-        <div key={label} className="flex flex-col gap-8">
-          <dt className="text-[11px] leading-[1.2] font-medium tracking-[0.08em] text-muted uppercase">
-            {label}
-          </dt>
-          <dd className="text-xs leading-[1.5] text-ink">{value}</dd>
         </div>
       ))}
     </dl>

@@ -32,22 +32,22 @@ export default function ProjectCard({
         ) : null}
 
         {/* Year sits on the image so the meta line below stays to one thought. */}
-        <span className="absolute top-16 right-16 rounded-sm-md bg-scrim px-8 py-4 text-xs leading-[1.5] text-surface backdrop-blur-[24px]">
+        <span className="serial absolute top-16 right-16 rounded-sm bg-scrim px-8 py-[6px] text-xs leading-[1.2] font-medium tracking-[0.08em] text-surface uppercase backdrop-blur-[24px]">
           {year}
         </span>
 
         <div className="absolute inset-x-0 bottom-32 flex justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="rounded-pill bg-glass px-16 py-8 text-xs leading-[1.5] text-surface shadow-pill backdrop-blur-[17px] transition-colors duration-200 hover:bg-white/35">
+          <span className="rounded-pill bg-glass px-16 py-8 text-xs leading-[1.2] font-medium tracking-[0.08em] text-surface uppercase shadow-pill backdrop-blur-[17px] transition-colors duration-200 hover:bg-white/35">
             {ctaLabel}
           </span>
         </div>
       </div>
 
       <div className="flex flex-col gap-8">
-        <span className="text-[22px] leading-[1.3] font-medium tracking-[-0.005em] text-ink uppercase">
+        <span className="text-[22px] leading-[1.3] font-medium tracking-[-0.005em] text-ink capitalize">
           {title}
         </span>
-        <span className="text-xs leading-[1.5] text-muted">{category}</span>
+        <span className="text-base leading-[1.65] tracking-[-0.005em] text-ink">{category}</span>
       </div>
     </Link>
   );

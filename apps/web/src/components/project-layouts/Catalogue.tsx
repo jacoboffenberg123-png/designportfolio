@@ -3,8 +3,8 @@ import {
   Band,
   Body,
   Eyebrow,
-  FactsRow,
   Figure,
+  MetaTable,
   NextProject,
   PageTitle,
   Reflection,
@@ -12,8 +12,8 @@ import {
 
 /**
  * Katalog — for a series of objects, where the volume and the variation across
- * the set is the point. Every item is shown, numbered and labelled; the ones
- * marked featured get a second, larger pass.
+ * the set is the point. Every item is shown once, numbered and labelled; the
+ * grid carries the argument, so there is no second pass on selected pieces.
  */
 export default function Catalogue({
   project,
@@ -22,21 +22,26 @@ export default function Catalogue({
   project: Project;
   nextSlug?: string;
 }) {
-  const featured = project.gallery.filter((g) => g.featured);
-
   return (
     <main className="flex flex-1 flex-col">
-      <Figure src={project.imageUrl} ratio="16 / 7" rounded={false} priority />
+      <Figure src={project.imageUrl} ratio="9 / 5" rounded={false} priority />
 
       <Band className="pt-64">
-        <div className="flex flex-col gap-32">
+        <div className="flex flex-col gap-48">
           <PageTitle>{project.title}</PageTitle>
-          {project.intro ? (
-            <div className="max-w-[760px]">
-              <Body>{project.intro}</Body>
-            </div>
-          ) : null}
-          <FactsRow project={project} />
+          {/* Side by side from md up — at lg the two columns only met on very
+              wide screens, and stacked on anything narrower. */}
+          <div className="flex flex-col gap-48 md:flex-row md:gap-48 lg:gap-96">
+            {project.intro ? (
+              <div className="flex flex-1 flex-col gap-16">
+                <Eyebrow>Om prosjektet</Eyebrow>
+                <Body>{project.intro}</Body>
+              </div>
+            ) : (
+              <div className="flex-1" />
+            )}
+            <MetaTable project={project} />
+          </div>
         </div>
       </Band>
 
@@ -52,32 +57,18 @@ export default function Catalogue({
                     ratio="1 / 1"
                     sizes="(min-width: 768px) 25vw, 50vw"
                   />
-                  <div className="flex gap-8">
-                    <span className="text-[11px] leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
-                      {String(i + 1).padStart(2, "0")}
+                  {/* Centred against the label, which is the taller of the two —
+                      top-aligning them leaves the number sitting high. */}
+                  <div className="flex items-center gap-8">
+                    {/* Three digits, so the run reads as a series rather than a
+                        handful — the set is the argument here. */}
+                    <span className="serial text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
+                      {`${String(i + 1).padStart(3, "0")}.`}
                     </span>
                     {g.label ? (
                       <span className="text-xs leading-[1.5] text-muted">{g.label}</span>
                     ) : null}
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Band>
-      ) : null}
-
-      {featured.length > 0 ? (
-        <Band className="pt-96">
-          <div className="flex flex-col gap-32">
-            <Eyebrow>Nærmere</Eyebrow>
-            <div className="grid grid-cols-1 gap-24 md:grid-cols-3">
-              {featured.map((g) => (
-                <div key={g.url} className="flex flex-col gap-8">
-                  <Figure src={g.url} ratio="4 / 5" sizes="33vw" />
-                  {g.label ? (
-                    <span className="text-xs leading-[1.5] text-muted">{g.label}</span>
-                  ) : null}
                 </div>
               ))}
             </div>

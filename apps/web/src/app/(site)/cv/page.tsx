@@ -5,7 +5,7 @@ export default async function CVPage() {
   const cv = await getCV();
 
   return (
-    <main className="mx-auto flex w-full max-w-[820px] flex-1 flex-col gap-48 px-24 pt-24 pb-96 md:px-48 lg:px-0">
+    <main className="mx-auto flex w-full max-w-[820px] flex-1 flex-col gap-48 px-24 py-64 md:px-48 lg:px-0">
       <div className="flex flex-col gap-24">
         <div className="h-[120px] w-[120px] shrink-0 overflow-hidden rounded-sm bg-line shadow-card">
           {cv.avatarUrl ? (
@@ -41,7 +41,7 @@ export default async function CVPage() {
           {cv.skills.map((skill) => (
             <span
               key={skill}
-              className="rounded-sm-md bg-line px-12 py-8 text-xs leading-[1.5] text-ink"
+              className="rounded-sm bg-ink/5 px-12 py-8 text-xs leading-[1.5] text-ink"
             >
               {skill}
             </span>
@@ -55,7 +55,9 @@ export default async function CVPage() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-24">
-      <h2 className="text-[20px] leading-[1.3] font-medium tracking-[-0.005em] text-ink">
+      {/* Section headings carry the `eyebrow` style, not a display size — the
+          page gets its hierarchy from spacing rather than typographic scale. */}
+      <h2 className="text-xs leading-[1.2] font-medium tracking-[0.08em] text-ink uppercase">
         {title}
       </h2>
       {children}
