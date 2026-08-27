@@ -48,10 +48,11 @@ export default function NavTabs() {
 
   return (
     // Glass: a 20% ink tint over a blur, rather than a solid pill.
-    <nav className="relative flex items-center rounded-pill bg-ink/20 p-4 shadow-card backdrop-blur-[10px]">
+    // Tighter below md so the whole bar fits one phone line.
+    <nav className="relative flex items-center rounded-pill bg-ink/20 p-[3px] shadow-card backdrop-blur-[10px] md:p-4">
       <span
         aria-hidden
-        className="absolute top-4 bottom-4 left-0 rounded-pill bg-surface transition-[transform,width] duration-300 ease-out"
+        className="absolute top-[3px] bottom-[3px] left-0 rounded-pill bg-surface transition-[transform,width] duration-300 ease-out md:top-4 md:bottom-4"
         style={{
           width: thumb?.width ?? 0,
           transform: `translateX(${thumb?.left ?? 0}px)`,
@@ -67,7 +68,7 @@ export default function NavTabs() {
           }}
           href={tab.href}
           aria-current={i === active ? "page" : undefined}
-          className={`relative z-10 rounded-pill px-16 py-8 text-[13px] leading-[1.3] font-medium whitespace-nowrap transition-colors duration-300 ${
+          className={`relative z-10 rounded-pill px-[10px] py-[6px] text-[11px] leading-[1.3] font-medium whitespace-nowrap transition-colors duration-300 md:px-16 md:py-8 md:text-[13px] ${
             i === active ? "text-ink" : "text-muted hover:text-ink"
           }`}
         >

@@ -5,7 +5,6 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-const SIZE = 41; // matches the nav tabs, and makes the open state a circle
 
 /**
  * The control that opens the panel and then closes it: a "Se mer" pill that
@@ -27,20 +26,28 @@ export default function PanelToggle({
   onToggle: () => void;
   label?: string;
 }) {
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
-  const [labelWidth, setLabelWidth] = useState<number>();
+  const [box, setBox] = useState<{ pill: number; size: number }>();
 
   useIsomorphicLayoutEffect(() => {
-    const el = labelRef.current;
-    if (!el) return;
-    const measure = () => setLabelWidth(el.offsetWidth);
+    const button = buttonRef.current;
+    const label = labelRef.current;
+    if (!button || !label) return;
+    const measure = () => {
+      const styles = getComputedStyle(button);
+      const padding = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
+      setBox({ pill: label.offsetWidth + padding, size: button.offsetHeight });
+    };
     measure();
-    // The label's width moves when the webfont swaps in.
+    // The label's width moves when the webfont swaps in, and both change at the
+    // breakpoint — but never mid-transition, since the button's width is the
+    // only thing animating and neither reading depends on it.
     document.fonts?.ready.then(measure).catch(() => {});
+    const media = window.matchMedia("(min-width: 768px)");
+    media.addEventListener("change", measure);
+    return () => media.removeEventListener("change", measure);
   }, []);
-
-  // px-16 on both sides.
-  const pillWidth = labelWidth === undefined ? undefined : labelWidth + 32;
 
   return (
     <button
@@ -48,8 +55,9 @@ export default function PanelToggle({
       onClick={onToggle}
       aria-expanded={open}
       aria-label={open ? "Lukk" : undefined}
-      style={{ width: open ? SIZE : pillWidth, height: SIZE }}
-      className="relative flex items-center justify-center overflow-hidden rounded-pill bg-ink/10 px-16 text-xs leading-[1.2] font-medium tracking-[0.08em] whitespace-nowrap text-ink uppercase shadow-card transition-[width,background-color,box-shadow] duration-500 ease-out hover:bg-ink/20 hover:shadow-card-hover"
+      ref={buttonRef}
+      style={{ width: open ? box?.size : box?.pill }}
+      className="relative flex h-[32px] shrink-0 items-center justify-center overflow-hidden rounded-pill bg-ink/10 px-12 text-[11px] leading-[1.2] font-medium tracking-[0.08em] whitespace-nowrap text-ink uppercase shadow-card transition-[width,background-color,box-shadow] duration-500 ease-out hover:bg-ink/20 hover:shadow-card-hover md:h-[41px] md:px-16 md:text-xs"
     >
       <span
         ref={labelRef}

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { readStoredDim, setDim } from "@/lib/theme";
+import { useDim } from "@/lib/useDim";
+import { Moon, Sun } from "./icons";
 
 const STEPS = 100;
 
@@ -17,23 +17,6 @@ const KNOB = HEIGHT - PAD * 2;
 const ICON_ZONE = HEIGHT;
 const TRAVEL = WIDTH - PAD * 2 - KNOB;
 
-function Sun() {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" className="h-[15px] w-[15px]">
-      <circle cx="8" cy="8" r="3.1" />
-      <path d="M8 1.4v1.6M8 13v1.6M14.6 8H13M3 8H1.4M12.7 3.3l-1.1 1.1M4.4 11.6l-1.1 1.1M12.7 12.7l-1.1-1.1M4.4 4.4L3.3 3.3" />
-    </svg>
-  );
-}
-
-function Moon() {
-  return (
-    <svg viewBox="0 0 16 16" fill="currentColor" className="h-[15px] w-[15px]">
-      <path d="M13.4 9.9A5.9 5.9 0 0 1 6.1 2.6a.5.5 0 0 0-.7-.6 6.6 6.6 0 1 0 8.6 8.6.5.5 0 0 0-.6-.7Z" />
-    </svg>
-  );
-}
-
 /**
  * The dimmer. A pill in the same family as the nav tabs — dark-tinted track,
  * round light knob — with the sun at the daylight end and the moon at the dark
@@ -42,15 +25,7 @@ function Moon() {
  * would on any slider.
  */
 export default function ThemeSlider() {
-  // Starts at 0 on both sides of hydration; the stored level is applied before
-  // paint by the init script, and read back into the control on mount.
-  const [value, setValue] = useState(0);
-
-  useEffect(() => {
-    const stored = readStoredDim();
-    setValue(stored);
-    setDim(stored);
-  }, []);
+  const [value, setValue] = useDim();
 
   return (
     <div
@@ -115,9 +90,7 @@ export default function ThemeSlider() {
         step={1}
         value={Math.round(value * STEPS)}
         onChange={(event) => {
-          const next = Number(event.target.value) / STEPS;
-          setValue(next);
-          setDim(next);
+          setValue(Number(event.target.value) / STEPS);
         }}
         className="dimmer absolute inset-0 h-full w-full opacity-0"
         aria-label="Lysstyrke"
