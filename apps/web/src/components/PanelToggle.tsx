@@ -20,7 +20,7 @@ const useIsomorphicLayoutEffect =
 export default function PanelToggle({
   open,
   onToggle,
-  label = "Se mer",
+  label = "Techstack",
 }: {
   open: boolean;
   onToggle: () => void;
