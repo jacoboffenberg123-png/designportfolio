@@ -18,6 +18,13 @@ import {
  */
 function Triptych({ images }: { images: GalleryItem[] }) {
   if (images.length === 0) return null;
+  // The band takes its shape from the uploads rather than a fixed ratio: a
+  // packaging render is wider than it is tall, and forcing it into a squarer box
+  // both crops the sides and makes the band taller than the pictures warrant.
+  // One ratio for the whole row, from the first image, so they stay level even
+  // if a later upload differs.
+  const first = images[0];
+  const ratio = first.width && first.height ? `${first.width} / ${first.height}` : "8 / 7";
   return (
     // Wrapping flex rather than a grid: three fit per row, and a row left with
     // one or two grows them to fill the width. A grid would leave a white notch
@@ -28,7 +35,7 @@ function Triptych({ images }: { images: GalleryItem[] }) {
         <div key={g.url} className="grow basis-full sm:basis-1/2 md:basis-1/3">
           <Figure
             src={g.url}
-            ratio="8 / 7"
+            ratio={ratio}
             rounded={false}
             sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
           />

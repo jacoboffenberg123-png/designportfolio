@@ -143,8 +143,24 @@ const existing = await payload.find({
 });
 
 if (existing.docs[0]) {
-  await payload.update({ collection: "projects", id: existing.docs[0].id, data });
-  console.log(`\n✓ Oppdaterte «${SLUG}» (id ${existing.docs[0].id})`);
+  // The two image bands get picked by hand in the admin — the special editions
+  // were already swapped for better originals than the crops seeded here. A
+  // re-run must not put the crops back, so those two fields keep whatever the
+  // project already holds.
+  const current = existing.docs[0] as unknown as {
+    gallery?: unknown[];
+    special?: { images?: unknown[] };
+  };
+  const keep = {
+    ...data,
+    gallery: current.gallery?.length ? current.gallery : data.gallery,
+    special: {
+      ...data.special,
+      images: current.special?.images?.length ? current.special.images : data.special.images,
+    },
+  };
+  await payload.update({ collection: "projects", id: existing.docs[0].id, data: keep as typeof data });
+  console.log(`\n✓ Oppdaterte «${SLUG}» (id ${existing.docs[0].id}) — bildebåndene beholdt som de var`);
 } else {
   const doc = await payload.create({ collection: "projects", data });
   console.log(`\n✓ Opprettet «${SLUG}» (id ${doc.id})`);

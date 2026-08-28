@@ -6,6 +6,9 @@ export type ProjectLayout = (typeof LAYOUTS)[number];
 export type GalleryItem = {
   url: string;
   label?: string;
+  /** The upload's own pixel size, so a band can take the image's shape. */
+  width?: number;
+  height?: number;
 };
 
 export type Project = {
@@ -33,7 +36,7 @@ export type Project = {
   special: { heading: string; images: GalleryItem[] };
 };
 
-type PayloadMedia = { url?: string };
+type PayloadMedia = { url?: string; width?: number; height?: number };
 
 type PayloadProject = {
   slug: string;
@@ -85,7 +88,10 @@ function toGallery(
   return (items ?? []).flatMap<GalleryItem>((item) => {
     const url = mediaUrl(item.image);
     if (!url) return [];
-    return [{ url, label: item.label || undefined }];
+    const media = typeof item.image === "object" ? item.image : undefined;
+    return [
+      { url, label: item.label || undefined, width: media?.width, height: media?.height },
+    ];
   });
 }
 
