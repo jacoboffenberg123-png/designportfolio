@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import ProjectTopBar from "@/components/ProjectTopBar";
 import ImageLed from "@/components/project-layouts/ImageLed";
 import Catalogue from "@/components/project-layouts/Catalogue";
+import Argument from "@/components/project-layouts/Argument";
 import { getProjectBySlug, getNextProject } from "@/lib/projects";
 
 export default async function ProsjektsidePage({
@@ -16,7 +17,12 @@ export default async function ProsjektsidePage({
 
   const next = await getNextProject(slug);
   // The template is chosen per project in Payload; new layouts get added here.
-  const Layout = project.layout === "katalog" ? Catalogue : ImageLed;
+  const LAYOUTS = {
+    katalog: Catalogue,
+    argumentet: Argument,
+    bildeledet: ImageLed,
+  } as const;
+  const Layout = LAYOUTS[project.layout];
 
   return (
     <>

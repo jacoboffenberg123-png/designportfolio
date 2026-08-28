@@ -1,6 +1,7 @@
 import { cmsFetch, cmsMediaUrl } from "./cms";
 
-export type ProjectLayout = "bildeledet" | "katalog";
+const LAYOUTS = ["bildeledet", "katalog", "argumentet"] as const;
+export type ProjectLayout = (typeof LAYOUTS)[number];
 
 export type GalleryItem = {
   url: string;
@@ -23,6 +24,13 @@ export type Project = {
   challenge: { heading: string; body: string };
   process: { heading: string; body: string };
   reflection: string;
+  // --- Argumentet ---
+  angle: string;
+  strategy: { label: string; value: string }[];
+  logo: { before?: string; beforeNote: string; after?: string; afterNote: string };
+  carrier: { heading: string; lead: string; items: GalleryItem[] };
+  designNote: string;
+  special: { heading: string; images: GalleryItem[] };
 };
 
 type PayloadMedia = { url?: string };
@@ -44,6 +52,21 @@ type PayloadProject = {
   challenge?: { heading?: string; body?: string };
   process?: { heading?: string; body?: string };
   reflection?: string;
+  angle?: string;
+  strategy?: { label?: string; value?: string }[];
+  logo?: {
+    before?: PayloadMedia | string;
+    beforeNote?: string;
+    after?: PayloadMedia | string;
+    afterNote?: string;
+  };
+  carrier?: {
+    heading?: string;
+    lead?: string;
+    items?: { image?: PayloadMedia | string; label?: string }[];
+  };
+  designNote?: string;
+  special?: { heading?: string; images?: { image?: PayloadMedia | string }[] };
 };
 
 type PayloadFindResponse<T> = { docs: T[] };
@@ -52,11 +75,27 @@ function mediaUrl(m: PayloadMedia | string | undefined) {
   return cmsMediaUrl(typeof m === "object" ? m?.url : undefined);
 }
 
+/**
+ * flatMap rather than map+filter so an item whose upload didn't resolve is
+ * dropped and the rest keep a non-optional url.
+ */
+function toGallery(
+  items: { image?: PayloadMedia | string; label?: string }[] | undefined,
+): GalleryItem[] {
+  return (items ?? []).flatMap<GalleryItem>((item) => {
+    const url = mediaUrl(item.image);
+    if (!url) return [];
+    return [{ url, label: item.label || undefined }];
+  });
+}
+
 function toProject(doc: PayloadProject): Project {
   return {
     slug: doc.slug,
     title: doc.title,
-    layout: doc.layout === "katalog" ? "katalog" : "bildeledet",
+    layout: (LAYOUTS as readonly string[]).includes(doc.layout ?? "")
+      ? (doc.layout as ProjectLayout)
+      : "bildeledet",
     intro: doc.intro ?? "",
     category: doc.category,
     year: doc.year,
@@ -67,13 +106,7 @@ function toProject(doc: PayloadProject): Project {
     // Falls back to the hero, cropped — a square crop of a wide image is
     // better than an empty card.
     cardImageUrl: mediaUrl(doc.cardImage) ?? mediaUrl(doc.coverImage),
-    // flatMap rather than map+filter so an item without a resolvable URL is
-    // dropped and the remaining ones keep a non-optional url.
-    gallery: (doc.gallery ?? []).flatMap<GalleryItem>((item) => {
-      const url = mediaUrl(item.image);
-      if (!url) return [];
-      return [{ url, label: item.label || undefined }];
-    }),
+    gallery: toGallery(doc.gallery),
     challenge: {
       heading: doc.challenge?.heading || "Utfordringen",
       body: doc.challenge?.body || "",
@@ -83,6 +116,28 @@ function toProject(doc: PayloadProject): Project {
       body: doc.process?.body || "",
     },
     reflection: doc.reflection ?? "",
+    angle: doc.angle ?? "",
+    // Both halves are required, so a half-filled row would render a label with
+    // nothing beside it.
+    strategy: (doc.strategy ?? []).flatMap((s) =>
+      s.label && s.value ? [{ label: s.label, value: s.value }] : [],
+    ),
+    logo: {
+      before: mediaUrl(doc.logo?.before),
+      beforeNote: doc.logo?.beforeNote ?? "",
+      after: mediaUrl(doc.logo?.after),
+      afterNote: doc.logo?.afterNote ?? "",
+    },
+    carrier: {
+      heading: doc.carrier?.heading || "Bærende element",
+      lead: doc.carrier?.lead ?? "",
+      items: toGallery(doc.carrier?.items),
+    },
+    designNote: doc.designNote ?? "",
+    special: {
+      heading: doc.special?.heading || "Designforslag til spesial-is",
+      images: toGallery(doc.special?.images),
+    },
   };
 }
 

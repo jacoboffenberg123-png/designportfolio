@@ -4,10 +4,16 @@ import type { CollectionConfig } from "payload";
 const LAYOUTS = [
   { label: "Bildeledet — store bilder, lite tekst", value: "bildeledet" },
   { label: "Katalog — en serie objekter, nummerert", value: "katalog" },
+  { label: "Argumentet — merkevarecase: vinkling, strategi, før/etter", value: "argumentet" },
 ] as const;
 
-const isKatalog = (data: { layout?: string }) => data?.layout === "katalog";
-const isBildeledet = (data: { layout?: string }) => data?.layout !== "katalog";
+// Falls back to the default rather than reading undefined: on the create form
+// the value isn't written until the field is touched, and a bare `!== "katalog"`
+// would then show Bildeledet's fields on every layout.
+const layoutOf = (data: { layout?: string }) => data?.layout ?? "bildeledet";
+const isKatalog = (data: { layout?: string }) => layoutOf(data) === "katalog";
+const isBildeledet = (data: { layout?: string }) => layoutOf(data) === "bildeledet";
+const isArgumentet = (data: { layout?: string }) => layoutOf(data) === "argumentet";
 
 export const Projects: CollectionConfig = {
   slug: "projects",
@@ -133,6 +139,124 @@ export const Projects: CollectionConfig = {
       ],
     },
 
+    // --- Argumentet ---
+    // Ett sammenhengende resonnement: hvorfor denne vinkelen, hva strategien ble,
+    // hvordan merket endret seg, og hva det ble til slutt.
+    {
+      name: "angle",
+      type: "textarea",
+      admin: {
+        condition: isArgumentet,
+        description:
+          "Vises som «Vinkling», rett under faktatabellen. Her står lesningen som " +
+          "skiller prosjektet fra briefen — hva du så som andre ikke så.",
+      },
+    },
+    {
+      name: "strategy",
+      type: "array",
+      labels: { singular: "Punkt", plural: "Strategipunkter" },
+      maxRows: 4,
+      admin: {
+        condition: isArgumentet,
+        description:
+          "Vises som «Strategien», i én rad. Fire punkter fyller raden pent; " +
+          "færre blir bredere, flere brekker til neste linje.",
+      },
+      fields: [
+        {
+          name: "label",
+          type: "text",
+          required: true,
+          admin: { description: "F.eks. «Posisjon», «Forbruker», «Uttrykk», «Prinsipp»." },
+        },
+        { name: "value", type: "text", required: true },
+      ],
+    },
+    {
+      name: "logo",
+      type: "group",
+      label: "Logoutvikling",
+      admin: { condition: isArgumentet },
+      fields: [
+        {
+          name: "before",
+          type: "upload",
+          relationTo: "media",
+          admin: {
+            description:
+              "Det gamle merket. Legg de to logofilene på samme lerret med samme " +
+              "grunnlinje og kapitélhøyde — da står ordmerkene på linje av seg selv.",
+          },
+        },
+        { name: "beforeNote", type: "text", admin: { description: "Bildetekst under «Før»." } },
+        { name: "after", type: "upload", relationTo: "media" },
+        { name: "afterNote", type: "text", admin: { description: "Bildetekst under «Etter»." } },
+      ],
+    },
+    {
+      name: "carrier",
+      type: "group",
+      label: "Bærende element",
+      admin: { condition: isArgumentet },
+      fields: [
+        {
+          name: "heading",
+          type: "text",
+          defaultValue: "Bærende element",
+        },
+        {
+          name: "lead",
+          type: "textarea",
+          admin: { description: "Én setning om hva grepet er. Tomme linjer blir avsnitt." },
+        },
+        {
+          name: "items",
+          type: "array",
+          labels: { singular: "Variant", plural: "Varianter" },
+          admin: {
+            description:
+              "Vises i én rad med bildetekst under. Beskjær filene til samme " +
+              "høyde og bredde før opplasting — ulike mål synes med én gang på rad.",
+          },
+          fields: [
+            { name: "image", type: "upload", relationTo: "media", required: true },
+            { name: "label", type: "text" },
+          ],
+        },
+      ],
+    },
+    {
+      name: "designNote",
+      type: "textarea",
+      admin: {
+        condition: isArgumentet,
+        description:
+          "Står mellom bildene av det endelige designet og spesialutgavene. " +
+          "Her forklarer du designet nærmere. Tomme linjer blir avsnitt.",
+      },
+    },
+    {
+      name: "special",
+      type: "group",
+      label: "Videre forslag",
+      admin: { condition: isArgumentet },
+      fields: [
+        { name: "heading", type: "text", defaultValue: "Designforslag til spesial-is" },
+        {
+          name: "images",
+          type: "array",
+          labels: { singular: "Bilde", plural: "Bilder" },
+          admin: {
+            description:
+              "Samme oppsett som det endelige designet: bildene går kant i kant " +
+              "over hele bredden. Tre stykker fyller raden.",
+          },
+          fields: [{ name: "image", type: "upload", relationTo: "media", required: true }],
+        },
+      ],
+    },
+
     // --- Bilder ---
     {
       name: "gallery",
@@ -141,7 +265,8 @@ export const Projects: CollectionConfig = {
       admin: {
         description:
           "I Katalog er dette hele serien, i rekkefølge, nummerert 001 og oppover. " +
-          "I Bildeledet går de to første side om side, resten i tre kolonner under.",
+          "I Bildeledet går de to første side om side, resten i tre kolonner under. " +
+          "I Argumentet er dette «Endelig design» — de går kant i kant over hele bredden.",
       },
       fields: [
         {

@@ -56,24 +56,41 @@ export function Figure({
   src,
   ratio,
   rounded = true,
+  contain = false,
   sizes = "100vw",
   priority = false,
 }: {
   src?: string;
   ratio: string;
   rounded?: boolean;
+  /**
+   * Fits the whole image inside the box instead of cropping to fill, and drops
+   * the grey ground so a transparent cut-out sits straight on the page. Two
+   * images that share a canvas keep their alignment: identical boxes letterbox
+   * them identically.
+   */
+  contain?: boolean;
   sizes?: string;
   priority?: boolean;
 }) {
   return (
     <div
-      className={`relative w-full overflow-hidden bg-line ${
-        rounded ? "rounded-sm shadow-card" : ""
-      }`}
+      className={`relative w-full overflow-hidden ${
+        // The grey stays while there's nothing to show — otherwise a missing
+        // image would be an invisible hole rather than an obvious gap.
+        contain && src ? "" : "bg-line"
+      } ${rounded ? "rounded-sm shadow-card" : ""}`}
       style={{ aspectRatio: ratio }}
     >
       {src ? (
-        <Image src={src} alt="" fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image
+          src={src}
+          alt=""
+          fill
+          sizes={sizes}
+          priority={priority}
+          className={contain ? "object-contain" : "object-cover"}
+        />
       ) : null}
     </div>
   );
