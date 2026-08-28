@@ -19,11 +19,24 @@ function activeIndexFor(pathname: string) {
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-export default function NavTabs() {
+export default function NavTabs({
+  active: controlledActive,
+  onSelect,
+}: {
+  /**
+   * Left off, the tabs follow the URL and navigate, as they do in the header.
+   * Passing a pair turns them into buttons that only move the thumb — the
+   * component gallery needs a tab selector that doesn't leave the page it is
+   * being shown on.
+   */
+  active?: number;
+  onSelect?: (index: number) => void;
+} = {}) {
   const pathname = usePathname();
-  const active = activeIndexFor(pathname);
+  const controlled = controlledActive !== undefined && onSelect !== undefined;
+  const active = controlled ? controlledActive : activeIndexFor(pathname);
 
-  const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const itemRefs = useRef<(HTMLElement | null)[]>([]);
   const [thumb, setThumb] = useState<{ left: number; width: number } | null>(null);
 
   const measure = useCallback(() => {
@@ -60,21 +73,36 @@ export default function NavTabs() {
           opacity: thumb ? 1 : 0,
         }}
       />
-      {TABS.map((tab, i) => (
-        <Link
-          key={tab.href}
-          ref={(el) => {
-            itemRefs.current[i] = el;
-          }}
-          href={tab.href}
-          aria-current={i === active ? "page" : undefined}
-          className={`relative z-10 rounded-pill px-[10px] py-[6px] text-[11px] leading-[1.3] font-medium whitespace-nowrap transition-colors duration-300 md:px-16 md:py-8 md:text-[13px] ${
-            i === active ? "text-ink" : "text-muted hover:text-ink"
-          }`}
-        >
-          {tab.label}
-        </Link>
-      ))}
+      {TABS.map((tab, i) => {
+        const className = `relative z-10 rounded-pill px-[10px] py-[6px] text-[11px] leading-[1.3] font-medium whitespace-nowrap transition-colors duration-300 md:px-16 md:py-8 md:text-[13px] ${
+          i === active ? "text-ink" : "text-muted hover:text-ink"
+        }`;
+        const setRef = (el: HTMLElement | null) => {
+          itemRefs.current[i] = el;
+        };
+        return controlled ? (
+          <button
+            key={tab.href}
+            type="button"
+            ref={setRef}
+            onClick={() => onSelect(i)}
+            aria-pressed={i === active}
+            className={className}
+          >
+            {tab.label}
+          </button>
+        ) : (
+          <Link
+            key={tab.href}
+            ref={setRef}
+            href={tab.href}
+            aria-current={i === active ? "page" : undefined}
+            className={className}
+          >
+            {tab.label}
+          </Link>
+        );
+      })}
     </nav>
   );
 }

@@ -24,8 +24,22 @@ const TRAVEL = WIDTH - PAD * 2 - KNOB;
  * covers the whole pill, so dragging, clicking and arrow keys work as they
  * would on any slider.
  */
-export default function ThemeSlider() {
-  const [value, setValue] = useDim();
+export default function ThemeSlider({
+  value: controlledValue,
+  onChange,
+}: {
+  /**
+   * Drives the page's dimmer when left off. Passing a pair makes the control
+   * local instead — the component gallery does that so a demo slider can't
+   * change the palette of the page it's being demonstrated on.
+   */
+  value?: number;
+  onChange?: (t: number) => void;
+} = {}) {
+  const [globalValue, setGlobal] = useDim();
+  const controlled = controlledValue !== undefined && onChange !== undefined;
+  const value = controlled ? controlledValue : globalValue;
+  const setValue = controlled ? onChange : setGlobal;
 
   return (
     <div

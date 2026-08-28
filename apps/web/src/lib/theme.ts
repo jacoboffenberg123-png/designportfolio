@@ -12,19 +12,21 @@
 export const DIM_KEY = "jo-dim";
 
 /**
- * Writes the palette for `t` onto the document root.
+ * Writes the palette for `t` onto the document root, or onto `target` when one
+ * is given — that scopes a whole palette to one box, which is how the component
+ * gallery demonstrates the dimmer without dragging the page along with it.
  *
  * Everything it needs is declared inside the function body, because the whole
  * function is stringified into the no-flash inline script below — nothing from
  * module scope survives that trip.
  */
-export function applyDim(t: number) {
+export function applyDim(t: number, target?: HTMLElement) {
   const clamped = t < 0 ? 0 : t > 1 ? 1 : t;
   // Smootherstep rather than smoothstep: steeper through the middle, so the
   // page spends as few slider positions as possible at the grey where ink has
   // to swap ends and neither choice reads well.
   const eased = clamped * clamped * clamped * (clamped * (clamped * 6 - 15) + 10);
-  const style = document.documentElement.style;
+  const style = (target || document.documentElement).style;
 
   const mix = (from: number[], to: number[], k: number) => [
     from[0] + (to[0] - from[0]) * k,

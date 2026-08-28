@@ -11,8 +11,20 @@ import { Moon, Sun } from "./icons";
  * It shows where a tap would take you, not where you are — the page itself
  * already tells you that.
  */
-export default function ThemeToggle({ size = 32 }: { size?: number }) {
-  const [dim, setDim] = useDim();
+export default function ThemeToggle({
+  size = 32,
+  value,
+  onChange,
+}: {
+  size?: number;
+  /** Same contract as ThemeSlider: pass a pair to keep the switch local. */
+  value?: number;
+  onChange?: (t: number) => void;
+} = {}) {
+  const [globalDim, setGlobal] = useDim();
+  const controlled = value !== undefined && onChange !== undefined;
+  const dim = controlled ? value : globalDim;
+  const setDim = controlled ? onChange : setGlobal;
   const dark = dim > 0.5;
 
   return (
