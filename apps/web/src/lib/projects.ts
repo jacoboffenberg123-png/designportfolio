@@ -1,6 +1,6 @@
 import { cmsFetch, cmsMediaUrl } from "./cms";
 
-const LAYOUTS = ["bildeledet", "katalog", "argumentet"] as const;
+const LAYOUTS = ["bildeledet", "katalog", "argumentet", "systemet"] as const;
 export type ProjectLayout = (typeof LAYOUTS)[number];
 
 export type GalleryItem = {

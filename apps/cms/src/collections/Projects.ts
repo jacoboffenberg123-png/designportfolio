@@ -5,6 +5,7 @@ const LAYOUTS = [
   { label: "Bildeledet — store bilder, lite tekst", value: "bildeledet" },
   { label: "Katalog — en serie objekter, nummerert", value: "katalog" },
   { label: "Argumentet — merkevarecase: vinkling, strategi, før/etter", value: "argumentet" },
+  { label: "Systemet — hvordan noe er bygget: diagrammer og levende komponenter", value: "systemet" },
 ] as const;
 
 // Falls back to the default rather than reading undefined: on the create form
@@ -14,6 +15,7 @@ const layoutOf = (data: { layout?: string }) => data?.layout ?? "bildeledet";
 const isKatalog = (data: { layout?: string }) => layoutOf(data) === "katalog";
 const isBildeledet = (data: { layout?: string }) => layoutOf(data) === "bildeledet";
 const isArgumentet = (data: { layout?: string }) => layoutOf(data) === "argumentet";
+const isSystemet = (data: { layout?: string }) => layoutOf(data) === "systemet";
 
 export const Projects: CollectionConfig = {
   slug: "projects",
@@ -146,7 +148,8 @@ export const Projects: CollectionConfig = {
       name: "angle",
       type: "textarea",
       admin: {
-        condition: isArgumentet,
+        // Både Argumentet og Systemet åpner med en vinkling under faktatabellen.
+        condition: (data: { layout?: string }) => isArgumentet(data) || isSystemet(data),
         description:
           "Vises som «Vinkling», rett under faktatabellen. Her står lesningen som " +
           "skiller prosjektet fra briefen — hva du så som andre ikke så.",
@@ -266,7 +269,8 @@ export const Projects: CollectionConfig = {
         description:
           "I Katalog er dette hele serien, i rekkefølge, nummerert 001 og oppover. " +
           "I Bildeledet går de to første side om side, resten i tre kolonner under. " +
-          "I Argumentet er dette «Endelig design» — de går kant i kant over hele bredden.",
+          "I Argumentet er dette «Endelig design» — de går kant i kant over hele bredden. " +
+          "I Systemet er de to første skjermbildene av siden selv: desktop først, så telefon.",
       },
       fields: [
         {

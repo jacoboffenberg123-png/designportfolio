@@ -3,6 +3,7 @@ import ProjectTopBar from "@/components/ProjectTopBar";
 import ImageLed from "@/components/project-layouts/ImageLed";
 import Catalogue from "@/components/project-layouts/Catalogue";
 import Argument from "@/components/project-layouts/Argument";
+import SystemLayout from "@/components/project-layouts/SystemLayout";
 import { getProjectBySlug, getNextProject } from "@/lib/projects";
 
 export default async function ProsjektsidePage({
@@ -20,6 +21,7 @@ export default async function ProsjektsidePage({
   const LAYOUTS = {
     katalog: Catalogue,
     argumentet: Argument,
+    systemet: SystemLayout,
     bildeledet: ImageLed,
   } as const;
   const Layout = LAYOUTS[project.layout];
