@@ -30,7 +30,12 @@ export type Project = {
   // --- Argumentet ---
   angle: string;
   strategy: { label: string; value: string }[];
-  logo: { before?: string; beforeNote: string; after?: string; afterNote: string };
+  logo: {
+    before?: GalleryItem;
+    beforeNote: string;
+    after?: GalleryItem;
+    afterNote: string;
+  };
   carrier: { heading: string; lead: string; items: GalleryItem[] };
   designNote: string;
   special: { heading: string; images: GalleryItem[] };
@@ -76,6 +81,14 @@ type PayloadFindResponse<T> = { docs: T[] };
 
 function mediaUrl(m: PayloadMedia | string | undefined) {
   return cmsMediaUrl(typeof m === "object" ? m?.url : undefined);
+}
+
+/** A single upload with its pixel size, so a box can take the file's own shape. */
+function toItem(m: PayloadMedia | string | undefined): GalleryItem | undefined {
+  const url = mediaUrl(m);
+  if (!url) return undefined;
+  const media = typeof m === "object" ? m : undefined;
+  return { url, width: media?.width, height: media?.height };
 }
 
 /**
@@ -129,9 +142,9 @@ function toProject(doc: PayloadProject): Project {
       s.label && s.value ? [{ label: s.label, value: s.value }] : [],
     ),
     logo: {
-      before: mediaUrl(doc.logo?.before),
+      before: toItem(doc.logo?.before),
       beforeNote: doc.logo?.beforeNote ?? "",
-      after: mediaUrl(doc.logo?.after),
+      after: toItem(doc.logo?.after),
       afterNote: doc.logo?.afterNote ?? "",
     },
     carrier: {
