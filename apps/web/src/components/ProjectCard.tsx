@@ -19,7 +19,11 @@ export default function ProjectCard({
   ctaLabel = "Se mer",
 }: ProjectCardProps) {
   return (
-    <Link href={`/arbeid/${slug}`} className="group flex flex-col gap-16">
+    // 18 and 20 are written out rather than as gap-18/pb-20: neither is in the
+    // project's spacing scale, so those would fall through to Tailwind's own and
+    // land on 72px and 80px. The bottom padding is what opens up the row gap —
+    // 48 between rows plus 20 under each card.
+    <Link href={`/arbeid/${slug}`} className="group flex flex-col gap-[18px] pb-[20px]">
       <div className="relative aspect-square w-full overflow-hidden rounded-sm bg-line shadow-card transition-shadow duration-300 ease-out group-hover:shadow-card-hover">
         {imageUrl ? (
           <Image
@@ -47,7 +51,7 @@ export default function ProjectCard({
       </div>
 
       <div className="flex flex-col gap-8">
-        <span className="text-[22px] leading-[1.3] font-medium tracking-[-0.005em] text-ink capitalize">
+        <span className="text-[25px] leading-[1.3] font-medium tracking-[-0.005em] text-ink capitalize">
           {title}
         </span>
         <span className="text-base leading-[1.65] tracking-[-0.005em] text-ink">{category}</span>
