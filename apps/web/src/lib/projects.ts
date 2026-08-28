@@ -38,6 +38,13 @@ export type Project = {
     afterNote: string;
   };
   carrier: { heading: string; lead: string; items: GalleryItem[] };
+  // --- Systemet ---
+  system: {
+    lead: string;
+    interfaceNote: string;
+    workflowNote: string;
+    componentsNote: string;
+  };
   designNote: string;
   special: { heading: string; images: GalleryItem[] };
 };
@@ -77,6 +84,12 @@ type PayloadProject = {
   };
   designNote?: string;
   special?: { heading?: string; images?: { image?: PayloadMedia | string }[] };
+  system?: {
+    lead?: string;
+    interfaceNote?: string;
+    workflowNote?: string;
+    componentsNote?: string;
+  };
 };
 
 type PayloadFindResponse<T> = { docs: T[] };
@@ -156,6 +169,12 @@ function toProject(doc: PayloadProject): Project {
       items: toGallery(doc.carrier?.items),
     },
     designNote: doc.designNote ?? "",
+    system: {
+      lead: doc.system?.lead ?? "",
+      interfaceNote: doc.system?.interfaceNote ?? "",
+      workflowNote: doc.system?.workflowNote ?? "",
+      componentsNote: doc.system?.componentsNote ?? "",
+    },
     special: {
       heading: doc.special?.heading || "Designforslag til spesial-is",
       images: toGallery(doc.special?.images),

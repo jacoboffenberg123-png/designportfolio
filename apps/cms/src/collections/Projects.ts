@@ -70,7 +70,9 @@ export const Projects: CollectionConfig = {
       admin: {
         description:
           "Hero-bildet øverst på prosjektsiden. Vises bredt, i 9:5 — så motivet bør " +
-          "tåle å bli beskåret i høyden. I Katalog: gjerne hele serien samlet i ett bilde.",
+          "tåle å bli beskåret i høyden. I Katalog: gjerne hele serien samlet i ett bilde. " +
+          "Systemet har ingen hero; der brukes bildet bare som reserve for kortet i " +
+          "prosjektoversikten hvis feltet under står tomt.",
       },
     },
     {
@@ -85,7 +87,8 @@ export const Projects: CollectionConfig = {
     },
 
     // --- Faktatabell ---
-    // Rendres i denne rekkefølgen, og bare radene som har innhold.
+    // Rendres i denne rekkefølgen, og bare radene som har innhold. I Systemet
+    // overstyres hele tabellen av punktlisten lenger nede, hvis den er fylt ut.
     { name: "category", type: "text", required: true },
     { name: "year", type: "text", required: true },
     {
@@ -148,8 +151,7 @@ export const Projects: CollectionConfig = {
       name: "angle",
       type: "textarea",
       admin: {
-        // Både Argumentet og Systemet åpner med en vinkling under faktatabellen.
-        condition: (data: { layout?: string }) => isArgumentet(data) || isSystemet(data),
+        condition: isArgumentet,
         description:
           "Vises som «Vinkling», rett under faktatabellen. Her står lesningen som " +
           "skiller prosjektet fra briefen — hva du så som andre ikke så.",
@@ -259,6 +261,41 @@ export const Projects: CollectionConfig = {
               "over hele bredden. Tre stykker fyller raden.",
           },
           fields: [{ name: "image", type: "upload", relationTo: "media", required: true }],
+        },
+      ],
+    },
+
+    {
+      name: "system",
+      type: "group",
+      label: "Systemet — tekstene på siden",
+      admin: {
+        condition: isSystemet,
+        description:
+          "Avsnittene over hver seksjon. Diagrammene og bildetekstene under " +
+          "komponentene er tegnet i koden og kan ikke endres her — de beskriver " +
+          "hvordan siden faktisk er bygget.",
+      },
+      fields: [
+        {
+          name: "lead",
+          type: "textarea",
+          admin: { description: "Under tittelen, oppe i det tonede feltet med grafen." },
+        },
+        {
+          name: "interfaceNote",
+          type: "textarea",
+          admin: { description: "Over skjermbildene, under overskriften «Grensesnittet»." },
+        },
+        {
+          name: "workflowNote",
+          type: "textarea",
+          admin: { description: "Over sløyfen, under overskriften «Arbeidsflyten»." },
+        },
+        {
+          name: "componentsNote",
+          type: "textarea",
+          admin: { description: "Over komponentene, under overskriften «Komponentene»." },
         },
       ],
     },

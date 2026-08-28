@@ -18,6 +18,22 @@ export default function SystemLayout({ project }: { project: Project; nextSlug?:
   // rather than assembled from the shared fields, which don't have a row for
   // "49 commits". Falls back to the standard table when nothing is filled in.
   const facts = project.strategy;
+  // The section copy is editorial, so it comes from the CMS. The fallbacks keep
+  // the page readable if a field is left empty; the diagrams and the component
+  // captions stay in code, because they describe how this is actually built.
+  const { system } = project;
+  const lead =
+    system.lead ||
+    "Tegnet i Figma, bygget i kode sammen med en agent i terminalen, driftet på fire tjenester. Dette er kartet over hvordan delene henger sammen.";
+  const interfaceNote =
+    system.interfaceNote ||
+    "Tre sider av de samme delene. Hele paletten styres av én skyvekontroll som går trinnløst fra lyst til mørkt — den bytter ikke mellom to temaer, den regner ut hvert steg.";
+  const workflowNote =
+    system.workflowNote ||
+    "Prosessen jeg jobbet med. Agenten leser Figma-filen direkte gjennom en Figma MCP, så en endring i en komponent kan hentes ut som tall og ikke som beskrivelse. Det korteste jeg fikk en endring fra tegning til publisert side var under to minutter.";
+  const componentsNote =
+    system.componentsNote ||
+    "Tolv komponenter i Figma, hver med sin motpart i koden. Instansene under er ikke bilder — det er de samme komponentene siden bygges av, hentet rett fra biblioteket.";
 
   return (
     <main className="flex flex-1 flex-col">
@@ -30,12 +46,9 @@ export default function SystemLayout({ project }: { project: Project; nextSlug?:
           <h1 className="text-[clamp(26px,7vw,40px)] leading-[1.1] font-bold tracking-[-0.015em] break-words text-ink uppercase">
             {project.title}
           </h1>
-          {project.intro ? (
-            <p className="text-base leading-[1.65] tracking-[-0.005em] text-ink">
-              Tegnet i Figma, bygget i kode sammen med en agent i terminalen, driftet på fire
-              tjenester. Dette er kartet over hvordan delene henger sammen.
-            </p>
-          ) : null}
+          <p className="text-base leading-[1.65] tracking-[-0.005em] whitespace-pre-line text-ink">
+            {lead}
+          </p>
         </div>
       </section>
 
@@ -76,11 +89,7 @@ export default function SystemLayout({ project }: { project: Project; nextSlug?:
           <div className="flex flex-col gap-32">
             <div className="flex max-w-[760px] flex-col gap-16">
               <Eyebrow>Grensesnittet</Eyebrow>
-              <Body>
-                Tre sider av de samme delene. Hele paletten styres av én skyvekontroll som går
-                trinnløst fra lyst til mørkt — den bytter ikke mellom to temaer, den regner ut
-                hvert steg.
-              </Body>
+              <Body>{interfaceNote}</Body>
             </div>
             {/* One box, both screens, matched heights: on a phone they stack and
                 each keeps its own shape. */}
@@ -118,11 +127,7 @@ export default function SystemLayout({ project }: { project: Project; nextSlug?:
         <div className="flex flex-col gap-32">
           <div className="flex max-w-[760px] flex-col gap-16">
             <Eyebrow>Arbeidsflyten</Eyebrow>
-            <Body>
-              Prosessen jeg jobbet med. Agenten leser Figma-filen direkte gjennom en Figma MCP,
-              så en endring i en komponent kan hentes ut som tall og ikke som beskrivelse. Det
-              korteste jeg fikk en endring fra tegning til publisert side var under to minutter.
-            </Body>
+            <Body>{workflowNote}</Body>
           </div>
           <WorkflowLoop />
         </div>
@@ -132,10 +137,7 @@ export default function SystemLayout({ project }: { project: Project; nextSlug?:
         <div className="flex scroll-mt-96 flex-col gap-32" id="komponentene">
           <div className="flex max-w-[760px] flex-col gap-16">
             <Eyebrow>Komponentene</Eyebrow>
-            <Body>
-              Tolv komponenter i Figma, hver med sin motpart i koden. Instansene under er ikke
-              bilder — det er de samme komponentene siden bygges av, hentet rett fra biblioteket.
-            </Body>
+            <Body>{componentsNote}</Body>
           </div>
           <LiveComponents />
         </div>
