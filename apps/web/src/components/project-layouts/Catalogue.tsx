@@ -51,7 +51,7 @@ export default function Catalogue({
             <Eyebrow>Serien</Eyebrow>
             <div className="grid grid-cols-2 gap-x-24 gap-y-32 md:grid-cols-4">
               {project.gallery.map((g, i) => (
-                <div key={g.url} className="flex flex-col gap-8">
+                <div key={`${i}-${g.url}`} className="flex flex-col gap-8">
                   <Figure
                     src={g.url}
                     ratio="1 / 1"

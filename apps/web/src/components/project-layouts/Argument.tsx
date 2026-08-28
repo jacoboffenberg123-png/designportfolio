@@ -31,8 +31,8 @@ function Triptych({ images }: { images: GalleryItem[] }) {
     // at the end of the band, which reads as a mistake when nothing else on the
     // page bleeds to the edge.
     <div className="flex flex-wrap">
-      {images.map((g) => (
-        <div key={g.url} className="grow basis-full sm:basis-1/2 md:basis-1/3">
+      {images.map((g, i) => (
+        <div key={`${i}-${g.url}`} className="grow basis-full sm:basis-1/2 md:basis-1/3">
           <Figure
             src={g.url}
             ratio={ratio}
@@ -178,9 +178,9 @@ export default function Argument({
               // 25% upscale, which is what made the row look soft. They still
               // shrink below the cap when the column can't hold three.
               <div className="flex flex-col gap-24 sm:flex-row sm:justify-between">
-                {carrier.items.map((item) => (
+                {carrier.items.map((item, i) => (
                   <div
-                    key={item.url}
+                    key={`${i}-${item.url}`}
                     className="flex flex-col gap-8 sm:flex-1"
                     style={{ maxWidth: CARRIER_MAX }}
                   >

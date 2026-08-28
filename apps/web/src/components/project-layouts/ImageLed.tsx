@@ -64,8 +64,8 @@ export default function ImageLed({
       {afterChallenge.length > 0 ? (
         <Band className="pt-64">
           <div className="grid grid-cols-1 gap-24 sm:grid-cols-3">
-            {afterChallenge.map((g) => (
-              <Figure key={g.url} src={g.url} ratio="4 / 5" sizes="(min-width: 640px) 33vw, 100vw" />
+            {afterChallenge.map((g, i) => (
+              <Figure key={`${i}-${g.url}`} src={g.url} ratio="4 / 5" sizes="(min-width: 640px) 33vw, 100vw" />
             ))}
           </div>
         </Band>
@@ -83,8 +83,8 @@ export default function ImageLed({
       {afterProcess.length > 0 ? (
         <Band className="pt-64">
           <div className="grid grid-cols-1 gap-24 sm:grid-cols-3">
-            {afterProcess.map((g) => (
-              <Figure key={g.url} src={g.url} ratio="4 / 5" sizes="(min-width: 640px) 33vw, 100vw" />
+            {afterProcess.map((g, i) => (
+              <Figure key={`${i}-${g.url}`} src={g.url} ratio="4 / 5" sizes="(min-width: 640px) 33vw, 100vw" />
             ))}
           </div>
         </Band>
@@ -102,9 +102,9 @@ export default function ImageLed({
               </div>
             ) : null}
             <div className="grid grid-cols-1 gap-24 md:grid-cols-2">
-              {closing.map((g) => (
+              {closing.map((g, i) => (
                 <Figure
-                  key={g.url}
+                  key={`${i}-${g.url}`}
                   src={g.url}
                   ratio="4 / 3"
                   sizes="(min-width: 768px) 50vw, 100vw"
