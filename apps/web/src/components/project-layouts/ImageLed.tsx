@@ -22,9 +22,12 @@ export default function ImageLed({
   project: Project;
   nextSlug?: string;
 }) {
-  // First two images sit side by side, the rest fall into a three-column grid.
-  const pair = project.gallery.slice(0, 2);
-  const grid = project.gallery.slice(2);
+  // Three groups: a row of three after each text block, then whatever is left
+  // under its own heading in a wider format. Each group drops out when empty,
+  // so a project with four images still reads properly.
+  const afterChallenge = project.gallery.slice(0, 3);
+  const afterProcess = project.gallery.slice(3, 6);
+  const closing = project.gallery.slice(6);
 
   return (
     <main className="flex flex-1 flex-col">
@@ -58,11 +61,11 @@ export default function ImageLed({
         </Band>
       ) : null}
 
-      {pair.length > 0 ? (
-        <Band className="pt-96">
-          <div className="grid grid-cols-1 gap-24 md:grid-cols-2">
-            {pair.map((g) => (
-              <Figure key={g.url} src={g.url} ratio="4 / 3" sizes="(min-width: 768px) 50vw, 100vw" />
+      {afterChallenge.length > 0 ? (
+        <Band className="pt-64">
+          <div className="grid grid-cols-1 gap-24 sm:grid-cols-3">
+            {afterChallenge.map((g) => (
+              <Figure key={g.url} src={g.url} ratio="4 / 5" sizes="(min-width: 640px) 33vw, 100vw" />
             ))}
           </div>
         </Band>
@@ -77,12 +80,37 @@ export default function ImageLed({
         </Band>
       ) : null}
 
-      {grid.length > 0 ? (
+      {afterProcess.length > 0 ? (
         <Band className="pt-64">
-          <div className="grid grid-cols-1 gap-24 md:grid-cols-3">
-            {grid.map((g) => (
-              <Figure key={g.url} src={g.url} ratio="4 / 5" sizes="33vw" />
+          <div className="grid grid-cols-1 gap-24 sm:grid-cols-3">
+            {afterProcess.map((g) => (
+              <Figure key={g.url} src={g.url} ratio="4 / 5" sizes="(min-width: 640px) 33vw, 100vw" />
             ))}
+          </div>
+        </Band>
+      ) : null}
+
+      {closing.length > 0 ? (
+        // The heading sits a long way below the row above it — the drawing puts
+        // 96 on the section and another 96 on the label, which reads as a
+        // deliberate break before the last set rather than a continuation.
+        <Band className="pt-96">
+          <div className="flex flex-col">
+            {project.galleryHeading ? (
+              <div className="max-w-[760px] pt-96 pb-[20px]">
+                <Eyebrow>{project.galleryHeading}</Eyebrow>
+              </div>
+            ) : null}
+            <div className="grid grid-cols-1 gap-24 md:grid-cols-2">
+              {closing.map((g) => (
+                <Figure
+                  key={g.url}
+                  src={g.url}
+                  ratio="4 / 3"
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                />
+              ))}
+            </div>
           </div>
         </Band>
       ) : null}

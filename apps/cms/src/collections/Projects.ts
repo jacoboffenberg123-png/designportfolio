@@ -260,6 +260,19 @@ export const Projects: CollectionConfig = {
       ],
     },
 
+    {
+      name: "galleryHeading",
+      type: "text",
+      admin: {
+        condition: isBildeledet,
+        description:
+          "Overskrift over den siste bilderaden, f.eks. «Render i Blender». " +
+          "De seks første bildene går i to rader på tre; alt fra det sjuende og " +
+          "utover havner under denne overskriften, i et bredere format. La feltet " +
+          "stå tomt hvis raden ikke trenger en tittel.",
+      },
+    },
+
     // --- Bilder ---
     {
       name: "gallery",
@@ -268,7 +281,8 @@ export const Projects: CollectionConfig = {
       admin: {
         description:
           "I Katalog er dette hele serien, i rekkefølge, nummerert 001 og oppover. " +
-          "I Bildeledet går de to første side om side, resten i tre kolonner under. " +
+          "I Bildeledet går de tre første etter «Utfordringen», de tre neste etter " +
+          "«Prosessen», og resten under overskriften over. " +
           "I Argumentet er dette «Endelig design» — de går kant i kant over hele bredden. " +
           "I Systemet er de to første skjermbildene av siden selv: desktop først, så telefon.",
       },
