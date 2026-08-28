@@ -1,7 +1,7 @@
 import { Eyebrow } from "./shared";
 
 /**
- * The diagrams are drawn as real elements rather than exported images: they
+ * The workflow loop, drawn as real elements rather than an exported image: it
  * reflow on a phone, stay sharp at any zoom, and travel with the dimmer like
  * the rest of the page. An image would do none of that.
  */
@@ -36,56 +36,6 @@ function Arrow({ label }: { label?: string }) {
         <line x1="0" y1="4" x2="36" y2="4" strokeWidth="1" className="stroke-line" />
         <path d="M36 0.5 L43 4 L36 7.5 Z" className="fill-line" />
       </svg>
-    </div>
-  );
-}
-
-function Node({
-  host,
-  tech,
-  desc,
-  sunken = false,
-}: {
-  host: string;
-  tech: string;
-  desc: string;
-  sunken?: boolean;
-}) {
-  return (
-    <div
-      className={`flex flex-1 flex-col gap-4 rounded-sm border border-line p-24 ${
-        sunken ? "bg-sunken" : "bg-paper"
-      }`}
-    >
-      <Eyebrow>
-        <span className="text-muted">{host}</span>
-      </Eyebrow>
-      <span className="text-xl leading-[1.3] font-medium text-ink">{tech}</span>
-      <span className="text-xs leading-[1.5] text-muted">{desc}</span>
-    </div>
-  );
-}
-
-/** Where a request goes, and which service owns which job. */
-export function SystemMap() {
-  return (
-    <div className="flex flex-col xl:flex-row xl:items-start">
-      <Node host="Klient" tech="Nettleser" desc="Ber om en side" />
-      <Arrow label="HTTP" />
-      <Node
-        host="Netlify"
-        tech="Next.js 16"
-        desc="Rendrer siden på server, cacher i 60 s"
-      />
-      <Arrow label="fetch" />
-      <Node host="Render" tech="Payload CMS" desc="REST-API og redigering" />
-      <Arrow label="lagring" />
-      {/* The two stores hang off the CMS together, so they share one connector
-          instead of each getting an elbow of its own. */}
-      <div className="flex flex-1 flex-col gap-12">
-        <Node host="Neon" tech="PostgreSQL" desc="Tekst og struktur" sunken />
-        <Node host="Cloudflare" tech="R2" desc="Bilder og filer" sunken />
-      </div>
     </div>
   );
 }
@@ -131,11 +81,11 @@ export function WorkflowLoop() {
           <path d="M4.5 0 L9 8 L0 8 Z" className="fill-line" />
         </svg>
         <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-paper px-16 text-xs leading-[1.5] text-muted">
-          Måler resultatet og retter det som ikke stemmer
+          Testere og iterere
         </span>
       </div>
       <p className="text-xs leading-[1.5] text-muted xl:hidden">
-        …og tilbake til start: måler resultatet og retter det som ikke stemmer.
+        …og tilbake til start: teste og iterere.
       </p>
     </div>
   );

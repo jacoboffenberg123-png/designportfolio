@@ -13,6 +13,8 @@
   --color-dot: #d5d5d5;
   /* The plane behind the page, revealed when the blind rolls down. */
   --color-sunken: #f2f2f2;
+  /* A green-tinted sunken. Used for the panels on the Systemet layout. */
+  --color-accent: #eef8f1;
   /* Translucent surfaces for controls that sit on top of photography. */
   --color-scrim: rgb(10 10 10 / 0.3);
   --color-glass: rgb(255 255 255 / 0.22);
@@ -25,6 +27,7 @@
   --color-line: var(--color-line);
   --color-muted: var(--color-muted);
   --color-sunken: var(--color-sunken);
+  --color-accent: var(--color-accent);
   --color-scrim: var(--color-scrim);
   --color-glass: var(--color-glass);
 

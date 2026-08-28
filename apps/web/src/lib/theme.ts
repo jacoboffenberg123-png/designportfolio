@@ -76,6 +76,11 @@ export function applyDim(t: number) {
   // The surface behind the page, revealed when the blind rolls down. Just far
   // enough off paper to read as a different plane.
   write("sunken", mix(paper, ink, 0.053));
+  // Sunken with a green cast — the tinted panels on the Systemet layout. The
+  // offset lands on #eef8f1 exactly at t=0 and rides the same mix afterwards,
+  // so the panels stay a tinted plane when the page goes dark rather than
+  // freezing as pale green on near-black.
+  write("accent", mix(paper, ink, 0.053), [-4, 6, -1]);
 }
 
 /**

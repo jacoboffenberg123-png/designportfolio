@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import DotGrid from "@/components/DotGrid";
+import NavTabs from "@/components/NavTabs";
 import PanelToggle from "@/components/PanelToggle";
 import PillLink from "@/components/PillLink";
 import ThemeSlider from "@/components/ThemeSlider";
@@ -16,7 +17,7 @@ import { Eyebrow } from "./shared";
  * the footer.
  */
 
-function Panel({
+function Tile({
   name,
   note,
   children,
@@ -29,7 +30,11 @@ function Panel({
 }) {
   return (
     <div className={`flex flex-col gap-16 ${wide ? "" : "flex-1"}`}>
-      <div className="flex min-h-[96px] items-center justify-center rounded-sm bg-sunken px-16 py-24">
+      <div
+        className={`flex items-center justify-center rounded-sm bg-accent px-24 ${
+          wide ? "py-32" : "h-[104px]"
+        }`}
+      >
         {children}
       </div>
       <div className="flex flex-col gap-4">
@@ -42,50 +47,66 @@ function Panel({
 
 export default function LiveComponents() {
   // The demo toggle owns its own state — it isn't wired to the real panel, so
-  // pressing it here can't roll the page down under you.
+  // pressing it here can't roll the page down under the reader.
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex flex-col gap-48">
-      <Panel
-        wide
-        name="ThemeSlider"
-        note="Trinnløs, ikke to temaer. Bakgrunnen glir med en smootherstep-kurve, mens tekstfargen velges framfor å blandes — en grå midt imellom ville vært usynlig mot begge. Derfor bytter blekket brått når bakgrunnen krysser 0,179 i relativ luminans. Dra i den: hele siden regnes om, inkludert denne boksen."
-      >
-        <ThemeSlider />
-      </Panel>
-
+    <div className="flex flex-col gap-24">
       <div className="flex flex-col gap-24 sm:flex-row">
-        <Panel
+        <Tile
+          name="ThemeSlider"
+          note="Trinnløs lys/mørk. Fargene regnes ut per steg, ikke byttet mellom to sett. Dra i den — hele siden regnes om."
+        >
+          <ThemeSlider />
+        </Tile>
+        <Tile
           name="PanelToggle"
-          note="Pillen kollapser til en sirkel når panelet er åpent. Bredden måles fra etiketten, ikke fra knappen — knappen rapporterer mellomverdier mens den animerer."
+          note="Pillen som kollapser til en sirkel når panelet er åpent. Trykk på den."
         >
           <PanelToggle open={open} onToggle={() => setOpen((v) => !v)} />
-        </Panel>
-        <Panel
-          name="ThemeToggle"
-          note="Erstatter slideren på telefon, der et 148 px spor ikke får plass på linjen. Viser ikonet for der et trykk tar deg."
+        </Tile>
+        <Tile
+          name="NavTabs"
+          note="Fanevelger der den hvite pillen glir mellom fanene. Lenker videre til CV-siden."
         >
-          <ThemeToggle />
-        </Panel>
-        <Panel
-          name="Button"
-          // Set in caps by the eyebrow style, "PillLink" reads as a typo.
-          note="Designsystemets sekundærknapp — PillLink i koden. Kantløs pille på en svak blekktone, med samme hover-steg som glass-pillen."
-        >
-          <PillLink href="#komponentene">Se mer</PillLink>
-        </Panel>
+          <NavTabs />
+        </Tile>
       </div>
 
-      <Panel
+      <div className="flex flex-col gap-24 sm:flex-row">
+        <Tile
+          name="Button"
+          note="Tre varianter i to størrelser. Secondary er standardpillen — den er PillLink i koden."
+        >
+          {/* Anchors back to this section, so pressing it demonstrates the hover
+              and press states without carrying the reader off the page. */}
+          <PillLink href="#komponentene">Se mer</PillLink>
+        </Tile>
+        <Tile
+          name="Tag"
+          note="Nøytral chip — brukes til programmer på CV-siden. Den eneste her uten en tilstand å trykke på."
+        >
+          <span className="rounded-sm bg-ink/5 px-12 py-8 text-xs leading-[1.5] text-ink">
+            Figma
+          </span>
+        </Tile>
+        <Tile
+          name="ThemeToggle"
+          note="Rund bryter som erstatter slideren på telefon. Viser ikonet for der et trykk tar deg."
+        >
+          <ThemeToggle />
+        </Tile>
+      </div>
+
+      <Tile
         wide
         name="FooterDots"
-        note="Rutenettet i bunnteksten, tegnet på canvas. Prikkene mørkner der pekeren er og falmer tilbake med forsinkelse, så sporet etter hånden henger igjen et øyeblikk. Rutenettet tettes på smale skjermer så J-en og O-en fortsatt kan leses."
+        note="Prikkerutenettet i bunnteksten. Prikkene mørkner der pekeren er, og falmer tilbake med forsinkelse. Rutenettet tettes på smale skjermer så J-en og O-en fortsatt kan leses."
       >
         <div className="w-full">
           <DotGrid />
         </div>
-      </Panel>
+      </Tile>
     </div>
   );
 }

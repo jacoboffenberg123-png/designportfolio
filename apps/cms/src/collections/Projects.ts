@@ -158,13 +158,16 @@ export const Projects: CollectionConfig = {
     {
       name: "strategy",
       type: "array",
-      labels: { singular: "Punkt", plural: "Strategipunkter" },
-      maxRows: 4,
+      labels: { singular: "Punkt", plural: "Punkter" },
+      maxRows: 6,
       admin: {
-        condition: isArgumentet,
+        // Samme form — etikett og verdi — men lest ulikt av de to layoutene.
+        condition: (data: { layout?: string }) => isArgumentet(data) || isSystemet(data),
         description:
-          "Vises som «Strategien», i én rad. Fire punkter fyller raden pent; " +
-          "færre blir bredere, flere brekker til neste linje.",
+          "I Argumentet vises dette som «Strategien», i én rad — fire punkter fyller " +
+          "raden pent. I Systemet er det faktatabellen ved siden av ingressen, " +
+          "f.eks. «Rolle», «Periode», «Omfang». La den stå tom for å bruke de " +
+          "vanlige feltene (Emne, Kategori, År, Varighet, Verktøy) i stedet.",
       },
       fields: [
         {
