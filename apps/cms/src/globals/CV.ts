@@ -23,6 +23,15 @@ export const CV: GlobalConfig = {
         { name: "program", type: "text", required: true },
         { name: "school", type: "text", required: true },
         { name: "dates", type: "text", required: true },
+        {
+          name: "note",
+          type: "text",
+          admin: {
+            description:
+              "Én linje om innholdet, f.eks. «20 ukers grunnforløp med eksamen». " +
+              "Står under skole og årstall. La feltet stå tomt for å utelate linjen.",
+          },
+        },
       ],
     },
     {

@@ -3,7 +3,7 @@ import { cmsFetch, cmsMediaUrl } from "./cms";
 export type CVData = {
   bio: string;
   avatarUrl?: string;
-  education: { program: string; school: string; dates: string }[];
+  education: { program: string; school: string; dates: string; note?: string }[];
   skills: string[];
   contactEmail: string;
   linkedin: string;
@@ -15,7 +15,7 @@ type PayloadMedia = { url?: string };
 type PayloadCV = {
   bio?: string;
   avatar?: PayloadMedia | string;
-  education?: { program: string; school: string; dates: string }[];
+  education?: { program: string; school: string; dates: string; note?: string }[];
   skills?: { label: string }[];
   contactEmail?: string;
   linkedin?: string;

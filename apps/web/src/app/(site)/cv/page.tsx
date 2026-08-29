@@ -23,14 +23,19 @@ export default async function CVPage() {
 
       <Section title="Utdanning">
         <div className="flex flex-col gap-16">
-          {cv.education.map((ed) => (
-            <div key={ed.program + ed.dates} className="flex flex-col gap-8">
+          {cv.education.map((ed, i) => (
+            // Keyed by position: the same programme can appear twice at one
+            // school, and two rows with the same name would collide.
+            <div key={`${i}-${ed.program}`} className="flex flex-col gap-8">
               <span className="text-[13px] leading-[1.3] font-medium text-ink">
                 {ed.program}
               </span>
               <span className="text-xs leading-[1.5] text-muted">
                 {ed.school} — {ed.dates}
               </span>
+              {ed.note ? (
+                <span className="text-xs leading-[1.5] text-muted">{ed.note}</span>
+              ) : null}
             </div>
           ))}
         </div>
