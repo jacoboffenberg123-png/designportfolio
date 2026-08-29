@@ -79,7 +79,7 @@ export function Figure({
         // The grey stays while there's nothing to show — otherwise a missing
         // image would be an invisible hole rather than an obvious gap.
         contain && src ? "" : "bg-line"
-      } ${rounded ? "rounded-sm shadow-card" : ""}`}
+      } ${rounded ? "rounded-sm" : ""}`}
       style={{ aspectRatio: ratio }}
     >
       {src ? (

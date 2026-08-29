@@ -62,7 +62,7 @@ export default function NavTabs({
   return (
     // Glass: a 20% ink tint over a blur, rather than a solid pill.
     // Tighter below md so the whole bar fits one phone line.
-    <nav className="relative flex items-center rounded-pill bg-ink/20 p-[3px] shadow-card backdrop-blur-[10px] md:p-4">
+    <nav className="relative flex items-center rounded-pill bg-ink/20 p-[3px] backdrop-blur-[10px] md:p-4">
       <span
         aria-hidden
         className="absolute top-[3px] bottom-[3px] left-0 rounded-pill bg-surface transition-[transform,width] duration-300 ease-out md:top-4 md:bottom-4"

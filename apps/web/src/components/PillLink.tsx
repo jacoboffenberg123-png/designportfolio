@@ -5,7 +5,7 @@ import Link from "next/link";
  * Hover deepens the fill by the same opacity step the glass "Se mer" pill uses.
  */
 const CLASSES =
-  "inline-flex h-[32px] items-center justify-center whitespace-nowrap rounded-pill bg-ink/10 px-12 text-[11px] leading-[1.5] text-ink shadow-card transition-[background-color,box-shadow] duration-200 hover:bg-ink/20 hover:shadow-card-hover md:h-auto md:px-16 md:py-8 md:text-xs";
+  "inline-flex h-[32px] items-center justify-center whitespace-nowrap rounded-pill bg-ink/10 px-12 text-[11px] leading-[1.5] text-ink transition-colors duration-200 hover:bg-ink/20 md:h-auto md:px-16 md:py-8 md:text-xs";
 
 export default function PillLink({
   href,

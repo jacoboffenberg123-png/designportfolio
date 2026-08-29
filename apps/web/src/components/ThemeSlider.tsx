@@ -43,7 +43,7 @@ export default function ThemeSlider({
 
   return (
     <div
-      className="relative shrink-0 overflow-hidden rounded-pill shadow-card"
+      className="relative shrink-0 overflow-hidden rounded-pill"
       style={{
         width: WIDTH,
         height: HEIGHT,
@@ -82,8 +82,8 @@ export default function ThemeSlider({
           top: (HEIGHT - KNOB) / 2,
           width: KNOB,
           height: KNOB,
-          // Thin enough to read the sun and moon straight through; the ring and
-          // the shadow are what give it an edge, not the fill.
+          // Thin enough to read the sun and moon straight through; the ring is
+          // what gives it an edge, not the fill.
           // A sheen rather than a backdrop blur: the icons' strokes are ~1.3px,
           // and any blur at all smears them into the track instead of letting
           // them show through. The gradient is what makes it read as glass.
@@ -91,8 +91,7 @@ export default function ThemeSlider({
             "linear-gradient(160deg, rgb(255 255 255 / 0.34), rgb(255 255 255 / 0.06))",
           // A mid-grey ring rather than a white or black one, so the knob keeps
           // an edge at both ends of the track.
-          boxShadow:
-            "inset 0 0 0 1px rgb(140 135 125 / 0.6), 0 2px 10px rgb(10 10 10 / 0.22)",
+          boxShadow: "inset 0 0 0 1px rgb(140 135 125 / 0.6)",
           transform: `translateX(${value * TRAVEL}px)`,
         }}
       />

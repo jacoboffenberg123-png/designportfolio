@@ -34,7 +34,7 @@ export default function ThemeToggle({
       aria-label={dark ? "Bytt til lys modus" : "Bytt til mørk modus"}
       aria-pressed={dark}
       style={{ width: size, height: size }}
-      className="flex shrink-0 items-center justify-center rounded-pill bg-ink/10 text-ink shadow-card transition-[background-color,box-shadow] duration-200 hover:bg-ink/20 hover:shadow-card-hover"
+      className="flex shrink-0 items-center justify-center rounded-pill bg-ink/10 text-ink transition-colors duration-200 hover:bg-ink/20"
     >
       {dark ? <Sun size={size * 0.45} /> : <Moon size={size * 0.45} />}
     </button>

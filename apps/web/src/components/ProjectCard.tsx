@@ -24,7 +24,7 @@ export default function ProjectCard({
     // land on 72px and 80px. The bottom padding is what opens up the row gap —
     // 48 between rows plus 20 under each card.
     <Link href={`/arbeid/${slug}`} className="group flex flex-col gap-[18px] pb-[20px]">
-      <div className="relative aspect-square w-full overflow-hidden rounded-sm bg-line shadow-card transition-shadow duration-300 ease-out group-hover:shadow-card-hover">
+      <div className="relative aspect-square w-full overflow-hidden rounded-sm bg-line">
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -44,7 +44,7 @@ export default function ProjectCard({
         </span>
 
         <div className="absolute inset-x-0 bottom-32 flex justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="rounded-pill bg-glass px-16 py-8 text-xs leading-[1.2] font-medium tracking-[0.08em] text-white uppercase shadow-pill backdrop-blur-[17px] transition-colors duration-200 hover:bg-white/35">
+          <span className="rounded-pill bg-glass px-16 py-8 text-xs leading-[1.2] font-medium tracking-[0.08em] text-white uppercase backdrop-blur-[17px] transition-colors duration-200 hover:bg-white/35">
             {ctaLabel}
           </span>
         </div>
