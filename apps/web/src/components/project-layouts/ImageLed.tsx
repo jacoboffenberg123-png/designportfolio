@@ -28,6 +28,7 @@ export default function ImageLed({
   const afterChallenge = project.gallery.slice(0, 3);
   const afterProcess = project.gallery.slice(3, 6);
   const closing = project.gallery.slice(6);
+  const headings = project.galleryHeadings;
 
   return (
     <main className="flex flex-1 flex-col">
@@ -63,10 +64,17 @@ export default function ImageLed({
 
       {afterChallenge.length > 0 ? (
         <Band className="pt-64">
-          <div className="grid grid-cols-1 gap-24 sm:grid-cols-3">
-            {afterChallenge.map((g, i) => (
-              <Figure key={`${i}-${g.url}`} src={g.url} ratio="4 / 5" sizes="(min-width: 640px) 33vw, 100vw" />
-            ))}
+          <div className="flex flex-col">
+            {headings.first ? (
+              <div className="pb-[20px]">
+                <Eyebrow>{headings.first}</Eyebrow>
+              </div>
+            ) : null}
+            <div className="grid grid-cols-1 gap-24 sm:grid-cols-3">
+              {afterChallenge.map((g, i) => (
+                <Figure key={`${i}-${g.url}`} src={g.url} ratio="4 / 5" sizes="(min-width: 640px) 33vw, 100vw" />
+              ))}
+            </div>
           </div>
         </Band>
       ) : null}
@@ -82,10 +90,17 @@ export default function ImageLed({
 
       {afterProcess.length > 0 ? (
         <Band className="pt-64">
-          <div className="grid grid-cols-1 gap-24 sm:grid-cols-3">
-            {afterProcess.map((g, i) => (
-              <Figure key={`${i}-${g.url}`} src={g.url} ratio="4 / 5" sizes="(min-width: 640px) 33vw, 100vw" />
-            ))}
+          <div className="flex flex-col">
+            {headings.second ? (
+              <div className="pb-[20px]">
+                <Eyebrow>{headings.second}</Eyebrow>
+              </div>
+            ) : null}
+            <div className="grid grid-cols-1 gap-24 sm:grid-cols-3">
+              {afterProcess.map((g, i) => (
+                <Figure key={`${i}-${g.url}`} src={g.url} ratio="4 / 5" sizes="(min-width: 640px) 33vw, 100vw" />
+              ))}
+            </div>
           </div>
         </Band>
       ) : null}
@@ -96,9 +111,9 @@ export default function ImageLed({
         // deliberate break before the last set rather than a continuation.
         <Band className="pt-96">
           <div className="flex flex-col">
-            {project.galleryHeading ? (
+            {headings.third ? (
               <div className="max-w-[760px] pt-96 pb-[20px]">
-                <Eyebrow>{project.galleryHeading}</Eyebrow>
+                <Eyebrow>{headings.third}</Eyebrow>
               </div>
             ) : null}
             <div className="grid grid-cols-1 gap-24 md:grid-cols-2">

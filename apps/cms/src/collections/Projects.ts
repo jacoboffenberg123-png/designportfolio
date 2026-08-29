@@ -301,16 +301,33 @@ export const Projects: CollectionConfig = {
     },
 
     {
-      name: "galleryHeading",
-      type: "text",
+      name: "galleryHeadings",
+      type: "group",
+      label: "Overskrifter over bilderadene",
       admin: {
         condition: isBildeledet,
         description:
-          "Overskrift over den siste bilderaden, f.eks. «Render i Blender». " +
-          "De seks første bildene går i to rader på tre; alt fra det sjuende og " +
-          "utover havner under denne overskriften, i et bredere format. La feltet " +
-          "stå tomt hvis raden ikke trenger en tittel.",
+          "Bildene deles i tre rader: de tre første, de tre neste, og resten. " +
+          "Hver rad kan ha sin egen overskrift — la et felt stå tomt for å " +
+          "utelate den.",
       },
+      fields: [
+        {
+          name: "first",
+          type: "text",
+          admin: { description: "Over de tre første bildene, f.eks. «Tre formkonsepter»." },
+        },
+        {
+          name: "second",
+          type: "text",
+          admin: { description: "Over de tre neste bildene." },
+        },
+        {
+          name: "third",
+          type: "text",
+          admin: { description: "Over den siste raden, f.eks. «Render i Blender»." },
+        },
+      ],
     },
 
     // --- Bilder ---
