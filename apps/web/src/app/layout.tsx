@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import AboutPanel from "@/components/AboutPanel";
-import BlindShell from "@/components/BlindShell";
 import Footer from "@/components/Footer";
 import { getCV } from "@/lib/cv";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
@@ -38,15 +36,18 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       {/* The header lives in each page rather than here: layouts persist across
           navigation, so a header in the layout could never morph between the
           site header and the project page's top bar. */}
-      <body className="min-h-full bg-sunken text-ink font-sans">
-        <BlindShell panel={<AboutPanel />}>
+      {/* Paper rather than sunken: the grey used to be the surface revealed
+          behind the roll-down panel. With that gone it would only ever show as
+          a mismatched band on an overscroll bounce. */}
+      <body className="min-h-full bg-paper text-ink font-sans">
+        <div className="flex min-h-dvh flex-col bg-paper">
           {children}
           <Footer
             contactEmail={cv.contactEmail}
             linkedin={cv.linkedin}
             instagram={cv.instagram}
           />
-        </BlindShell>
+        </div>
       </body>
     </html>
   );

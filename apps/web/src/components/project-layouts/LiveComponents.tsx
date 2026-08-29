@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import DotGrid from "@/components/DotGrid";
 import NavTabs from "@/components/NavTabs";
-import PanelToggle from "@/components/PanelToggle";
 import PillLink from "@/components/PillLink";
 import ThemeSlider from "@/components/ThemeSlider";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -28,11 +27,12 @@ function Tile({
   name: string;
   note: string;
   children: React.ReactNode;
+  /** Taller stage for the dot grid, which needs room to read. */
   wide?: boolean;
   stageRef?: React.Ref<HTMLDivElement>;
 }) {
   return (
-    <div className={`flex flex-col gap-16 ${wide ? "" : "flex-1"}`}>
+    <div className="flex flex-col gap-16">
       <div
         ref={stageRef}
         className={`flex items-center justify-center rounded-sm bg-accent px-24 ${
@@ -66,7 +66,6 @@ export default function LiveComponents() {
   const [sliderDim, setSliderDim] = useState(0);
   const [toggleDim, setToggleDim] = useState(0);
   const [tab, setTab] = useState(0);
-  const [open, setOpen] = useState(false);
   const [pressed, setPressed] = useState(0);
 
   const sliderStage = useScopedDim(sliderDim);
@@ -74,7 +73,9 @@ export default function LiveComponents() {
 
   return (
     <div className="flex flex-col gap-24">
-      <div className="flex flex-col gap-24 sm:flex-row">
+      {/* A grid rather than two fixed rows: with five tiles the last row holds
+          two, and each keeps a column's width instead of stretching to half. */}
+      <div className="grid gap-24 sm:grid-cols-2 lg:grid-cols-3">
         <Tile
           stageRef={sliderStage}
           name="ThemeSlider"
@@ -83,20 +84,11 @@ export default function LiveComponents() {
           <ThemeSlider value={sliderDim} onChange={setSliderDim} />
         </Tile>
         <Tile
-          name="PanelToggle"
-          note={`Pillen kollapser til en sirkel når panelet er åpent. Nå: ${open ? "åpen" : "lukket"}.`}
-        >
-          <PanelToggle open={open} onToggle={() => setOpen((v) => !v)} />
-        </Tile>
-        <Tile
           name="NavTabs"
           note="Fanevelger der den hvite pillen glir mellom fanene. I headeren navigerer den; her flytter den bare pillen."
         >
           <NavTabs active={tab} onSelect={setTab} />
         </Tile>
-      </div>
-
-      <div className="flex flex-col gap-24 sm:flex-row">
         <Tile
           name="Button"
           note={`Sekundærknappen — PillLink i koden. Trykket ${pressed} ${pressed === 1 ? "gang" : "ganger"}.`}

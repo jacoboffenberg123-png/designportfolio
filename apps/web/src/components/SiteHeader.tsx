@@ -1,23 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useBlind } from "./BlindShell";
+import { useEffect, useState } from "react";
 import NavTabs from "./NavTabs";
-import PanelToggle from "./PanelToggle";
 import ThemeSlider from "./ThemeSlider";
 import ThemeToggle from "./ThemeToggle";
 
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
-
 /**
- * The site header. It doesn't move itself — it rides the blind with the rest of
- * the page, and only reports its height so the blind knows where to stop.
+ * The site header. Sticks to the top and trims its own top padding once you
+ * leave the top of the page.
  */
 export default function SiteHeader() {
-  const { open, toggle, reportHeaderHeight } = useBlind();
-  const ref = useRef<HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
 
   // Only the top padding shrinks once you leave the top of the page. The
@@ -44,32 +37,17 @@ export default function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useIsomorphicLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const measure = () => reportHeaderHeight(el.offsetHeight);
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [reportHeaderHeight]);
-
   return (
     <header
-      ref={ref}
       className={`sticky top-0 z-30 flex flex-col items-center gap-24 bg-paper px-24 pb-24 transition-[padding] duration-300 ease-out md:px-0 ${
         scrolled ? "pt-16" : "pt-48"
       }`}
     >
-      {/* Phones get one line: button, mark, tabs, switch. `md:contents`
-          dissolves the row above that width, handing the children back to the
-          header so the wordmark and tabs centre on the page and the controls
-          take their absolute places. */}
+      {/* Phones get one line: mark, tabs, switch. `md:contents` dissolves the
+          row above that width, handing the children back to the header so the
+          wordmark and tabs centre on the page and the slider takes its absolute
+          place at the right. */}
       <div className="flex w-full items-center justify-between gap-8 md:contents">
-        <div className="md:absolute md:bottom-24 md:left-48 lg:left-120">
-          <PanelToggle open={open} onToggle={toggle} />
-        </div>
-
         <Link
           href="/"
           className="shrink-0 text-[13px] leading-none font-bold uppercase tracking-[0.02em] text-ink md:text-[15px]"
