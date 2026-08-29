@@ -23,7 +23,10 @@ export default function ProjectCard({
     // project's spacing scale, so those would fall through to Tailwind's own and
     // land on 72px and 80px. The bottom padding is what opens up the row gap —
     // 48 between rows plus 20 under each card.
-    <Link href={`/arbeid/${slug}`} className="group flex flex-col gap-[18px] pb-[20px]">
+    <Link
+      href={`/arbeid/${slug}`}
+      className="group flex flex-col gap-[18px] pb-[20px] transition-opacity duration-150 active:opacity-90"
+    >
       <div className="relative aspect-square w-full overflow-hidden rounded-sm bg-line">
         {imageUrl ? (
           <Image
@@ -31,7 +34,10 @@ export default function ProjectCard({
             alt=""
             fill
             sizes="(min-width: 768px) 50vw, 100vw"
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+            // group-active as well as group-hover: Tailwind gates hover behind
+            // @media (hover:hover), so on a phone none of it runs and a tap
+            // gives no sign the card registered it. Active fires on touch.
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03] group-active:scale-[1.03]"
           />
         ) : null}
 
@@ -43,7 +49,7 @@ export default function ProjectCard({
           {year}
         </span>
 
-        <div className="absolute inset-x-0 bottom-32 flex justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <div className="absolute inset-x-0 bottom-32 flex justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-active:opacity-100">
           <span className="rounded-pill bg-glass px-16 py-8 text-xs leading-[1.2] font-medium tracking-[0.08em] text-white uppercase backdrop-blur-[17px] transition-colors duration-200 hover:bg-white/35">
             {ctaLabel}
           </span>
