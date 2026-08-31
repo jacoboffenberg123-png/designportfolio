@@ -139,17 +139,22 @@ export default function Argument({
         <Band className="pt-96">
           <div className="flex flex-col gap-32">
             <Eyebrow>Strategien</Eyebrow>
-            {/* Two columns until xl rather than four: a 14px value in a 190px
-                column breaks after every second word. Four columns only fit
-                from 1280 up, where each one is 238px — at lg they'd be 174. */}
-            <div className="grid grid-cols-1 gap-24 sm:grid-cols-2 xl:grid-cols-4">
+            {/* Two columns until xl: a 14px value in a 190px column breaks
+                after every second word, and at lg four columns would be 174.
+                From xl the four sit in a row, but sized to their own content
+                rather than to an equal share. The values are wildly uneven —
+                44, 11, 44 and 42 characters — so equal columns leave a hole
+                the width of a column under the short one, and the eye reads
+                that as broken spacing. Content widths plus justify-between
+                spread the slack evenly instead. The max-width is what stops
+                the gaps running away: uncapped they reach 266px at 1920,
+                wider than the columns they separate. */}
+            <div className="grid grid-cols-1 gap-24 sm:grid-cols-2 xl:flex xl:max-w-[1160px] xl:justify-between xl:gap-x-32">
               {project.strategy.map((s) => (
-                // The rule is what makes the column a column. The four values
-                // are very different lengths — "Unge voksne" leaves most of its
-                // width empty — and without a top edge that emptiness reads as
-                // uneven spacing rather than as a short entry. Same border the
-                // fact table uses further up the page.
-                <div key={s.label} className="flex flex-col gap-12 border-t border-line pt-16">
+                <div
+                  key={s.label}
+                  className="flex flex-col gap-12 border-t border-line pt-16 xl:max-w-[260px]"
+                >
                   <Eyebrow>{s.label}</Eyebrow>
                   <p className="text-sm leading-[1.55] text-ink">{s.value}</p>
                 </div>
