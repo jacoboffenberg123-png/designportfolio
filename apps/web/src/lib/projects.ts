@@ -1,6 +1,17 @@
 import { cmsFetch, cmsMediaUrl } from "./cms";
 
 const LAYOUTS = ["bildeledet", "katalog", "argumentet", "systemet"] as const;
+
+/** The component gallery's tiles, in the order the page draws them. */
+export const CAPTION_KEYS = [
+  "themeSlider",
+  "navTabs",
+  "button",
+  "tag",
+  "themeToggle",
+  "footerDots",
+] as const;
+export type CaptionKey = (typeof CAPTION_KEYS)[number];
 export type ProjectLayout = (typeof LAYOUTS)[number];
 
 export type GalleryItem = {
@@ -45,6 +56,7 @@ export type Project = {
     interfaceNote: string;
     workflowNote: string;
     componentsNote: string;
+    captions: Record<CaptionKey, string>;
   };
   designNote: string;
   special: { heading: string; images: GalleryItem[] };
@@ -91,6 +103,7 @@ type PayloadProject = {
     interfaceNote?: string;
     workflowNote?: string;
     componentsNote?: string;
+    captions?: Partial<Record<CaptionKey, string>>;
   };
 };
 
@@ -181,6 +194,9 @@ function toProject(doc: PayloadProject): Project {
       interfaceNote: doc.system?.interfaceNote ?? "",
       workflowNote: doc.system?.workflowNote ?? "",
       componentsNote: doc.system?.componentsNote ?? "",
+      captions: Object.fromEntries(
+        CAPTION_KEYS.map((k) => [k, doc.system?.captions?.[k] ?? ""]),
+      ) as Record<CaptionKey, string>,
     },
     special: {
       heading: doc.special?.heading || "Designforslag til spesial-is",

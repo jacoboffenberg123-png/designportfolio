@@ -279,23 +279,45 @@ export const Projects: CollectionConfig = {
       fields: [
         {
           name: "lead",
+          label: "Ingress i toppfeltet",
           type: "textarea",
           admin: { description: "Under tittelen, oppe i det tonede feltet med grafen." },
         },
         {
           name: "interfaceNote",
+          label: "Avsnitt — Grensesnittet",
           type: "textarea",
           admin: { description: "Over skjermbildene, under overskriften «Grensesnittet»." },
         },
         {
           name: "workflowNote",
+          label: "Avsnitt — Arbeidsflyten",
           type: "textarea",
           admin: { description: "Over sløyfen, under overskriften «Arbeidsflyten»." },
         },
         {
           name: "componentsNote",
+          label: "Avsnitt — Komponentene",
           type: "textarea",
           admin: { description: "Over komponentene, under overskriften «Komponentene»." },
+        },
+        {
+          name: "captions",
+          label: "Bildetekster under hver komponent",
+          type: "group",
+          admin: {
+            description:
+              "Én linje under hver rute. Rekkefølgen på siden er slideren, " +
+              "fanevelgeren, knappen, chipen, bryteren og prikkerutenettet.",
+          },
+          fields: [
+            { name: "themeSlider", label: "ThemeSlider", type: "textarea" },
+            { name: "navTabs", label: "NavTabs", type: "textarea" },
+            { name: "button", label: "Button", type: "textarea" },
+            { name: "tag", label: "Tag", type: "textarea" },
+            { name: "themeToggle", label: "ThemeToggle", type: "textarea" },
+            { name: "footerDots", label: "FooterDots", type: "textarea" },
+          ],
         },
       ],
     },

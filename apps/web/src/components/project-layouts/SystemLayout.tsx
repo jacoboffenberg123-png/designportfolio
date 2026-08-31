@@ -139,7 +139,7 @@ export default function SystemLayout({ project }: { project: Project; nextSlug?:
             <Eyebrow>Komponentene</Eyebrow>
             <Body>{componentsNote}</Body>
           </div>
-          <LiveComponents />
+          <LiveComponents captions={system.captions} />
         </div>
       </Band>
 

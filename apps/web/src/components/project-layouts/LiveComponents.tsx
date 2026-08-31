@@ -6,6 +6,7 @@ import NavTabs from "@/components/NavTabs";
 import PillLink from "@/components/PillLink";
 import ThemeSlider from "@/components/ThemeSlider";
 import ThemeToggle from "@/components/ThemeToggle";
+import type { CaptionKey } from "@/lib/projects";
 import { applyDim } from "@/lib/theme";
 import { Eyebrow } from "./shared";
 
@@ -62,11 +63,29 @@ function useScopedDim(t: number) {
   return ref;
 }
 
-export default function LiveComponents() {
+/** Written in the CMS; these stand in when a field is left empty. */
+const FALLBACK: Record<CaptionKey, string> = {
+  themeSlider:
+    "Trinnløs lys/mørk. Fargene regnes ut per steg, ikke byttet mellom to sett — dra i den, så mørkner boksen. På siden styrer den hele paletten; her bare sin egen rute.",
+  navTabs:
+    "Fanevelger der den hvite pillen glir mellom fanene. I headeren navigerer den; her flytter den bare pillen.",
+  button: "Sekundærknappen — PillLink i koden. Samme hover- og trykk-tilstand som ellers på siden.",
+  tag: "Nøytral chip — brukes til programmer på CV-siden. Den eneste her uten en tilstand å trykke på.",
+  themeToggle:
+    "Erstatter slideren på telefon. Viser ikonet for der et trykk tar deg — og mørkner boksen, ikke siden.",
+  footerDots:
+    "Prikkerutenettet i bunnteksten. Prikkene mørkner der pekeren er, og falmer tilbake med forsinkelse. Rutenettet tettes på smale skjermer så J-en og O-en fortsatt kan leses.",
+};
+
+export default function LiveComponents({
+  captions,
+}: {
+  captions?: Partial<Record<CaptionKey, string>>;
+}) {
+  const note = (k: CaptionKey) => captions?.[k] || FALLBACK[k];
   const [sliderDim, setSliderDim] = useState(0);
   const [toggleDim, setToggleDim] = useState(0);
   const [tab, setTab] = useState(0);
-  const [pressed, setPressed] = useState(0);
 
   const sliderStage = useScopedDim(sliderDim);
   const toggleStage = useScopedDim(toggleDim);
@@ -79,25 +98,25 @@ export default function LiveComponents() {
         <Tile
           stageRef={sliderStage}
           name="ThemeSlider"
-          note="Trinnløs lys/mørk. Fargene regnes ut per steg, ikke byttet mellom to sett — dra i den, så mørkner boksen. På siden styrer den hele paletten; her bare sin egen rute."
+          note={note("themeSlider")}
         >
           <ThemeSlider value={sliderDim} onChange={setSliderDim} />
         </Tile>
         <Tile
           name="NavTabs"
-          note="Fanevelger der den hvite pillen glir mellom fanene. I headeren navigerer den; her flytter den bare pillen."
+          note={note("navTabs")}
         >
           <NavTabs active={tab} onSelect={setTab} />
         </Tile>
         <Tile
           name="Button"
-          note={`Sekundærknappen — PillLink i koden. Trykket ${pressed} ${pressed === 1 ? "gang" : "ganger"}.`}
+          note={note("button")}
         >
-          <PillLink onClick={() => setPressed((n) => n + 1)}>Se mer</PillLink>
+          <PillLink>Se mer</PillLink>
         </Tile>
         <Tile
           name="Tag"
-          note="Nøytral chip — brukes til programmer på CV-siden. Den eneste her uten en tilstand å trykke på."
+          note={note("tag")}
         >
           <span className="rounded-sm bg-ink/5 px-12 py-8 text-xs leading-[1.5] text-ink">
             Figma
@@ -106,7 +125,7 @@ export default function LiveComponents() {
         <Tile
           stageRef={toggleStage}
           name="ThemeToggle"
-          note="Erstatter slideren på telefon. Viser ikonet for der et trykk tar deg — og mørkner boksen, ikke siden."
+          note={note("themeToggle")}
         >
           <ThemeToggle value={toggleDim} onChange={setToggleDim} />
         </Tile>
@@ -115,7 +134,7 @@ export default function LiveComponents() {
       <Tile
         wide
         name="FooterDots"
-        note="Prikkerutenettet i bunnteksten. Prikkene mørkner der pekeren er, og falmer tilbake med forsinkelse. Rutenettet tettes på smale skjermer så J-en og O-en fortsatt kan leses."
+        note={note("footerDots")}
       >
         <div className="w-full">
           <DotGrid />
