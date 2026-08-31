@@ -139,22 +139,11 @@ export default function Argument({
         <Band className="pt-96">
           <div className="flex flex-col gap-32">
             <Eyebrow>Strategien</Eyebrow>
-            {/* Two columns until xl: a 14px value in a 190px column breaks
-                after every second word, and at lg four columns would be 174.
-                From xl the four sit in a row, but sized to their own content
-                rather than to an equal share. The values are wildly uneven —
-                44, 11, 44 and 42 characters — so equal columns leave a hole
-                the width of a column under the short one, and the eye reads
-                that as broken spacing. Content widths plus justify-between
-                spread the slack evenly instead. The max-width is what stops
-                the gaps running away: uncapped they reach 266px at 1920,
-                wider than the columns they separate. */}
-            <div className="grid grid-cols-1 gap-24 sm:grid-cols-2 xl:flex xl:max-w-[1160px] xl:justify-between xl:gap-x-32">
+            {/* Two columns on a tablet rather than four: four 14px lines in a
+                190px column break after every second word. */}
+            <div className="grid grid-cols-1 gap-24 sm:grid-cols-2 lg:grid-cols-4">
               {project.strategy.map((s) => (
-                <div
-                  key={s.label}
-                  className="flex flex-col gap-12 border-t border-line pt-16 xl:max-w-[260px]"
-                >
+                <div key={s.label} className="flex flex-col gap-12">
                   <Eyebrow>{s.label}</Eyebrow>
                   <p className="text-sm leading-[1.55] text-ink">{s.value}</p>
                 </div>
