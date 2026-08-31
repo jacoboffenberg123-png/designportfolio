@@ -139,9 +139,10 @@ export default function Argument({
         <Band className="pt-96">
           <div className="flex flex-col gap-32">
             <Eyebrow>Strategien</Eyebrow>
-            {/* Two columns on a tablet rather than four: four 14px lines in a
-                190px column break after every second word. */}
-            <div className="grid grid-cols-1 gap-24 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Two columns until xl rather than four: a 14px value in a 190px
+                column breaks after every second word. Four columns only fit
+                from 1280 up, where each one is 238px — at lg they'd be 174. */}
+            <div className="grid grid-cols-1 gap-24 sm:grid-cols-2 xl:grid-cols-4">
               {project.strategy.map((s) => (
                 <div key={s.label} className="flex flex-col gap-12">
                   <Eyebrow>{s.label}</Eyebrow>
