@@ -4,7 +4,8 @@ import Link from "next/link";
 type ProjectCardProps = {
   slug: string;
   title: string;
-  category: string;
+  /** The line under the title. Its own CMS field, not the fact table's category. */
+  subtitle: string;
   year: string;
   imageUrl?: string;
   ctaLabel?: string;
@@ -13,7 +14,7 @@ type ProjectCardProps = {
 export default function ProjectCard({
   slug,
   title,
-  category,
+  subtitle,
   year,
   imageUrl,
   ctaLabel = "Se mer",
@@ -60,7 +61,7 @@ export default function ProjectCard({
         <span className="text-[25px] leading-[1.3] font-medium tracking-[-0.005em] text-ink capitalize">
           {title}
         </span>
-        <span className="text-base leading-[1.65] tracking-[-0.005em] text-ink">{category}</span>
+        <span className="text-base leading-[1.65] tracking-[-0.005em] text-ink">{subtitle}</span>
       </div>
     </Link>
   );

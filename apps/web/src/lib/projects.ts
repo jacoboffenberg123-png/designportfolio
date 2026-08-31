@@ -28,6 +28,8 @@ export type Project = {
   layout: ProjectLayout;
   intro: string;
   category: string;
+  /** The line under the title on the overview page. Independent of `category`. */
+  cardSubtitle: string;
   year: string;
   subject: string;
   duration: string;
@@ -70,6 +72,7 @@ type PayloadProject = {
   layout?: string;
   intro?: string;
   category: string;
+  cardSubtitle?: string;
   year: string;
   subject?: string;
   duration?: string;
@@ -147,6 +150,9 @@ function toProject(doc: PayloadProject): Project {
       : "bildeledet",
     intro: doc.intro ?? "",
     category: doc.category,
+    // Falls back to the category so the cards keep their current subtitle until
+    // the new field is filled in, rather than every one of them going blank.
+    cardSubtitle: doc.cardSubtitle || doc.category,
     year: doc.year,
     subject: doc.subject ?? "",
     duration: doc.duration ?? "",

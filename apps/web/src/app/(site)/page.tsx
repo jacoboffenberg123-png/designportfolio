@@ -17,7 +17,7 @@ export default async function ProsjektoversiktPage() {
               key={project.slug}
               slug={project.slug}
               title={project.title}
-              category={project.category}
+              subtitle={project.cardSubtitle}
               year={project.year}
               imageUrl={project.cardImageUrl}
             />

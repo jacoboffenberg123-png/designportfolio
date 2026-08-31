@@ -85,11 +85,31 @@ export const Projects: CollectionConfig = {
           "mister mye her. Lar du feltet stå tomt, brukes hero-bildet beskåret.",
       },
     },
+    {
+      name: "cardSubtitle",
+      type: "text",
+      label: "Undertittel på kortet",
+      admin: {
+        description:
+          "Linjen under prosjekttittelen i prosjektoversikten. Står den tom, " +
+          "brukes «Kategori» i stedet, slik det gjorde før.",
+      },
+    },
 
     // --- Faktatabell ---
     // Rendres i denne rekkefølgen, og bare radene som har innhold. I Systemet
     // overstyres hele tabellen av punktlisten lenger nede, hvis den er fylt ut.
-    { name: "category", type: "text", required: true },
+    {
+      name: "category",
+      type: "text",
+      label: "Kategori",
+      required: true,
+      admin: {
+        description:
+          "Vises som «Kategori» i faktatabellen på prosjektsiden. Kortet i " +
+          "prosjektoversikten har sitt eget felt lenger opp.",
+      },
+    },
     { name: "year", type: "text", required: true },
     {
       name: "subject",
