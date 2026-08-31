@@ -25,6 +25,7 @@ export type Project = {
   cardImageUrl?: string;
   gallery: GalleryItem[];
   galleryHeadings: { first: string; second: string; third: string };
+  galleryNote: string;
   challenge: { heading: string; body: string };
   process: { heading: string; body: string };
   reflection: string;
@@ -66,6 +67,7 @@ type PayloadProject = {
   cardImage?: PayloadMedia | string;
   gallery?: { image?: PayloadMedia | string; label?: string }[];
   galleryHeadings?: { first?: string; second?: string; third?: string };
+  galleryNote?: string;
   challenge?: { heading?: string; body?: string };
   process?: { heading?: string; body?: string };
   reflection?: string;
@@ -146,6 +148,7 @@ function toProject(doc: PayloadProject): Project {
       second: doc.galleryHeadings?.second ?? "",
       third: doc.galleryHeadings?.third ?? "",
     },
+    galleryNote: doc.galleryNote ?? "",
     challenge: {
       heading: doc.challenge?.heading || "Utfordringen",
       body: doc.challenge?.body || "",

@@ -105,6 +105,17 @@ export default function ImageLed({
         </Band>
       ) : null}
 
+      {project.galleryNote ? (
+        // A comment on the row above rather than a new section, so it carries
+        // no eyebrow — the drawing gives it the same 96 above as a text block
+        // and lets the closing heading keep its own break below.
+        <Band className="pt-96">
+          <div className="max-w-[760px]">
+            <Body>{project.galleryNote}</Body>
+          </div>
+        </Band>
+      ) : null}
+
       {closing.length > 0 ? (
         // The heading sits a long way below the row above it — the drawing puts
         // 96 on the section and another 96 on the label, which reads as a

@@ -301,6 +301,17 @@ export const Projects: CollectionConfig = {
     },
 
     {
+      name: "galleryNote",
+      type: "textarea",
+      admin: {
+        condition: isBildeledet,
+        description:
+          "Et avsnitt mellom den andre og den siste bilderaden — uten overskrift, " +
+          "som en kommentar til bildene over. La feltet stå tomt for å utelate det. " +
+          "Tomme linjer blir avsnitt.",
+      },
+    },
+    {
       name: "galleryHeadings",
       type: "group",
       label: "Overskrifter over bilderadene",
