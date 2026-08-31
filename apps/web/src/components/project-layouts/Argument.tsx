@@ -144,7 +144,12 @@ export default function Argument({
                 from 1280 up, where each one is 238px — at lg they'd be 174. */}
             <div className="grid grid-cols-1 gap-24 sm:grid-cols-2 xl:grid-cols-4">
               {project.strategy.map((s) => (
-                <div key={s.label} className="flex flex-col gap-12">
+                // The rule is what makes the column a column. The four values
+                // are very different lengths — "Unge voksne" leaves most of its
+                // width empty — and without a top edge that emptiness reads as
+                // uneven spacing rather than as a short entry. Same border the
+                // fact table uses further up the page.
+                <div key={s.label} className="flex flex-col gap-12 border-t border-line pt-16">
                   <Eyebrow>{s.label}</Eyebrow>
                   <p className="text-sm leading-[1.55] text-ink">{s.value}</p>
                 </div>
