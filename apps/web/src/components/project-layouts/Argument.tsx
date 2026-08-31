@@ -107,7 +107,7 @@ export default function Argument({
 
   return (
     <main className="flex flex-1 flex-col">
-      <Figure src={project.imageUrl} ratio="9 / 5" rounded={false} priority />
+      <Figure src={project.imageUrl} height={755} rounded={false} priority />
 
       <Band className="pt-64">
         <div className="flex flex-col gap-48">

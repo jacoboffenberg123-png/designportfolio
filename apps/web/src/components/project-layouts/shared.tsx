@@ -55,13 +55,20 @@ export function Band({
 export function Figure({
   src,
   ratio,
+  height,
   rounded = true,
   contain = false,
   sizes = "100vw",
   priority = false,
 }: {
   src?: string;
-  ratio: string;
+  /** Aspect ratio for the box. Ignored when `height` is given. */
+  ratio?: string;
+  /**
+   * A fixed pixel height instead of a ratio, so the box keeps the same height
+   * at every width and the image crops wider as the viewport grows.
+   */
+  height?: number;
   rounded?: boolean;
   /**
    * Fits the whole image inside the box instead of cropping to fill, and drops
@@ -80,7 +87,7 @@ export function Figure({
         // image would be an invisible hole rather than an obvious gap.
         contain && src ? "" : "bg-line"
       } ${rounded ? "rounded-sm" : ""}`}
-      style={{ aspectRatio: ratio }}
+      style={height ? { height } : { aspectRatio: ratio }}
     >
       {src ? (
         <Image
